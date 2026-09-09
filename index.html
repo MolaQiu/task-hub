@@ -95,7 +95,7 @@ textarea{resize:vertical;min-height:60px}
 .layout-right{display:flex;flex-direction:column;gap:16px;min-width:0}
 
 /* ========== View Tabs ========== */
-.view-tabs{display:flex;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:4px}
+.view-tabs{position:sticky;top:76px;z-index:90;display:flex;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:4px}
 .view-tab{flex:1;padding:10px 16px;border:none;background:transparent;border-radius:var(--radius-sm);font-size:14px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
 .view-tab:hover{color:var(--text)}
 .view-tab.active{background:var(--card-bg);color:var(--primary);box-shadow:var(--shadow)}
@@ -273,7 +273,7 @@ textarea{resize:vertical;min-height:60px}
 .note-color-dot.c-blue{background:#dbeafe}
 .note-color-dot.c-pink{background:#fce7f3}
 .note-add-btn{align-self:flex-end}
-.note-list{display:flex;flex-direction:column;gap:8px;max-height:400px;overflow-y:auto}
+.note-list{display:flex;flex-direction:column;gap:8px}
 .note-empty{text-align:center;padding:20px 12px;color:var(--text-light);font-size:13px}
 .note-card{padding:10px 12px;border-radius:var(--radius-sm);position:relative;transition:all .15s;border:1px solid transparent}
 .note-card.pinned{border-left:3px solid rgba(0,0,0,.25);padding-left:10px}
@@ -287,7 +287,7 @@ textarea{resize:vertical;min-height:60px}
 .note-card.c-pink{background:#fce7f3;color:#831843}
 .note-card-content{font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;cursor:pointer}
 .note-card-content.editing{display:none}
-.note-card-edit-area{display:none;width:100%;min-height:60px;padding:6px 8px;font-size:13px;font-family:inherit;border:1px solid rgba(0,0,0,.15);border-radius:4px;background:rgba(255,255,255,.6);color:inherit;resize:vertical;line-height:1.5}
+.note-card-edit-area{display:none;width:100%;min-height:0;padding:6px 8px;font-size:13px;font-family:inherit;border:1px solid rgba(0,0,0,.15);border-radius:4px;background:rgba(255,255,255,.6);color:inherit;resize:none;overflow:hidden;line-height:1.5}
 .note-card-edit-area.active{display:block}
 .note-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
 .note-card-date{font-size:11px;opacity:.6}
@@ -838,6 +838,10 @@ function togglePinNote(id) {
   }
   saveNotes();
   renderNotes();
+}
+function autoResizeTextarea(ta){
+  ta.style.height = "auto";
+  ta.style.height = ta.scrollHeight + "px";
 }
 function saveEditNote(id, newContent) {
   for(var i=0;i<notes.length;i++) {
@@ -1735,6 +1739,7 @@ function bindEvents() {
       contentDiv.classList.add("editing");
       editArea.classList.add("active");
       editArea.focus();
+      autoResizeTextarea(editArea);
       editArea.setSelectionRange(editArea.value.length, editArea.value.length);
       return;
     }
@@ -1748,9 +1753,15 @@ function bindEvents() {
       noteContent.classList.add("editing");
       editArea.classList.add("active");
       editArea.focus();
+      autoResizeTextarea(editArea);
       editArea.setSelectionRange(editArea.value.length, editArea.value.length);
       return;
     }
+  });
+
+  // Auto-resize note edit area while typing
+  document.addEventListener("input", function(e){
+    if(e.target.classList.contains("note-card-edit-area")) autoResizeTextarea(e.target);
   });
 
   // Note edit area — save on blur or Ctrl+Enter
