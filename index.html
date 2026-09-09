@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#2563eb">
+<title>小黄花的料理台 - 个人工作台</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#2563eb;--primary-dark:#1d4ed8;--primary-light:#dbeafe;--primary-bg:#eff6ff;
+  --bg:#f1f5f9;--card-bg:#ffffff;
+  --text:#1e293b;--text-secondary:#64748b;--text-light:#94a3b8;
+  --border:#e2e8f0;--border-dark:#cbd5e1;
+  --danger:#ef4444;--danger-bg:#fef2f2;--danger-border:#fecaca;
+  --success:#10b981;--success-bg:#ecfdf5;--success-border:#a7f3d0;
+  --warning:#f59e0b;--warning-bg:#fffbeb;--warning-border:#fde68a;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --shadow-lg:0 10px 30px rgba(0,0,0,.08);
+  --radius:12px;--radius-sm:8px;
+  --sidebar-w:340px;
+}
+/* Dark theme */
+[data-theme="dark"]{
+  --primary:#3b82f6;--primary-dark:#2563eb;--primary-light:#1e3a5f;--primary-bg:#172554;
+  --bg:#0f172a;--card-bg:#1e293b;
+  --text:#e2e8f0;--text-secondary:#94a3b8;--text-light:#64748b;
+  --border:#334155;--border-dark:#475569;
+  --danger:#f87171;--danger-bg:#450a0a;--danger-border:#7f1d1d;
+  --success:#34d399;--success-bg:#022c22;--success-border:#065f46;
+  --warning:#fbbf24;--warning-bg:#451a03;--warning-border:#78350f;
+  --shadow:0 1px 3px rgba(0,0,0,.3),0 1px 2px rgba(0,0,0,.2);
+  --shadow-lg:0 10px 30px rgba(0,0,0,.4);
+}
+[data-theme="dark"] .prio-P0{background:#450a0a;color:#f87171}
+[data-theme="dark"] .prio-P1{background:#451a03;color:#fbbf24}
+[data-theme="dark"] .prio-P2{background:#1e3a5f;color:#60a5fa}
+[data-theme="dark"] .type-product{background:#172554;color:#60a5fa}
+[data-theme="dark"] .type-operation{background:#2e1065;color:#a78bfa}
+[data-theme="dark"] .type-design{background:#500724;color:#f472b6}
+[data-theme="dark"] .type-tech{background:#042f2e;color:#2dd4bf}
+[data-theme="dark"] .type-data{background:#431407;color:#fb923c}
+[data-theme="dark"] .status-pending{background:#1e293b;color:#94a3b8}
+[data-theme="dark"] .status-progress{background:#1e3a5f;color:#60a5fa}
+[data-theme="dark"] .status-done{background:#022c22;color:#34d399}
+[data-theme="dark"] .status-overdue{background:#450a0a!important;color:#f87171!important}
+[data-theme="dark"] .js-toggle-status:hover{box-shadow:0 0 0 2px rgba(96,165,250,.2)}
+[data-theme="dark"] .toast{background:#334155}
+[data-theme="dark"] #jsError{background:#450a0a;border-color:#7f1d1d;color:#f87171}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+  padding-bottom:calc(env(safe-area-inset-bottom) + 20px);
+}
+button,input,select,textarea{font-family:inherit;font-size:inherit}
+button{cursor:pointer;border:none;background:none}
+input,select,textarea{border:1px solid var(--border-dark);border-radius:var(--radius-sm);padding:10px 12px;font-size:16px;width:100%;outline:none;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-light)}
+textarea{resize:vertical;min-height:60px}
+.hidden{display:none!important}
+.container{max-width:1280px;margin:0 auto;padding:0 16px}
+
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;max-width:1280px;margin:0 auto;gap:12px;flex-wrap:wrap}
+.header-left{display:flex;align-items:center;gap:10px}
+.header-logo{width:32px;height:32px;flex-shrink:0}
+.header-title{font-size:18px;font-weight:700;color:var(--text);white-space:nowrap}
+.header-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;border-radius:var(--radius-sm);font-size:14px;font-weight:500;transition:all .2s;min-height:40px;white-space:nowrap}
+.btn svg{width:16px;height:16px;flex-shrink:0}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-dark)}
+.btn-secondary{background:var(--card-bg);color:var(--text-secondary);border:1px solid var(--border-dark)}
+.btn-secondary:hover{background:var(--bg);color:var(--text)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover{background:#dc2626}
+.btn-sm{padding:6px 10px;min-height:34px;font-size:13px}
+.btn-icon{padding:8px;width:36px;height:36px;min-height:36px;border-radius:var(--radius-sm)}
+.btn-block{width:100%}
+
+.backup-reminder{background:var(--warning-bg);border:1px solid var(--warning-border);color:#92400e;padding:10px 16px;text-align:center;font-size:14px;border-radius:var(--radius-sm);margin-bottom:12px}
+.backup-reminder strong{font-weight:700}
+
+/* ========== Main Layout ========== */
+.main-layout{display:grid;grid-template-columns:var(--sidebar-w) 1fr;gap:16px;align-items:start}
+.layout-left{position:sticky;top:76px}
+.layout-right{display:flex;flex-direction:column;gap:16px;min-width:0}
+
+/* ========== View Tabs ========== */
+.view-tabs{display:flex;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:4px}
+.view-tab{flex:1;padding:10px 16px;border:none;background:transparent;border-radius:var(--radius-sm);font-size:14px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.view-tab:hover{color:var(--text)}
+.view-tab.active{background:var(--card-bg);color:var(--primary);box-shadow:var(--shadow)}
+.view-tab .count-badge{margin-left:0;font-size:12px;padding:1px 8px}
+.view-panel{display:flex;flex-direction:column;gap:16px}
+.view-panel.hidden{display:none}
+
+.section{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.section-title{font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.section-title svg{width:20px;height:20px;color:var(--primary)}
+.section-title .count-badge{font-size:13px;font-weight:600;color:var(--text-secondary);background:var(--bg);padding:2px 10px;border-radius:12px;margin-left:auto}
+
+/* ========== Today Section ========== */
+.today-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.today-stat{padding:16px;border-radius:var(--radius-sm);text-align:center;border:1px solid var(--border)}
+.today-stat .stat-num{font-size:28px;font-weight:800;line-height:1.2}
+.today-stat .stat-label{font-size:13px;color:var(--text-secondary);margin-top:4px}
+.today-stat.overdue{background:var(--danger-bg);border-color:var(--danger-border)}
+.today-stat.overdue .stat-num{color:var(--danger)}
+.today-stat.today{background:var(--primary-bg);border-color:var(--primary-light)}
+.today-stat.today .stat-num{color:var(--primary)}
+.today-stat.upcoming{background:var(--warning-bg);border-color:var(--warning-border)}
+.today-stat.upcoming .stat-num{color:var(--warning)}
+.today-empty{text-align:center;padding:32px 16px;color:var(--text-light);font-size:14px}
+.today-empty svg{width:48px;height:48px;margin:0 auto 12px;display:block;opacity:.4}
+.today-group{margin-bottom:16px}
+.today-group:last-child{margin-bottom:0}
+.today-group-title{font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.today-group-title .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.today-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:6px;background:var(--card-bg);transition:all .15s}
+.today-item.overdue{border-color:var(--danger-border);background:var(--danger-bg)}
+.today-item:hover{box-shadow:var(--shadow)}
+.today-item-body{flex:1;min-width:0}
+.today-item-title{font-size:14px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.today-item-meta{font-size:12px;color:var(--text-secondary);display:flex;align-items:center;gap:6px;margin-top:2px;flex-wrap:wrap}
+.today-item-meta .badge{font-size:11px;padding:2px 6px;border-radius:4px;font-weight:500}
+.today-item-deadline{font-size:12px;font-weight:600;white-space:nowrap}
+.today-item-deadline.overdue-text{color:var(--danger)}
+.today-item-actions{display:flex;gap:6px;flex-shrink:0}
+.today-item-actions .btn{min-height:34px;padding:6px 12px;font-size:13px}
+
+/* ========== Task Form (always visible) ========== */
+.task-form{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-row.full{grid-template-columns:1fr}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-label{font-size:13px;color:var(--text-secondary);font-weight:500}
+.form-actions{display:flex;gap:8px;justify-content:flex-end}
+.form-error{color:var(--danger);font-size:13px;margin-bottom:8px}
+.form-mode-tag{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:12px;margin-left:auto}
+.form-mode-tag.add{background:var(--primary-light);color:var(--primary-dark)}
+.form-mode-tag.edit{background:var(--warning-bg);color:#b45309}
+
+/* ========== Filter Bar ========== */
+.filter-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.filter-bar select{width:auto;min-width:100px;padding:8px 10px;font-size:13px;min-height:40px}
+.search-box{position:relative;flex:1;min-width:140px}
+.search-box svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--text-light);pointer-events:none}
+.search-box input{padding-left:34px;font-size:13px;min-height:40px}
+.filter-toggle{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);cursor:pointer;user-select:none;white-space:nowrap;min-height:40px;padding:0 10px;border:1px solid var(--border-dark);border-radius:var(--radius-sm);background:var(--card-bg);transition:all .2s}
+.filter-toggle:hover{background:var(--bg)}
+.filter-toggle input{width:16px;height:16px;min-height:auto;margin:0;cursor:pointer}
+
+/* ========== Archive Section ========== */
+.archive-section{margin-top:12px;border:1px dashed var(--border-dark);border-radius:var(--radius-sm);overflow:hidden}
+.archive-header{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bg);cursor:pointer;font-size:13px;color:var(--text-secondary);font-weight:600;user-select:none}
+.archive-header svg{width:16px;height:16px;transition:transform .2s}
+.archive-header.open svg{transform:rotate(90deg)}
+.archive-count{background:var(--border-dark);color:var(--text-secondary);font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600;margin-left:auto}
+.archive-body{padding:8px 14px;display:none}
+.archive-body.open{display:block}
+.archive-body .task-card{opacity:.5}
+
+/* ========== Task List ========== */
+.task-list{display:flex;flex-direction:column;gap:8px}
+.task-card{display:flex;align-items:flex-start;gap:12px;padding:14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);transition:all .15s}
+.task-card:hover{box-shadow:var(--shadow);border-color:var(--border-dark)}
+.task-card.completed{opacity:.65}
+.task-card.completed .task-title{text-decoration:line-through;color:var(--text-secondary)}
+.task-check{width:24px;height:24px;border:2px solid var(--border-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .2s;margin-top:2px}
+.task-check:hover{border-color:var(--primary)}
+.task-check.checked{background:var(--success);border-color:var(--success)}
+.task-check.checked svg{display:block}
+.task-check svg{display:none;width:14px;height:14px;color:#fff}
+.task-body{flex:1;min-width:0}
+.task-header{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.task-title{font-size:15px;font-weight:600;color:var(--text);word-break:break-word}
+.task-badges{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.badge{font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.task-desc{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.task-footer{display:flex;align-items:center;gap:12px;margin-top:8px;flex-wrap:wrap}
+.task-footer-item{font-size:12px;color:var(--text-secondary);display:flex;align-items:center;gap:4px}
+.task-footer-item svg{width:13px;height:13px}
+/* ========== Task Progress Log ========== */
+.task-progress{margin-top:10px;border-top:1px dashed var(--border);padding-top:8px}
+.task-progress-empty{margin-top:8px}
+.task-progress-empty .task-progress-add{margin-left:0;padding-left:0;font-weight:600;gap:4px}
+.task-progress-empty .task-progress-add svg{width:14px;height:14px}
+.task-progress-head{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary);margin-bottom:8px;font-weight:600}
+.task-progress-head svg{width:13px;height:13px}
+.task-progress-count{background:var(--primary-light);color:var(--primary-dark);font-size:10px;padding:0 6px;border-radius:8px;font-weight:700;line-height:16px}
+.task-progress-add{margin-left:auto;font-size:12px;color:var(--primary);cursor:pointer;display:inline-flex;align-items:center;gap:3px;background:none;border:none;padding:3px 8px;border-radius:6px;font-weight:500;transition:all .15s}
+.task-progress-add:hover{background:var(--primary-light)}
+.task-progress-add svg{width:12px;height:12px}
+.task-progress-list{border-left:2px solid var(--border);margin-left:3px;padding-left:14px;display:flex;flex-direction:column;gap:8px}
+.task-progress-item{position:relative;font-size:13px;line-height:1.55;display:flex;align-items:flex-start;gap:8px}
+.task-progress-item::before{content:"";position:absolute;left:-19px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--border-dark);flex-shrink:0}
+.task-progress-item:first-child::before{background:var(--primary);box-shadow:0 0 0 3px var(--primary-light)}
+.task-progress-time{font-size:11px;color:var(--text-light);white-space:nowrap;flex-shrink:0;margin-top:1px;font-variant-numeric:tabular-nums}
+.task-progress-content{color:var(--text-secondary);word-break:break-word;flex:1;min-width:0;white-space:pre-wrap}
+.task-progress-del{opacity:0;width:20px;height:20px;flex-shrink:0;border:none;background:none;color:var(--text-light);cursor:pointer;border-radius:5px;display:flex;align-items:center;justify-content:center;transition:all .15s;padding:0}
+.task-progress-del svg{width:12px;height:12px}
+.task-progress-item:hover .task-progress-del{opacity:.7}
+.task-progress-del:hover{opacity:1!important;color:var(--danger);background:var(--danger-bg)}
+.task-progress-input-wrap{display:none;margin-top:8px;border-top:1px dashed var(--border);padding-top:8px}
+.task-progress-input-wrap.active{display:block;animation:dd-in .15s ease-out}
+.task-progress-input{width:100%;min-height:54px;padding:8px 10px;font-size:13px;font-family:inherit;border:1px solid var(--border-dark);border-radius:var(--radius-sm);background:var(--card-bg);color:var(--text);resize:vertical;line-height:1.5}
+.task-progress-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 2px rgba(37,99,235,.12)}
+.task-progress-input-actions{display:flex;gap:6px;justify-content:flex-end;margin-top:6px}
+.task-progress-input-actions .btn{padding:6px 14px;font-size:12px;min-height:32px}
+[data-theme="dark"] .task-progress-time{color:#64748b}
+@media(max-width:768px){
+  .task-progress-del{opacity:.5}
+  .task-progress-input-actions .btn{flex:1}
+}
+.task-actions{display:flex;gap:4px;flex-shrink:0}
+.task-actions .btn-icon{width:32px;height:32px;min-height:32px;color:var(--text-secondary)}
+.task-actions .btn-icon:hover{background:var(--bg);color:var(--text)}
+.task-actions .btn-icon.delete:hover{background:var(--danger-bg);color:var(--danger)}
+.task-empty{text-align:center;padding:40px 16px;color:var(--text-light)}
+.task-empty svg{width:48px;height:48px;margin:0 auto 12px;display:block;opacity:.4}
+.task-empty p{font-size:14px;margin-bottom:8px}
+
+/* ========== Badges ========== */
+.prio-P0{background:var(--danger-bg);color:var(--danger)}
+.prio-P1{background:var(--warning-bg);color:#b45309}
+.prio-P2{background:var(--primary-light);color:var(--primary)}
+.type-product{background:#dbeafe;color:#1e40af}
+.type-operation{background:#ede9fe;color:#5b21b6}
+.type-design{background:#fce7f3;color:#9d174d}
+.type-tech{background:#ccfbf1;color:#115e59}
+.type-data{background:#ffedd5;color:#9a3412}
+.status-pending{background:#f1f5f9;color:#475569}
+.status-progress{background:var(--primary-light);color:var(--primary-dark)}
+.status-done{background:var(--success-bg);color:#047857}
+.js-toggle-status{cursor:pointer;transition:all .15s;position:relative;padding-right:18px}
+.js-toggle-status:hover{filter:brightness(.93);box-shadow:0 0 0 2px rgba(37,99,235,.15)}
+.js-toggle-status::after{content:"";position:absolute;right:5px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:4px solid currentColor;opacity:.5}
+.status-overdue{background:var(--danger-bg)!important;color:var(--danger)!important;animation:pulse-overdue 2s ease-in-out infinite}
+@keyframes pulse-overdue{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.3)}50%{box-shadow:0 0 0 3px rgba(239,68,68,.12)}}
+.status-dropdown{position:fixed;z-index:9999;background:var(--card-bg);border:1px solid var(--border-dark);border-radius:var(--radius-sm);box-shadow:0 8px 24px rgba(0,0,0,.15);padding:4px;min-width:140px;animation:dd-in .12s ease-out}
+@keyframes dd-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.status-dropdown-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:6px;cursor:pointer;transition:background .12s}
+.status-dropdown-item:hover{background:var(--bg)}
+.status-dropdown-item.current{background:var(--primary-light)}
+.status-dropdown-item .check-icon{width:16px;height:16px;color:var(--primary);flex-shrink:0}
+[data-theme="dark"] .status-dropdown{background:#1e293b;border-color:#334155;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+[data-theme="dark"] .status-dropdown-item:hover{background:#334155}
+[data-theme="dark"] .status-dropdown-item.current{background:#1e3a5f}
+.notes-section{margin-top:16px}
+.note-input-wrap{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.note-textarea{width:100%;min-height:70px;max-height:200px;padding:10px 12px;font-size:14px;font-family:inherit;border:1px solid var(--border-dark);border-radius:var(--radius-sm);background:var(--card-bg);color:var(--text);resize:vertical;line-height:1.5}
+.note-textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 2px rgba(37,99,235,.12)}
+.note-color-row{display:flex;align-items:center;gap:6px}
+.note-color-label{font-size:12px;color:var(--text-secondary);margin-right:4px}
+.note-color-dot{width:20px;height:20px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s}
+.note-color-dot.selected{border-color:var(--text);transform:scale(1.15)}
+.note-color-dot.c-yellow{background:#fef9c3}
+.note-color-dot.c-green{background:#dcfce7}
+.note-color-dot.c-blue{background:#dbeafe}
+.note-color-dot.c-pink{background:#fce7f3}
+.note-add-btn{align-self:flex-end}
+.note-list{display:flex;flex-direction:column;gap:8px;max-height:400px;overflow-y:auto}
+.note-empty{text-align:center;padding:20px 12px;color:var(--text-light);font-size:13px}
+.note-card{padding:10px 12px;border-radius:var(--radius-sm);position:relative;transition:all .15s;border:1px solid transparent}
+.note-card.pinned{border-left:3px solid rgba(0,0,0,.25);padding-left:10px}
+.note-card.pinned::before{content:"";position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 14px 14px 0;border-color:transparent rgba(0,0,0,.15) transparent transparent}
+.note-pin-btn{opacity:.4}
+.note-pin-btn.active{opacity:1;color:#dc2626}
+.note-pin-btn.active svg{fill:currentColor}
+.note-card.c-yellow{background:#fef9c3;color:#422006}
+.note-card.c-green{background:#dcfce7;color:#052e16}
+.note-card.c-blue{background:#dbeafe;color:#1e3a5f}
+.note-card.c-pink{background:#fce7f3;color:#831843}
+.note-card-content{font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;cursor:pointer}
+.note-card-content.editing{display:none}
+.note-card-edit-area{display:none;width:100%;min-height:60px;padding:6px 8px;font-size:13px;font-family:inherit;border:1px solid rgba(0,0,0,.15);border-radius:4px;background:rgba(255,255,255,.6);color:inherit;resize:vertical;line-height:1.5}
+.note-card-edit-area.active{display:block}
+.note-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.note-card-date{font-size:11px;opacity:.6}
+.note-card-actions{display:flex;gap:4px}
+.note-card-actions .btn-icon{width:26px;height:26px;min-height:26px;padding:4px;opacity:.5}
+.note-card-actions .btn-icon:hover{opacity:1}
+[data-theme="dark"] .note-color-dot.c-yellow{background:#713f12}
+[data-theme="dark"] .note-color-dot.c-green{background:#14532d}
+[data-theme="dark"] .note-color-dot.c-blue{background:#1e3a5f}
+[data-theme="dark"] .note-color-dot.c-pink{background:#831843}
+[data-theme="dark"] .note-card.c-yellow{background:rgba(113,63,18,.3);color:#fde047}
+[data-theme="dark"] .note-card.c-green{background:rgba(20,83,45,.3);color:#86efac}
+[data-theme="dark"] .note-card.c-blue{background:rgba(30,58,95,.35);color:#93c5fd}
+[data-theme="dark"] .note-card.c-pink{background:rgba(131,24,67,.3);color:#f9a8d4}
+[data-theme="dark"] .note-card-edit-area{background:rgba(0,0,0,.2);border-color:rgba(255,255,255,.15);color:inherit}
+[data-theme="dark"] .note-card.pinned{border-left-color:rgba(255,255,255,.3)}
+[data-theme="dark"] .note-card.pinned::before{border-right-color:rgba(255,255,255,.2)}
+[data-theme="dark"] .note-pin-btn.active{color:#f87171}
+[data-theme="dark"] .note-textarea{background:#0f172a;color:#e2e8f0}
+
+/* ========== Modal ========== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{background:var(--card-bg);border-radius:var(--radius);padding:24px;max-width:400px;width:100%;box-shadow:var(--shadow-lg)}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:12px;color:var(--text)}
+.modal-body{font-size:14px;color:var(--text-secondary);margin-bottom:20px;line-height:1.6}
+.modal-body strong{color:var(--danger)}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end}
+
+/* ========== Toast ========== */
+.toast{position:fixed;bottom:calc(env(safe-area-inset-bottom) + 20px);left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:10px 24px;border-radius:24px;font-size:14px;z-index:300;box-shadow:var(--shadow-lg);animation:toastIn .3s ease}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,20px)}to{opacity:1;transform:translate(-50%,0)}}
+
+/* ========== Cloud Sync Banner ========== */
+.cloud-banner{position:fixed;top:12px;left:50%;transform:translateX(-50%);max-width:520px;width:calc(100% - 24px);background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:14px 18px;border-radius:12px;font-size:13px;z-index:400;box-shadow:0 10px 30px rgba(102,126,234,.35);display:flex;align-items:center;gap:12px;animation:bannerSlide .4s cubic-bezier(.16,1,.3,1)}
+@keyframes bannerSlide{from{opacity:0;transform:translate(-50%,-30px)}to{opacity:1;transform:translate(-50%,0)}}
+.cloud-banner-icon{font-size:22px;flex-shrink:0;line-height:1}
+.cloud-banner-text{flex:1;line-height:1.5}
+.cloud-banner-text strong{display:block;font-size:14px;margin-bottom:2px}
+.cloud-banner-text small{opacity:.85;font-size:11px}
+.cloud-banner-actions{display:flex;gap:6px;flex-shrink:0}
+.cloud-banner-btn{background:rgba(255,255,255,.95);color:#764ba2;border:none;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.cloud-banner-btn:hover{background:#fff;transform:translateY(-1px)}
+.cloud-banner-btn-secondary{background:rgba(255,255,255,.15);color:#fff}
+.cloud-banner-btn-secondary:hover{background:rgba(255,255,255,.25)}
+@media(max-width:600px){.cloud-banner{flex-wrap:wrap}.cloud-banner-text{order:1;width:100%}.cloud-banner-icon{order:0}.cloud-banner-actions{order:2;width:100%;justify-content:flex-end}}
+
+/* ========== Footer ========== */
+.footer{text-align:center;padding:20px 16px;font-size:12px;color:var(--text-light)}
+.footer .btn{margin-top:8px}
+
+#jsError{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:12px 16px;border-radius:8px;margin:12px 0;font-size:13px;display:none}
+
+/* ========== Mobile ========== */
+@media(max-width:768px){
+  .header-inner{padding:10px 12px}
+  .header-title{font-size:16px}
+  .header-right .btn{padding:6px 10px;font-size:13px;min-height:38px}
+  .header-right .btn .btn-text{display:none}
+  .header-right .btn svg{width:18px;height:18px}
+  .container{padding:0 12px}
+  .section{padding:16px}
+  .main-layout{grid-template-columns:1fr;gap:12px}
+  .layout-left{position:static}
+  .layout-right{gap:12px}
+  .today-stats{grid-template-columns:repeat(3,1fr);gap:8px}
+  .today-stat{padding:12px 8px}
+  .today-stat .stat-num{font-size:22px}
+  .today-stat .stat-label{font-size:11px}
+  .form-row{grid-template-columns:1fr;gap:8px}
+  .task-card{padding:12px}
+  .task-title{font-size:14px}
+  .filter-bar{flex-direction:column}
+  .filter-bar select{width:100%}
+  .search-box{width:100%}
+  .filter-toggle{width:100%;justify-content:center}
+  .today-item{flex-wrap:wrap}
+  .today-item-actions{width:100%;margin-top:4px}
+  .today-item-actions .btn{flex:1}
+}
+@media(max-width:480px){
+  .header-right{gap:4px}
+  .header-right .btn{padding:6px 8px}
+  .section-title{font-size:16px}
+  .today-item-meta{font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<div id="jsError"></div>
+
+<!-- Cloud sync banner (populated by JS) -->
+<div id="cloudBanner" class="cloud-banner" style="display:none"></div>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <svg class="header-logo" viewBox="0 0 32 32" fill="none">
+        <rect width="32" height="32" rx="8" fill="#f59e0b"/>
+        <path d="M16 6c-2 0-3.5 1.5-3.5 3.5S14 13 16 13s3.5-1.5 3.5-3.5S18 6 16 6z" fill="#fff"/>
+        <path d="M10 14c0 3.3 2.7 6 6 6s6-2.7 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <path d="M16 20v6M12 26h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="header-title">小黄花的料理台</span>
+    </div>
+    <div class="header-right">
+      <button class="btn btn-secondary" id="exportBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="btn-text">导出JSON</span>
+      </button>
+      <button class="btn btn-secondary" id="importBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="btn-text">导入恢复</span>
+      </button>
+      <button class="btn btn-secondary" id="clearBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="btn-text">清空</span>
+      </button>
+      <button class="btn btn-secondary" id="themeBtn" type="button" title="切换暗色/亮色">
+        <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg id="iconSun" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+<div id="backupReminder" class="backup-reminder hidden">
+  数据已积累 <strong id="dataCount">0</strong> 条，建议导出备份
+</div>
+
+<div class="main-layout">
+
+  <!-- ========== Left: Task Form (always visible) ========== -->
+  <aside class="layout-left">
+    <section class="section">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+        新增任务
+        <span class="form-mode-tag add" id="formModeTag">新增</span>
+      </h2>
+      <div class="task-form" style="margin-bottom:0">
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label">任务标题 *</label>
+            <input type="text" id="inputTitle" placeholder="输入任务标题" maxlength="100">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">任务类型</label>
+            <select id="inputType">
+              <option value="产品需求">产品需求</option>
+              <option value="运营活动">运营活动</option>
+              <option value="设计跟进">设计跟进</option>
+              <option value="技术对接">技术对接</option>
+              <option value="数据分析">数据分析</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">优先级</label>
+            <select id="inputPriority">
+              <option value="P0">P0 紧急</option>
+              <option value="P1" selected>P1 重要</option>
+              <option value="P2">P2 一般</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label">截止日期</label>
+            <input type="date" id="inputDeadline">
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label">任务描述（可选）</label>
+            <textarea id="inputDesc" placeholder="补充任务细节..." maxlength="500"></textarea>
+          </div>
+        </div>
+        <div id="formError" class="form-error hidden"></div>
+        <div class="form-actions">
+          <button class="btn btn-secondary" id="cancelFormBtn" type="button">清空</button>
+          <button class="btn btn-primary" id="saveTaskBtn" type="button">保存任务</button>
+        </div>
+      </div>
+    </section>
+
+  </aside>
+
+  <!-- ========== Right: Today + Task List ========== -->
+  <div class="layout-right">
+
+    <div class="view-tabs">
+      <button class="view-tab active" id="tabTasksBtn" type="button">任务列表</button>
+      <button class="view-tab" id="tabNotesBtn" type="button">便签备忘 <span class="count-badge" id="noteCountBadge">0</span></button>
+    </div>
+
+    <div id="tasksView" class="view-panel">
+
+    <section class="section">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        今天要处理
+      </h2>
+      <div class="today-stats">
+        <div class="today-stat overdue">
+          <div class="stat-num" id="overdueCount">0</div>
+          <div class="stat-label">逾期</div>
+        </div>
+        <div class="today-stat today">
+          <div class="stat-num" id="todayCount">0</div>
+          <div class="stat-label">今日待办</div>
+        </div>
+        <div class="today-stat upcoming">
+          <div class="stat-num" id="upcomingCount">0</div>
+          <div class="stat-label">即将到期</div>
+        </div>
+      </div>
+      <div id="todayList"></div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        任务列表
+        <span class="count-badge" id="taskCountBadge">0</span>
+      </h2>
+
+      <div class="filter-bar">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg>
+          <input type="text" id="searchInput" placeholder="搜索任务标题或描述..." autocomplete="off">
+        </div>
+        <select id="filterType">
+          <option value="">全部类型</option>
+          <option value="产品需求">产品需求</option>
+          <option value="运营活动">运营活动</option>
+          <option value="设计跟进">设计跟进</option>
+          <option value="技术对接">技术对接</option>
+          <option value="数据分析">数据分析</option>
+        </select>
+        <select id="filterPriority">
+          <option value="">全部优先级</option>
+          <option value="P0">P0 紧急</option>
+          <option value="P1">P1 重要</option>
+          <option value="P2">P2 一般</option>
+        </select>
+        <select id="filterStatus">
+          <option value="">全部状态</option>
+          <option value="待处理">待处理</option>
+          <option value="进行中">进行中</option>
+          <option value="已完成">已完成</option>
+        </select>
+        <label class="filter-toggle">
+          <input type="checkbox" id="hideCompletedChk">
+          隐藏已完成
+        </label>
+      </div>
+
+      <div id="taskList" class="task-list"></div>
+
+      <div id="archiveSection" class="archive-section hidden">
+        <div class="archive-header" id="archiveHeader">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          已完成任务归档
+          <span class="archive-count" id="archiveCount">0</span>
+        </div>
+        <div class="archive-body" id="archiveBody"></div>
+      </div>
+    </section>
+
+    </div><!-- /#tasksView -->
+
+    <div id="notesView" class="view-panel hidden">
+      <section class="section notes-section">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h12l4 4v12a0 0 0 010 0H4a0 0 0 010 0V4zM16 4v4h4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 12h8M8 16h5" stroke-linecap="round"/></svg>
+          便签备忘
+        </h2>
+        <div class="note-input-wrap">
+          <textarea class="note-textarea" id="noteInput" placeholder="记录需要随时查看的信息，比如：API密钥、常用链接、会议要点..." maxlength="500"></textarea>
+          <div class="note-color-row">
+            <span class="note-color-label">颜色</span>
+            <div class="note-color-dot c-yellow selected" data-color="yellow" title="黄色"></div>
+            <div class="note-color-dot c-green" data-color="green" title="绿色"></div>
+            <div class="note-color-dot c-blue" data-color="blue" title="蓝色"></div>
+            <div class="note-color-dot c-pink" data-color="pink" title="粉色"></div>
+            <button class="btn btn-primary btn-sm note-add-btn" id="addNoteBtn" type="button" style="margin-left:auto">添加便签</button>
+          </div>
+        </div>
+        <div class="note-list" id="noteList"></div>
+      </section>
+    </div><!-- /#notesView -->
+
+  </div><!-- /.layout-right -->
+</div><!-- /.main-layout -->
+
+<div class="footer">
+  <p>数据保存在本地浏览器，刷新关闭不丢失</p>
+  <button class="btn btn-secondary btn-sm" id="gistConfigBtn" type="button">云同步设置</button>
+</div>
+
+</div><!-- /.container -->
+
+<div id="clearModal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-title">确认清空数据</div>
+    <div class="modal-body">
+      此操作将<strong>删除所有任务数据</strong>，且不可恢复。<br>
+      建议先导出备份再清空。确定要继续吗？
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="cancelClearBtn" type="button">取消</button>
+      <button class="btn btn-danger" id="confirmClearBtn" type="button">确认清空</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="importFile" accept=".json" class="hidden">
+
+<script>
+(function(){
+"use strict";
+
+/* ========== Safe Storage (localStorage with memory fallback) ========== */
+var _memStore = {};
+var _storageOK = false;
+try {
+  if (typeof localStorage !== "undefined") {
+    var testKey = "__test_" + Date.now();
+    localStorage.setItem(testKey, "1");
+    localStorage.getItem(testKey);
+    localStorage.removeItem(testKey);
+    _storageOK = true;
+  }
+} catch(e) {
+  _storageOK = false;
+}
+
+function storageGet(key) {
+  if (_storageOK) {
+    try { return localStorage.getItem(key); } catch(e) {}
+  }
+  return _memStore[key] !== undefined ? _memStore[key] : null;
+}
+function storageSet(key, val) {
+  if (_storageOK) {
+    try { localStorage.setItem(key, val); return; } catch(e) {}
+  }
+  _memStore[key] = val;
+}
+function storageRemove(key) {
+  if (_storageOK) {
+    try { localStorage.removeItem(key); return; } catch(e) {}
+  }
+  delete _memStore[key];
+}
+
+/* ========== Config ========== */
+var STORAGE_KEY = "wb_task_hub_tasks";
+var NOTES_KEY = "wb_task_hub_notes";
+
+var TYPE_COLORS = {
+  "产品需求":"#3b82f6",
+  "运营活动":"#8b5cf6",
+  "设计跟进":"#ec4899",
+  "技术对接":"#14b8a6",
+  "数据分析":"#f97316"
+};
+var TYPE_CLASS = {
+  "产品需求":"type-product",
+  "运营活动":"type-operation",
+  "设计跟进":"type-design",
+  "技术对接":"type-tech",
+  "数据分析":"type-data"
+};
+var STATUS_CLASS = {
+  "待处理":"status-pending",
+  "进行中":"status-progress",
+  "已完成":"status-done"
+};
+var STATUS_CYCLE = ["待处理","进行中","已完成"];
+
+/* ========== State ========== */
+var tasks = [];
+var editingTaskId = null;
+var filters = {type:"",priority:"",status:"",keyword:"",hideCompleted:false};
+var notes = [];
+var selectedNoteColor = "yellow";
+var THEME_KEY = "wb_task_hub_theme";
+var CLOUD_LAST_SYNC_KEY = "wb_task_hub_cloud_last_sync_version";
+var CLOUD_DISMISSED_VERSION_KEY = "wb_task_hub_cloud_dismissed_version";
+// Gist ID 存 localStorage，绝不硬编码在代码里
+// （页面若部署到公开站点，硬编码会让任何人拿到 ID 从而读到你的任务数据）
+var GIST_ID_KEY = "wb_task_hub_gist_id";
+var GIST_USER = "MolaQiu";
+var GIST_FILE = "taskhub-data.json";
+function getGistId() { try { return storageGet(GIST_ID_KEY) || ""; } catch(e) { return ""; } }
+function setGistId(id) { try { storageSet(GIST_ID_KEY, id); } catch(e) {} }
+// 云端数据通道（动态生成，按顺序尝试，第一个成功的为准）
+//  1) GitHub Gist raw：主通道，CORS 全放行，需先配置 Gist ID
+//  2) CloudStudio 同域 tasks.json：回退通道
+function cloudSyncUrls() {
+  var urls = [];
+  var gid = getGistId();
+  if(gid) {
+    urls.push("https://gist.githubusercontent.com/" + GIST_USER + "/" + gid + "/raw/" + GIST_FILE);
+  }
+  urls.push("./data/tasks.json");
+  return urls;
+}
+var archiveOpen = false;
+
+/* ========== Date Utils ========== */
+function pad2(n) { return String(n).padStart(2,"0"); }
+function todayStr() {
+  var d = new Date();
+  return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate());
+}
+function dateOffset(days) {
+  var d = new Date();
+  d.setDate(d.getDate()+days);
+  return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate());
+}
+function daysBetween(dateStr) {
+  var target = new Date(dateStr+"T00:00:00");
+  var now = new Date(todayStr()+"T00:00:00");
+  return Math.round((target-now)/86400000);
+}
+function formatDate(dateStr) {
+  if(!dateStr) return "";
+  var parts = dateStr.split("-");
+  return parts[1]+"月"+parts[2]+"日";
+}
+function formatDateTime(ts) {
+  if(!ts) return "";
+  var d = new Date(ts);
+  if(isNaN(d.getTime())) return "";
+  return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())+" "+pad2(d.getHours())+":"+pad2(d.getMinutes());
+}
+function formatDeadline(dateStr) {
+  if(!dateStr) return "无截止日";
+  var diff = daysBetween(dateStr);
+  if(diff<0) return "逾期"+(-diff)+"天";
+  if(diff===0) return "今天到期";
+  if(diff===1) return "明天到期";
+  if(diff<=3) return diff+"天后到期";
+  return formatDate(dateStr);
+}
+
+/* ========== Storage ========== */
+function loadTasks() {
+  try {
+    var raw = storageGet(STORAGE_KEY);
+    if(raw) tasks = JSON.parse(raw);
+  } catch(e) { tasks = []; }
+}
+function saveTasks() {
+  try {
+    storageSet(STORAGE_KEY, JSON.stringify(tasks));
+  } catch(e) {}
+}
+function loadNotes() {
+  try {
+    var raw = storageGet(NOTES_KEY);
+    if(raw) notes = JSON.parse(raw);
+  } catch(e) { notes = []; }
+}
+function saveNotes() {
+  try {
+    storageSet(NOTES_KEY, JSON.stringify(notes));
+  } catch(e) {}
+}
+function addNote() {
+  var input = document.getElementById("noteInput");
+  var content = input.value.trim();
+  if(!content) { showToast("请输入便签内容"); return; }
+  notes.unshift({
+    id: Date.now(),
+    content: content,
+    color: selectedNoteColor,
+    createdAt: todayStr()
+  });
+  saveNotes();
+  input.value = "";
+  renderNotes();
+  showToast("便签已添加");
+}
+function deleteNote(id) {
+  notes = notes.filter(function(n){ return n.id !== id; });
+  saveNotes();
+  renderNotes();
+  showToast("便签已删除");
+}
+function togglePinNote(id) {
+  for(var i=0;i<notes.length;i++) {
+    if(notes[i].id === id) {
+      notes[i].pinned = !notes[i].pinned;
+      break;
+    }
+  }
+  saveNotes();
+  renderNotes();
+}
+function saveEditNote(id, newContent) {
+  for(var i=0;i<notes.length;i++) {
+    if(notes[i].id === id) {
+      notes[i].content = newContent.trim();
+      if(!notes[i].content) {
+        deleteNote(id);
+        return;
+      }
+      break;
+    }
+  }
+  saveNotes();
+  renderNotes();
+}
+function renderNotes() {
+  var list = document.getElementById("noteList");
+  var badge = document.getElementById("noteCountBadge");
+  if(badge) badge.textContent = notes.length;
+  if(notes.length === 0) {
+    list.innerHTML = '<div class="note-empty">暂无便签，记录一些常用信息吧</div>';
+    return;
+  }
+  var sorted = notes.slice().sort(function(a,b){
+    var ap = a.pinned ? 1 : 0;
+    var bp = b.pinned ? 1 : 0;
+    if(ap !== bp) return bp - ap;
+    return b.id - a.id;
+  });
+  var html = "";
+  for(var i=0;i<sorted.length;i++) {
+    var n = sorted[i];
+    var pinCls = n.pinned ? " pinned" : "";
+    var pinBtnCls = n.pinned ? " active" : "";
+    var pinTitle = n.pinned ? "取消置顶" : "置顶";
+    html += '<div class="note-card c-'+n.color+pinCls+'">'+
+      '<div class="note-card-content js-note-content" data-id="'+n.id+'">'+escapeHtml(n.content)+'</div>'+
+      '<textarea class="note-card-edit-area" data-id="'+n.id+'">'+escapeHtml(n.content)+'</textarea>'+
+      '<div class="note-card-footer">'+
+        '<span class="note-card-date">'+formatDate(n.createdAt)+'</span>'+
+        '<div class="note-card-actions">'+
+          '<button class="btn btn-icon note-pin-btn js-note-pin'+pinBtnCls+'" data-id="'+n.id+'" title="'+pinTitle+'" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17v5M9 10.5V4h6v6.5l3 3.5H6l3-3.5z" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
+          '<button class="btn btn-icon js-note-edit" data-id="'+n.id+'" title="编辑" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
+          '<button class="btn btn-icon delete js-note-delete" data-id="'+n.id+'" title="删除" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }
+  list.innerHTML = html;
+}
+/* ========== CRUD ========== */
+function addTask(data) {
+  tasks.unshift({
+    id:Date.now(),
+    title:data.title,
+    type:data.type,
+    priority:data.priority,
+    deadline:data.deadline,
+    status:"待处理",
+    desc:data.desc||"",
+    createdAt:todayStr(),
+    completedAt:null,
+    progressLog:[]
+  });
+  saveTasks();
+}
+function updateTask(id,data) {
+  for(var i=0;i<tasks.length;i++) {
+    if(tasks[i].id===id) {
+      tasks[i].title=data.title;
+      tasks[i].type=data.type;
+      tasks[i].priority=data.priority;
+      tasks[i].deadline=data.deadline;
+      tasks[i].desc=data.desc||"";
+      break;
+    }
+  }
+  saveTasks();
+}
+function deleteTask(id) {
+  tasks = tasks.filter(function(t){return t.id!==id;});
+  saveTasks();
+}
+function completeTask(id) {
+  for(var i=0;i<tasks.length;i++) {
+    if(tasks[i].id===id) {
+      tasks[i].status="已完成";
+      tasks[i].completedAt=todayStr();
+      break;
+    }
+  }
+  saveTasks();
+}
+function setStatus(id, newStatus) {
+  for(var i=0;i<tasks.length;i++) {
+    if(tasks[i].id===id) {
+      tasks[i].status = newStatus;
+      tasks[i].completedAt = newStatus==="已完成" ? todayStr() : null;
+      break;
+    }
+  }
+  saveTasks();
+}
+function closeStatusDropdown() {
+  var existing = document.querySelector(".status-dropdown");
+  if(existing) existing.remove();
+}
+function openStatusDropdown(badgeEl, taskId) {
+  closeStatusDropdown();
+  var task = null;
+  for(var i=0;i<tasks.length;i++) { if(tasks[i].id===taskId) { task=tasks[i]; break; } }
+  if(!task) return;
+  var dd = document.createElement("div");
+  dd.className = "status-dropdown";
+  for(var j=0;j<STATUS_CYCLE.length;j++) {
+    var s = STATUS_CYCLE[j];
+    var sCls = STATUS_CLASS[s] || "";
+    var isCurrent = s===task.status;
+    var item = document.createElement("div");
+    item.className = "status-dropdown-item"+(isCurrent?" current":"");
+    item.innerHTML = '<span class="badge '+sCls+'">'+s+'</span>'+(isCurrent?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="check-icon"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>':'');
+    (function(statusVal, tid){
+      item.addEventListener("click", function(e){
+        e.stopPropagation();
+        setStatus(tid, statusVal);
+        closeStatusDropdown();
+        renderAll();
+      });
+    })(s, taskId);
+    dd.appendChild(item);
+  }
+  document.body.appendChild(dd);
+  var rect = badgeEl.getBoundingClientRect();
+  var ddRect = dd.getBoundingClientRect();
+  var left = rect.left;
+  if(left + ddRect.width > window.innerWidth - 8) left = window.innerWidth - ddRect.width - 8;
+  var top = rect.bottom + 4;
+  if(top + ddRect.height > window.innerHeight - 8) top = rect.top - ddRect.height - 4;
+  dd.style.left = left + "px";
+  dd.style.top = top + "px";
+}
+function uncompleteTask(id) {
+  for(var i=0;i<tasks.length;i++) {
+    if(tasks[i].id===id) {
+      tasks[i].status="进行中";
+      tasks[i].completedAt=null;
+      break;
+    }
+  }
+  saveTasks();
+}
+/* ========== Progress Log ========== */
+function addProgressLog(id, content) {
+  for(var i=0;i<tasks.length;i++) {
+    if(tasks[i].id===id) {
+      if(!tasks[i].progressLog) tasks[i].progressLog = [];
+      tasks[i].progressLog.push({ ts: Date.now(), content: content });
+      break;
+    }
+  }
+  saveTasks();
+  renderAll();
+}
+function deleteProgressLog(id, idx) {
+  for(var i=0;i<tasks.length;i++) {
+    if(tasks[i].id===id) {
+      if(tasks[i].progressLog && tasks[i].progressLog[idx]) {
+        tasks[i].progressLog.splice(idx, 1);
+      }
+      break;
+    }
+  }
+  saveTasks();
+  renderAll();
+}
+
+/* ========== Escape HTML ========== */
+function escapeHtml(str) {
+  if(!str) return "";
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+
+/* ========== Toast ========== */
+var toastTimer = null;
+function showToast(msg) {
+  var existing = document.querySelector(".toast");
+  if(existing) existing.remove();
+  if(toastTimer) clearTimeout(toastTimer);
+  var toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  toastTimer = setTimeout(function(){ toast.remove(); }, 2000);
+}
+
+/* ========== Render: Today ========== */
+function renderToday() {
+  var overdue=[], todayTasks=[], upcoming=[];
+  for(var i=0;i<tasks.length;i++) {
+    var t = tasks[i];
+    if(t.status==="已完成"||!t.deadline) continue;
+    var diff = daysBetween(t.deadline);
+    if(diff<0) overdue.push(t);
+    else if(diff===0) todayTasks.push(t);
+    else if(diff<=3) upcoming.push(t);
+  }
+  var po = {"P0":0,"P1":1,"P2":2};
+  function sortFn(a,b) {
+    if(po[a.priority]!==po[b.priority]) return po[a.priority]-po[b.priority];
+    return a.deadline<b.deadline?-1:1;
+  }
+  overdue.sort(sortFn); todayTasks.sort(sortFn); upcoming.sort(sortFn);
+
+  document.getElementById("overdueCount").textContent = overdue.length;
+  document.getElementById("todayCount").textContent = todayTasks.length;
+  document.getElementById("upcomingCount").textContent = upcoming.length;
+
+  var html = "";
+  if(overdue.length===0 && todayTasks.length===0 && upcoming.length===0) {
+    html = '<div class="today-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" stroke-linecap="round" stroke-linejoin="round"/></svg><p>今天没有待处理的任务，保持节奏！</p></div>';
+  } else {
+    if(overdue.length>0) {
+      html += '<div class="today-group"><div class="today-group-title"><span class="dot" style="background:#ef4444"></span>逾期未完成 ('+overdue.length+')</div>';
+      for(var i=0;i<overdue.length;i++) html += todayItemHtml(overdue[i],true);
+      html += '</div>';
+    }
+    if(todayTasks.length>0) {
+      html += '<div class="today-group"><div class="today-group-title"><span class="dot" style="background:#2563eb"></span>今天到期 ('+todayTasks.length+')</div>';
+      for(var i=0;i<todayTasks.length;i++) html += todayItemHtml(todayTasks[i],false);
+      html += '</div>';
+    }
+    if(upcoming.length>0) {
+      html += '<div class="today-group"><div class="today-group-title"><span class="dot" style="background:#f59e0b"></span>即将到期 ('+upcoming.length+')</div>';
+      for(var i=0;i<upcoming.length;i++) html += todayItemHtml(upcoming[i],false);
+      html += '</div>';
+    }
+  }
+  document.getElementById("todayList").innerHTML = html;
+}
+
+function todayItemHtml(task,isOverdue) {
+  return '<div class="today-item'+(isOverdue?" overdue":"")+'">'+
+    '<div class="today-item-body">'+
+      '<div class="today-item-title">'+escapeHtml(task.title)+'</div>'+
+      '<div class="today-item-meta">'+
+        '<span class="badge prio-'+task.priority+'">'+task.priority+'</span>'+
+        '<span class="badge '+(TYPE_CLASS[task.type]||"")+'">'+task.type+'</span>'+
+        '<span class="today-item-deadline '+(isOverdue?"overdue-text":"")+'">'+formatDeadline(task.deadline)+'</span>'+
+      '</div>'+
+    '</div>'+
+    '<div class="today-item-actions">'+
+      '<button class="btn btn-primary btn-sm js-today-complete" data-id="'+task.id+'" type="button">完成</button>'+
+    '</div>'+
+  '</div>';
+}
+
+/* ========== Render: Task List ========== */
+function renderTaskList() {
+  var kw = (filters.keyword||"").toLowerCase().trim();
+  var filtered = tasks.filter(function(t){
+    if(filters.type && t.type!==filters.type) return false;
+    if(filters.priority && t.priority!==filters.priority) return false;
+    if(filters.status && t.status!==filters.status) return false;
+    if(kw) {
+      var inTitle = t.title.toLowerCase().indexOf(kw)>=0;
+      var inDesc = t.desc && t.desc.toLowerCase().indexOf(kw)>=0;
+      if(!inTitle && !inDesc) return false;
+    }
+    return true;
+  });
+
+  var po = {"P0":0,"P1":1,"P2":2};
+  filtered.sort(function(a,b){
+    var aDone = a.status==="已完成";
+    var bDone = b.status==="已完成";
+    if(aDone && !bDone) return 1;
+    if(!aDone && bDone) return -1;
+    if(po[a.priority]!==po[b.priority]) return po[a.priority]-po[b.priority];
+    if(a.deadline && b.deadline) return a.deadline<b.deadline?-1:1;
+    if(a.deadline) return -1;
+    if(b.deadline) return 1;
+    return b.id-a.id;
+  });
+
+  /* Update count badge */
+  var badge = document.getElementById("taskCountBadge");
+  if(badge) badge.textContent = filtered.length;
+
+  /* Split: active vs completed (when hideCompleted is on) */
+  var active = [];
+  var completed = [];
+  for(var i=0;i<filtered.length;i++) {
+    if(filtered[i].status==="已完成" && filters.hideCompleted) {
+      completed.push(filtered[i]);
+    } else {
+      active.push(filtered[i]);
+    }
+  }
+
+  /* Render active list */
+  if(active.length===0 && completed.length===0) {
+    document.getElementById("taskList").innerHTML =
+      '<div class="task-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6M9 16h6M14 2H5a2 2 0 00-2 2v16a2 2 0 002 2h14a2 2 0 002-2V7l-5-5zM14 2v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg><p>暂无任务</p><p style="font-size:12px">在左侧面板输入任务标题开始记录</p></div>';
+  } else if(active.length===0 && completed.length>0) {
+    document.getElementById("taskList").innerHTML =
+      '<div class="task-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6M9 16h6M14 2H5a2 2 0 00-2 2v16a2 2 0 002 2h14a2 2 0 002-2V7l-5-5zM14 2v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg><p>当前筛选下无活跃任务</p><p style="font-size:12px">'+completed.length+'条已完成任务在下方归档区</p></div>';
+  } else {
+    var html = "";
+    for(var i=0;i<active.length;i++) html += taskCardHtml(active[i]);
+    document.getElementById("taskList").innerHTML = html;
+  }
+
+  /* Render archive section */
+  var archiveSec = document.getElementById("archiveSection");
+  var archiveBody = document.getElementById("archiveBody");
+  var archiveHeader = document.getElementById("archiveHeader");
+  var archiveCount = document.getElementById("archiveCount");
+  if(completed.length>0 && filters.hideCompleted) {
+    archiveSec.classList.remove("hidden");
+    archiveCount.textContent = completed.length;
+    var aHtml = "";
+    for(var i=0;i<completed.length;i++) aHtml += taskCardHtml(completed[i]);
+    archiveBody.innerHTML = aHtml;
+    if(archiveOpen) {
+      archiveBody.classList.add("open");
+      archiveHeader.classList.add("open");
+    } else {
+      archiveBody.classList.remove("open");
+      archiveHeader.classList.remove("open");
+    }
+  } else {
+    archiveSec.classList.add("hidden");
+  }
+}
+
+function taskCardHtml(task) {
+  var isDone = task.status==="已完成";
+  var dlText = formatDeadline(task.deadline);
+  var dlClass = "";
+  var isOverdue = false;
+  if(task.deadline && !isDone) {
+    var diff = daysBetween(task.deadline);
+    if(diff<0) { dlClass = "overdue-text"; isOverdue = true; }
+  }
+  var descHtml = task.desc ? '<div class="task-desc">'+escapeHtml(task.desc)+'</div>' : "";
+  var typeCls = TYPE_CLASS[task.type] || "";
+  var statusCls = STATUS_CLASS[task.status] || "";
+  if(isOverdue && task.status==="待处理") statusCls += " status-overdue";
+
+  /* Progress log (timeline) */
+  var progress = task.progressLog || [];
+  var progressHtml = "";
+  if(progress.length > 0) {
+    var items = "";
+    for(var pi=progress.length-1; pi>=0; pi--) {
+      items += '<div class="task-progress-item">'+
+        '<span class="task-progress-time">'+formatDateTime(progress[pi].ts)+'</span>'+
+        '<span class="task-progress-content">'+escapeHtml(progress[pi].content)+'</span>'+
+        '<button class="task-progress-del js-progress-del" data-id="'+task.id+'" data-idx="'+pi+'" title="删除该条进度" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>'+
+      '</div>';
+    }
+    progressHtml = '<div class="task-progress">'+
+      '<div class="task-progress-head">'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+        '进度记录<span class="task-progress-count">'+progress.length+'</span>'+
+        '<button class="task-progress-add js-add-progress" data-id="'+task.id+'" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>添加</button>'+
+      '</div>'+
+      '<div class="task-progress-list">'+items+'</div>'+
+    '</div>';
+  } else {
+    progressHtml = '<div class="task-progress-empty">'+
+      '<button class="task-progress-add js-add-progress" data-id="'+task.id+'" type="button" style="margin-left:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>添加进度</button>'+
+    '</div>';
+  }
+  var progressInputHtml = '<div class="task-progress-input-wrap" data-wrap="'+task.id+'">'+
+    '<textarea class="task-progress-input" data-id="'+task.id+'" placeholder="记录本次进展，如：已完成XX，正在等YY确认…（Ctrl+Enter 保存）"></textarea>'+
+    '<div class="task-progress-input-actions">'+
+      '<button class="btn js-progress-cancel" data-id="'+task.id+'" type="button">取消</button>'+
+      '<button class="btn btn-primary js-progress-save" data-id="'+task.id+'" type="button">保存进度</button>'+
+    '</div>'+
+  '</div>';
+
+  return '<div class="task-card'+(isDone?" completed":"")+'">'+
+    '<div class="task-check'+(isDone?" checked":"")+' js-task-check" data-id="'+task.id+'">'+
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+    '</div>'+
+    '<div class="task-body">'+
+      '<div class="task-header"><span class="task-title">'+escapeHtml(task.title)+'</span></div>'+
+      '<div class="task-badges">'+
+        '<span class="badge prio-'+task.priority+'">'+task.priority+'</span>'+
+        '<span class="badge '+typeCls+'">'+task.type+'</span>'+
+        '<span class="badge '+statusCls+' js-toggle-status" data-id="'+task.id+'" style="cursor:pointer">'+task.status+'</span>'+
+      '</div>'+
+      descHtml+
+      progressHtml+
+      progressInputHtml+
+      '<div class="task-footer">'+
+        (task.deadline ? '<span class="task-footer-item '+dlClass+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-linecap="round"/></svg>'+dlText+'</span>' : '')+
+        '<span class="task-footer-item">创建于 '+formatDate(task.createdAt)+'</span>'+
+      '</div>'+
+    '</div>'+
+    '<div class="task-actions">'+
+      '<button class="btn btn-icon js-edit-task" data-id="'+task.id+'" title="编辑" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
+      '<button class="btn btn-icon delete js-delete-task" data-id="'+task.id+'" title="删除" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
+    '</div>'+
+  '</div>';
+}
+
+/* ========== Form (always visible) ========== */
+function resetForm() {
+  editingTaskId = null;
+  document.getElementById("inputTitle").value = "";
+  document.getElementById("inputType").value = "产品需求";
+  document.getElementById("inputPriority").value = "P1";
+  document.getElementById("inputDeadline").value = todayStr();
+  document.getElementById("inputDesc").value = "";
+  document.getElementById("formError").classList.add("hidden");
+  document.getElementById("saveTaskBtn").textContent = "保存任务";
+  var tag = document.getElementById("formModeTag");
+  tag.textContent = "新增";
+  tag.className = "form-mode-tag add";
+}
+
+function fillFormForEdit(id) {
+  var task = null;
+  for(var i=0;i<tasks.length;i++) {
+    if(tasks[i].id===id) { task = tasks[i]; break; }
+  }
+  if(!task) return;
+  editingTaskId = id;
+  document.getElementById("inputTitle").value = task.title;
+  document.getElementById("inputType").value = task.type;
+  document.getElementById("inputPriority").value = task.priority;
+  document.getElementById("inputDeadline").value = task.deadline || "";
+  document.getElementById("inputDesc").value = task.desc || "";
+  document.getElementById("formError").classList.add("hidden");
+  document.getElementById("saveTaskBtn").textContent = "更新任务";
+  var tag = document.getElementById("formModeTag");
+  tag.textContent = "编辑中";
+  tag.className = "form-mode-tag edit";
+  try { document.getElementById("inputTitle").focus(); } catch(e) {}
+}
+
+function saveForm() {
+  var title = document.getElementById("inputTitle").value.trim();
+  if(!title) {
+    var errEl = document.getElementById("formError");
+    errEl.textContent = "请输入任务标题";
+    errEl.classList.remove("hidden");
+    return;
+  }
+  var data = {
+    title: title,
+    type: document.getElementById("inputType").value,
+    priority: document.getElementById("inputPriority").value,
+    deadline: document.getElementById("inputDeadline").value,
+    desc: document.getElementById("inputDesc").value.trim()
+  };
+  if(editingTaskId) {
+    updateTask(editingTaskId, data);
+    showToast("任务已更新");
+  } else {
+    addTask(data);
+    showToast("任务已添加");
+  }
+  resetForm();
+  renderAll();
+}
+
+/* ========== Export / Import ========== */
+function exportData() {
+  var data = {
+    exportDate: new Date().toISOString(),
+    taskCount: tasks.length,
+    noteCount: notes.length,
+    tasks: tasks,
+    notes: notes
+  };
+  var blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "小黄花的料理台_备份_" + todayStr() + ".json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast("数据已导出");
+}
+
+function importData(file) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      var importedTasks;
+      if(Array.isArray(data)) importedTasks = data;
+      else if(data.tasks && Array.isArray(data.tasks)) importedTasks = data.tasks;
+      else throw new Error("format");
+
+      var valid = importedTasks.filter(function(t){
+        return t && typeof t.title === "string" && typeof t.type === "string";
+      }).map(function(t){
+        return {
+          id: t.id || Date.now()+Math.random(),
+          title: t.title,
+          type: t.type || "产品需求",
+          priority: t.priority || "P2",
+          deadline: t.deadline || "",
+          status: t.status || "待处理",
+          desc: t.desc || "",
+          createdAt: t.createdAt || todayStr(),
+          completedAt: t.completedAt || null,
+          progressLog: Array.isArray(t.progressLog) ? t.progressLog.map(function(g){
+            return { ts: g.ts || Date.now(), content: String(g.content || "") };
+          }) : []
+        };
+      });
+
+      if(valid.length===0) { showToast("未找到有效任务数据"); return; }
+      tasks = valid;
+      saveTasks();
+
+      // Import notes if present
+      var importedNotes = [];
+      if(data.notes && Array.isArray(data.notes)) {
+        importedNotes = data.notes.filter(function(n){
+          return n && typeof n.content === "string";
+        }).map(function(n){
+          return {
+            id: n.id || Date.now()+Math.random(),
+            content: n.content,
+            color: n.color || "yellow",
+            createdAt: n.createdAt || todayStr(),
+            pinned: !!n.pinned
+          };
+        });
+        notes = importedNotes;
+        saveNotes();
+      }
+
+      renderAll();
+      var msg = "已导入 "+valid.length+" 条任务";
+      if(importedNotes.length > 0) msg += "，"+importedNotes.length+" 条便签";
+      showToast(msg);
+    } catch(err) {
+      showToast("导入失败：文件格式错误");
+    }
+  };
+  reader.readAsText(file);
+}
+
+/* ========== Clear ========== */
+function showClearModal() {
+  document.getElementById("clearModal").classList.remove("hidden");
+}
+function hideClearModal() {
+  document.getElementById("clearModal").classList.add("hidden");
+}
+function clearAllData() {
+  tasks = [];
+  notes = [];
+  saveTasks();
+  saveNotes();
+  hideClearModal();
+  resetForm();
+  renderAll();
+  showToast("数据已清空");
+}
+/* ========== Backup Reminder ========== */
+function updateBackupReminder() {
+  var el = document.getElementById("backupReminder");
+  if(tasks.length >= 30) {
+    document.getElementById("dataCount").textContent = tasks.length;
+    el.classList.remove("hidden");
+  } else {
+    el.classList.add("hidden");
+  }
+}
+
+/* ========== Render All ========== */
+function renderAll() {
+  try { renderToday(); } catch(e) {}
+  try { renderTaskList(); } catch(e) {}
+  try { renderNotes(); } catch(e) {}
+  try { updateBackupReminder(); } catch(e) {}
+}
+
+/* ========== View Switching ========== */
+function switchView(view) {
+  var tasksView = document.getElementById("tasksView");
+  var notesView = document.getElementById("notesView");
+  var tabTasks = document.getElementById("tabTasksBtn");
+  var tabNotes = document.getElementById("tabNotesBtn");
+  if(view === "notes") {
+    tasksView.classList.add("hidden");
+    notesView.classList.remove("hidden");
+    tabTasks.classList.remove("active");
+    tabNotes.classList.add("active");
+  } else {
+    tasksView.classList.remove("hidden");
+    notesView.classList.add("hidden");
+    tabTasks.classList.add("active");
+    tabNotes.classList.remove("active");
+  }
+}
+
+/* ========== Event Binding ========== */
+function bindEvents() {
+  // View tabs
+  document.getElementById("tabTasksBtn").addEventListener("click", function(){ switchView("tasks"); });
+  document.getElementById("tabNotesBtn").addEventListener("click", function(){ switchView("notes"); });
+
+  // Gist ID 配置（不硬编码，用户本地保存）
+  document.getElementById("gistConfigBtn").addEventListener("click", function(){
+    var cur = getGistId();
+    var id = prompt("输入 Gist ID（云端任务数据的位置）\n\n留空 = 取消云同步", cur || "");
+    if(id === null) return;
+    var v = id.trim();
+    setGistId(v);
+    if(v) {
+      storageSet(CLOUD_LAST_SYNC_KEY, "0");
+      showToast("已保存，正在同步");
+      checkCloudSync();
+    } else {
+      showToast("已取消云同步");
+    }
+  });
+
+  // Form (always visible)
+  document.getElementById("cancelFormBtn").addEventListener("click", function(){
+    resetForm();
+  });
+  document.getElementById("saveTaskBtn").addEventListener("click", saveForm);
+
+  // Notes
+  document.getElementById("addNoteBtn").addEventListener("click", addNote);
+  document.getElementById("noteInput").addEventListener("keydown", function(e){
+    if(e.key==="Enter" && (e.ctrlKey||e.metaKey)) { e.preventDefault(); addNote(); }
+  });
+  var colorDots = document.querySelectorAll(".note-color-dot");
+  for(var ci=0;ci<colorDots.length;ci++) {
+    colorDots[ci].addEventListener("click", function(e){
+      var dots = document.querySelectorAll(".note-color-dot");
+      for(var di=0;di<dots.length;di++) dots[di].classList.remove("selected");
+      e.target.classList.add("selected");
+      selectedNoteColor = e.target.getAttribute("data-color");
+    });
+  }
+
+  // Export / Import
+  document.getElementById("exportBtn").addEventListener("click", exportData);
+  document.getElementById("importBtn").addEventListener("click", function(){
+    document.getElementById("importFile").click();
+  });
+  document.getElementById("importFile").addEventListener("change", function(e){
+    if(e.target.files && e.target.files[0]) {
+      importData(e.target.files[0]);
+      e.target.value = "";
+    }
+  });
+
+  // Clear
+  document.getElementById("clearBtn").addEventListener("click", showClearModal);
+  document.getElementById("cancelClearBtn").addEventListener("click", hideClearModal);
+  document.getElementById("confirmClearBtn").addEventListener("click", clearAllData);
+
+  // Filters
+  document.getElementById("filterType").addEventListener("change", function(e){
+    filters.type = e.target.value;
+    renderTaskList();
+  });
+  document.getElementById("filterPriority").addEventListener("change", function(e){
+    filters.priority = e.target.value;
+    renderTaskList();
+  });
+  document.getElementById("filterStatus").addEventListener("change", function(e){
+    filters.status = e.target.value;
+    renderTaskList();
+  });
+
+  // Search (debounced)
+  var searchTimer = null;
+  document.getElementById("searchInput").addEventListener("input", function(e){
+    clearTimeout(searchTimer);
+    var val = e.target.value;
+    searchTimer = setTimeout(function(){
+      filters.keyword = val;
+      renderTaskList();
+    }, 200);
+  });
+
+  // Hide completed toggle
+  document.getElementById("hideCompletedChk").addEventListener("change", function(e){
+    filters.hideCompleted = e.target.checked;
+    renderTaskList();
+  });
+
+  // Archive fold/unfold
+  document.getElementById("archiveHeader").addEventListener("click", function(){
+    archiveOpen = !archiveOpen;
+    var body = document.getElementById("archiveBody");
+    var header = document.getElementById("archiveHeader");
+    if(archiveOpen) {
+      body.classList.add("open");
+      header.classList.add("open");
+    } else {
+      body.classList.remove("open");
+      header.classList.remove("open");
+    }
+  });
+
+  // Theme toggle
+  document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+
+  // Modal overlay click
+  document.getElementById("clearModal").addEventListener("click", function(e){
+    if(e.target === this) hideClearModal();
+  });
+
+  // Enter key in title
+  document.getElementById("inputTitle").addEventListener("keydown", function(e){
+    if(e.key === "Enter") {
+      e.preventDefault();
+      saveForm();
+    }
+  });
+
+  // Event delegation for dynamically generated elements
+  document.addEventListener("click", function(e) {
+    // Today complete button
+    var todayBtn = e.target.closest(".js-today-complete");
+    if(todayBtn) {
+      var id = parseInt(todayBtn.getAttribute("data-id"));
+      completeTask(id);
+      renderAll();
+      showToast("已完成");
+      return;
+    }
+
+    // Task check toggle
+    var check = e.target.closest(".js-task-check");
+    if(check) {
+      var id = parseInt(check.getAttribute("data-id"));
+      if(check.classList.contains("checked")) {
+        uncompleteTask(id);
+      } else {
+        completeTask(id);
+        showToast("已完成");
+      }
+      renderAll();
+      return;
+    }
+
+    // Status dropdown
+    var statusBadge = e.target.closest(".js-toggle-status");
+    if(statusBadge) {
+      var id = parseInt(statusBadge.getAttribute("data-id"));
+      if(document.querySelector(".status-dropdown")) {
+        closeStatusDropdown();
+      } else {
+        openStatusDropdown(statusBadge, id);
+      }
+      return;
+    }
+
+    // Close dropdown when clicking outside
+    var dd = e.target.closest(".status-dropdown");
+    if(!dd && document.querySelector(".status-dropdown")) {
+      closeStatusDropdown();
+      return;
+    }
+
+    // Edit task
+    var editBtn = e.target.closest(".js-edit-task");
+    if(editBtn) {
+      var id = parseInt(editBtn.getAttribute("data-id"));
+      fillFormForEdit(id);
+      // Scroll to form on mobile
+      if(window.innerWidth <= 768) {
+        document.querySelector(".layout-left").scrollIntoView({behavior:"smooth",block:"start"});
+      }
+      return;
+    }
+
+    // Delete task
+    var delBtn = e.target.closest(".js-delete-task");
+    if(delBtn) {
+      var id = parseInt(delBtn.getAttribute("data-id"));
+      deleteTask(id);
+      renderAll();
+      showToast("任务已删除");
+      return;
+    }
+
+    // Add progress — expand inline input
+    var addProg = e.target.closest(".js-add-progress");
+    if(addProg) {
+      var aid = parseInt(addProg.getAttribute("data-id"));
+      var allWraps = document.querySelectorAll(".task-progress-input-wrap.active");
+      for(var wi=0;wi<allWraps.length;wi++) {
+        if(parseInt(allWraps[wi].getAttribute("data-wrap"))!==aid) {
+          allWraps[wi].classList.remove("active");
+        }
+      }
+      var wrap = document.querySelector('.task-progress-input-wrap[data-wrap="'+aid+'"]');
+      if(wrap) {
+        wrap.classList.add("active");
+        var ta = wrap.querySelector("textarea");
+        if(ta) { ta.focus(); }
+      }
+      return;
+    }
+
+    // Save progress
+    var saveProg = e.target.closest(".js-progress-save");
+    if(saveProg) {
+      var sid = parseInt(saveProg.getAttribute("data-id"));
+      var swrap = document.querySelector('.task-progress-input-wrap[data-wrap="'+sid+'"]');
+      if(swrap) {
+        var sta = swrap.querySelector("textarea");
+        var content = sta.value.trim();
+        if(content) {
+          addProgressLog(sid, content);
+          showToast("进度已记录");
+        } else {
+          showToast("请输入进度内容");
+          return;
+        }
+        sta.value = "";
+        swrap.classList.remove("active");
+      }
+      return;
+    }
+
+    // Cancel progress
+    var cancelProg = e.target.closest(".js-progress-cancel");
+    if(cancelProg) {
+      var cid = parseInt(cancelProg.getAttribute("data-id"));
+      var cwrap = document.querySelector('.task-progress-input-wrap[data-wrap="'+cid+'"]');
+      if(cwrap) {
+        var cta = cwrap.querySelector("textarea");
+        cta.value = "";
+        cwrap.classList.remove("active");
+      }
+      return;
+    }
+
+    // Delete progress entry
+    var delProg = e.target.closest(".js-progress-del");
+    if(delProg) {
+      var did = parseInt(delProg.getAttribute("data-id"));
+      var didx = parseInt(delProg.getAttribute("data-idx"));
+      deleteProgressLog(did, didx);
+      showToast("进度已删除");
+      return;
+    }
+
+    // Note pin toggle
+    var notePinBtn = e.target.closest(".js-note-pin");
+    if(notePinBtn) {
+      var nid = parseInt(notePinBtn.getAttribute("data-id"));
+      togglePinNote(nid);
+      return;
+    }
+
+    // Note delete
+    var noteDel = e.target.closest(".js-note-delete");
+    if(noteDel) {
+      var nid = parseInt(noteDel.getAttribute("data-id"));
+      deleteNote(nid);
+      showToast("便签已删除");
+      return;
+    }
+
+    // Note edit button — enter edit mode
+    var noteEditBtn = e.target.closest(".js-note-edit");
+    if(noteEditBtn) {
+      var nid = parseInt(noteEditBtn.getAttribute("data-id"));
+      var card = noteEditBtn.closest(".note-card");
+      var contentDiv = card.querySelector(".note-card-content");
+      var editArea = card.querySelector(".note-card-edit-area");
+      contentDiv.classList.add("editing");
+      editArea.classList.add("active");
+      editArea.focus();
+      editArea.setSelectionRange(editArea.value.length, editArea.value.length);
+      return;
+    }
+
+    // Note content click — also enters edit mode
+    var noteContent = e.target.closest(".js-note-content");
+    if(noteContent) {
+      var nid = parseInt(noteContent.getAttribute("data-id"));
+      var card = noteContent.closest(".note-card");
+      var editArea = card.querySelector(".note-card-edit-area");
+      noteContent.classList.add("editing");
+      editArea.classList.add("active");
+      editArea.focus();
+      editArea.setSelectionRange(editArea.value.length, editArea.value.length);
+      return;
+    }
+  });
+
+  // Note edit area — save on blur or Ctrl+Enter
+  document.addEventListener("keydown", function(e) {
+    if((e.key==="Enter" && (e.ctrlKey||e.metaKey)) && e.target.classList.contains("note-card-edit-area")) {
+      e.preventDefault();
+      var nid = parseInt(e.target.getAttribute("data-id"));
+      saveEditNote(nid, e.target.value);
+    }
+    if((e.key==="Enter" && (e.ctrlKey||e.metaKey)) && e.target.classList.contains("task-progress-input")) {
+      e.preventDefault();
+      var pid = parseInt(e.target.getAttribute("data-id"));
+      var pwrap = document.querySelector('.task-progress-input-wrap[data-wrap="'+pid+'"]');
+      var pcontent = e.target.value.trim();
+      if(pcontent) {
+        addProgressLog(pid, pcontent);
+        showToast("进度已记录");
+        e.target.value = "";
+        if(pwrap) pwrap.classList.remove("active");
+      } else {
+        showToast("请输入进度内容");
+      }
+    }
+  });
+  document.addEventListener("focusout", function(e) {
+    if(e.target.classList.contains("note-card-edit-area") && e.target.classList.contains("active")) {
+      var nid = parseInt(e.target.getAttribute("data-id"));
+      saveEditNote(nid, e.target.value);
+    }
+  });
+}
+
+/* ========== Theme ========== */
+function applyTheme(theme) {
+  if(theme === "dark") {
+    document.documentElement.setAttribute("data-theme","dark");
+    document.getElementById("iconMoon").classList.add("hidden");
+    document.getElementById("iconSun").classList.remove("hidden");
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+    document.getElementById("iconMoon").classList.remove("hidden");
+    document.getElementById("iconSun").classList.add("hidden");
+  }
+}
+function toggleTheme() {
+  var current = document.documentElement.getAttribute("data-theme");
+  var next = current === "dark" ? "light" : "dark";
+  applyTheme(next);
+  try { storageSet(THEME_KEY, next); } catch(e) {}
+}
+
+/* ========== Init ========== */
+function init() {
+  // Bind events FIRST, before any rendering that might fail
+  try {
+    bindEvents();
+  } catch(e) {
+    showJSError("事件绑定失败: " + e.message);
+  }
+
+  // Load theme preference
+  try {
+    var savedTheme = storageGet(THEME_KEY) || "light";
+    applyTheme(savedTheme);
+  } catch(e) {}
+
+  // Load data
+  try {
+    loadTasks();
+    loadNotes();
+  } catch(e) {
+    showJSError("数据加载失败: " + e.message);
+  }
+
+  // Initialize form with default values
+  resetForm();
+
+  // Render
+  renderAll();
+
+  // Cloud sync (only on HTTPS deployed version, fire-and-forget)
+  setTimeout(checkCloudSync, 300);
+}
+
+function showJSError(msg) {
+  var el = document.getElementById("jsError");
+  if(el) {
+    el.textContent = "JavaScript 错误: " + msg + " — 部分功能可能不可用";
+    el.style.display = "block";
+  }
+}
+
+/* ========== Cloud Sync (HTTPS-only) ========== */
+// 依次尝试各个云端通道，返回第一个成功拿到的快照
+function fetchCloudSnapshot(urlIndex, urls) {
+  var idx = urlIndex || 0;
+  var list = urls || cloudSyncUrls();
+  if(idx >= list.length) return Promise.resolve(null);
+  // 加随机查询参数绕开 CDN 缓存（Gist raw 默认 max-age=300，会导致更新延迟 5 分钟）
+  var separator = list[idx].indexOf("?") >= 0 ? "&" : "?";
+  var bustUrl = list[idx] + separator + "_=" + Date.now();
+  return fetch(bustUrl, { cache: "no-store" })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(snapshot){
+      // 拿到有效快照就返回，否则尝试下一个通道
+      if(snapshot && snapshot.version) return snapshot;
+      return fetchCloudSnapshot(idx + 1, list);
+    })
+    .catch(function(){ return fetchCloudSnapshot(idx + 1, list); });
+}
+
+function checkCloudSync() {
+  // 本地 file:// 协议下 fetch 会被 CORS 拦截，仅 HTTPS 部署版尝试同步
+  if(location.protocol !== "https:") return;
+  fetchCloudSnapshot(0, cloudSyncUrls())
+    .then(function(snapshot){
+      if(!snapshot || !snapshot.version) return;
+      var lastVersion = parseInt(storageGet(CLOUD_LAST_SYNC_KEY) || "0", 10);
+      if(snapshot.version <= lastVersion) return;
+      // 检查本会话是否已主动忽略过这个版本
+      var dismissed = parseInt(storageGet(CLOUD_DISMISSED_VERSION_KEY) || "0", 10);
+      if(snapshot.version <= dismissed) return;
+      // 展示 banner
+      showCloudSyncBanner(snapshot);
+    })
+    .catch(function(){ /* 静默失败，避免打扰 */ });
+}
+
+function showCloudSyncBanner(snapshot) {
+  var el = document.getElementById("cloudBanner");
+  if(!el) return;
+  var taskCount = (snapshot.tasks || []).length;
+  var noteCount = (snapshot.notes || []).length;
+  var updatedAt = snapshot.updatedAt || "未知时间";
+  el.innerHTML =
+    '<div class="cloud-banner-icon">☁️</div>' +
+    '<div class="cloud-banner-text">' +
+      '<strong>检测到云端更新</strong>' +
+      '<small>' + taskCount + ' 任务 / ' + noteCount + ' 便签 · 更新于 ' + updatedAt + '</small>' +
+    '</div>' +
+    '<div class="cloud-banner-actions">' +
+      '<button class="cloud-banner-btn" id="cloudImportBtn">立即导入</button>' +
+      '<button class="cloud-banner-btn cloud-banner-btn-secondary" id="cloudDismissBtn">稍后</button>' +
+    '</div>';
+  el.style.display = "flex";
+  document.getElementById("cloudImportBtn").onclick = function(){
+    applyCloudSync(snapshot);
+    dismissCloudSync(snapshot.version);
+    el.style.display = "none";
+  };
+  document.getElementById("cloudDismissBtn").onclick = function(){
+    dismissCloudSync(snapshot.version);
+    el.style.display = "none";
+  };
+}
+
+function dismissCloudSync(version) {
+  storageSet(CLOUD_DISMISSED_VERSION_KEY, String(version));
+  storageSet(CLOUD_LAST_SYNC_KEY, String(version));
+}
+
+function applyCloudSync(snapshot) {
+  // 按 id 合并任务：云端覆盖本地（云端是源），本地独有保留
+  var localById = {};
+  tasks.forEach(function(t){ localById[String(t.id)] = t; });
+  var merged = [];
+  var added = 0, updated = 0;
+  (snapshot.tasks || []).forEach(function(t){
+    if(!t || typeof t.title !== "string") return;
+    var normalized = {
+      id: t.id || Date.now() + Math.random(),
+      title: t.title,
+      type: t.type || "产品需求",
+      priority: t.priority || "P2",
+      deadline: t.deadline || "",
+      status: t.status || "待处理",
+      desc: t.desc || "",
+      createdAt: t.createdAt || todayStr(),
+      completedAt: t.completedAt || null,
+      progressLog: Array.isArray(t.progressLog) ? t.progressLog.map(function(g){
+          return { ts: g.ts || Date.now(), content: String(g.content || "") };
+        }) : []
+    };
+    if(localById[String(normalized.id)]) updated++;
+    else added++;
+    merged.push(normalized);
+    delete localById[String(normalized.id)];
+  });
+  // 本地独有的追加到末尾
+  var localOnly = Object.keys(localById).map(function(k){ return localById[k]; });
+
+  tasks = merged.concat(localOnly);
+  saveTasks();
+  storageSet(CLOUD_LAST_SYNC_KEY, String(snapshot.version));
+
+  // 便签同样合并
+  var noteById = {};
+  notes.forEach(function(n){ noteById[String(n.id)] = n; });
+  var mergedNotes = [];
+  (snapshot.notes || []).forEach(function(n){
+    if(!n || typeof n.content !== "string") return;
+    var normalized = {
+      id: n.id || Date.now() + Math.random(),
+      content: n.content,
+      color: n.color || "yellow",
+      createdAt: n.createdAt || todayStr(),
+      pinned: !!n.pinned
+    };
+    mergedNotes.push(normalized);
+    delete noteById[String(normalized.id)];
+  });
+  notes = mergedNotes.concat(Object.keys(noteById).map(function(k){ return noteById[k]; }));
+  saveNotes();
+
+  renderAll();
+  showToast("已合并云端更新：新增 " + added + "，更新 " + updated + "，本地保留 " + localOnly.length);
+}
+
+// Global error handler
+window.onerror = function(msg, url, line, col, error) {
+  showJSError(msg + " (行:" + line + ")");
+  return false;
+};
+
+// Start
+if(document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
+
+})();
+</script>
+
+</body>
+</html>
