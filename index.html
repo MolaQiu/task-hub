@@ -35,11 +35,16 @@
 [data-theme="dark"] .prio-P0{background:#450a0a;color:#f87171}
 [data-theme="dark"] .prio-P1{background:#451a03;color:#fbbf24}
 [data-theme="dark"] .prio-P2{background:#1e3a5f;color:#60a5fa}
-[data-theme="dark"] .type-product{background:#172554;color:#60a5fa}
-[data-theme="dark"] .type-operation{background:#2e1065;color:#a78bfa}
-[data-theme="dark"] .type-design{background:#500724;color:#f472b6}
-[data-theme="dark"] .type-tech{background:#042f2e;color:#2dd4bf}
-[data-theme="dark"] .type-data{background:#431407;color:#fb923c}
+[data-theme="dark"] .type-qixiang{background:#172554;color:#60a5fa}
+[data-theme="dark"] .type-arc{background:#064e3b;color:#6ee7b7}
+[data-theme="dark"] .type-juhecn{background:#78350f;color:#fcd34d}
+[data-theme="dark"] .type-juheos{background:#7c2d12;color:#fdba74}
+[data-theme="dark"] .type-mt1{background:#500724;color:#f9a8d4}
+[data-theme="dark"] .type-mt2{background:#2e1065;color:#c4b5fd}
+[data-theme="dark"] .type-mt3{background:#1e1b4b;color:#a78bfa}
+[data-theme="dark"] .type-re{background:#4c0519;color:#fda4af}
+[data-theme="dark"] .type-dk{background:#083344;color:#67e8f9}
+[data-theme="dark"] .type-unknown{background:#1f2937;color:#9ca3af}
 [data-theme="dark"] .status-pending{background:#1e293b;color:#94a3b8}
 [data-theme="dark"] .status-progress{background:#1e3a5f;color:#60a5fa}
 [data-theme="dark"] .status-done{background:#022c22;color:#34d399}
@@ -228,11 +233,16 @@ textarea{resize:vertical;min-height:60px}
 .prio-P0{background:var(--danger-bg);color:var(--danger)}
 .prio-P1{background:var(--warning-bg);color:#b45309}
 .prio-P2{background:var(--primary-light);color:var(--primary)}
-.type-product{background:#dbeafe;color:#1e40af}
-.type-operation{background:#ede9fe;color:#5b21b6}
-.type-design{background:#fce7f3;color:#9d174d}
-.type-tech{background:#ccfbf1;color:#115e59}
-.type-data{background:#ffedd5;color:#9a3412}
+.type-qixiang{background:#dbeafe;color:#1e40af}
+.type-arc{background:#d1fae5;color:#065f46}
+.type-juhecn{background:#fef3c7;color:#92400e}
+.type-juheos{background:#ffedd5;color:#9a3412}
+.type-mt1{background:#fce7f3;color:#9d174d}
+.type-mt2{background:#ede9fe;color:#5b21b6}
+.type-mt3{background:#ddd6fe;color:#4c1d95}
+.type-re{background:#ffe4e6;color:#9f1239}
+.type-dk{background:#cffafe;color:#155e75}
+.type-unknown{background:#f3f4f6;color:#374151}
 .status-pending{background:#f1f5f9;color:#475569}
 .status-progress{background:var(--primary-light);color:var(--primary-dark)}
 .status-done{background:var(--success-bg);color:#047857}
@@ -429,13 +439,18 @@ textarea{resize:vertical;min-height:60px}
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">任务类型</label>
+            <label class="form-label">产品类型</label>
             <select id="inputType">
-              <option value="产品需求">产品需求</option>
-              <option value="运营活动">运营活动</option>
-              <option value="设计跟进">设计跟进</option>
-              <option value="技术对接">技术对接</option>
-              <option value="数据分析">数据分析</option>
+              <option value="未分类">未分类</option>
+              <option value="奇想AI">奇想AI</option>
+              <option value="始祖鸟">始祖鸟</option>
+              <option value="聚合国内">聚合国内</option>
+              <option value="聚合海外">聚合海外</option>
+              <option value="猫汤1">猫汤1</option>
+              <option value="猫汤2">猫汤2</option>
+              <option value="猫汤3">猫汤3</option>
+              <option value="代号RE">代号RE</option>
+              <option value="代号DK">代号DK</option>
             </select>
           </div>
           <div class="form-group">
@@ -515,11 +530,16 @@ textarea{resize:vertical;min-height:60px}
         </div>
         <select id="filterType">
           <option value="">全部类型</option>
-          <option value="产品需求">产品需求</option>
-          <option value="运营活动">运营活动</option>
-          <option value="设计跟进">设计跟进</option>
-          <option value="技术对接">技术对接</option>
-          <option value="数据分析">数据分析</option>
+          <option value="未分类">未分类</option>
+          <option value="奇想AI">奇想AI</option>
+          <option value="始祖鸟">始祖鸟</option>
+          <option value="聚合国内">聚合国内</option>
+          <option value="聚合海外">聚合海外</option>
+          <option value="猫汤1">猫汤1</option>
+          <option value="猫汤2">猫汤2</option>
+          <option value="猫汤3">猫汤3</option>
+          <option value="代号RE">代号RE</option>
+          <option value="代号DK">代号DK</option>
         </select>
         <select id="filterPriority">
           <option value="">全部优先级</option>
@@ -644,18 +664,28 @@ var STORAGE_KEY = "wb_task_hub_tasks";
 var NOTES_KEY = "wb_task_hub_notes";
 
 var TYPE_COLORS = {
-  "产品需求":"#3b82f6",
-  "运营活动":"#8b5cf6",
-  "设计跟进":"#ec4899",
-  "技术对接":"#14b8a6",
-  "数据分析":"#f97316"
+  "未分类":"#6b7280",
+  "奇想AI":"#1e40af",
+  "始祖鸟":"#065f46",
+  "聚合国内":"#92400e",
+  "聚合海外":"#9a3412",
+  "猫汤1":"#9d174d",
+  "猫汤2":"#5b21b6",
+  "猫汤3":"#4c1d95",
+  "代号RE":"#9f1239",
+  "代号DK":"#155e75"
 };
 var TYPE_CLASS = {
-  "产品需求":"type-product",
-  "运营活动":"type-operation",
-  "设计跟进":"type-design",
-  "技术对接":"type-tech",
-  "数据分析":"type-data"
+  "未分类":"type-unknown",
+  "奇想AI":"type-qixiang",
+  "始祖鸟":"type-arc",
+  "聚合国内":"type-juhecn",
+  "聚合海外":"type-juheos",
+  "猫汤1":"type-mt1",
+  "猫汤2":"type-mt2",
+  "猫汤3":"type-mt3",
+  "代号RE":"type-re",
+  "代号DK":"type-dk"
 };
 var STATUS_CLASS = {
   "待处理":"status-pending",
@@ -1221,7 +1251,7 @@ function taskCardHtml(task) {
 function resetForm() {
   editingTaskId = null;
   document.getElementById("inputTitle").value = "";
-  document.getElementById("inputType").value = "产品需求";
+  document.getElementById("inputType").value = "未分类";
   document.getElementById("inputPriority").value = "P1";
   document.getElementById("inputDeadline").value = todayStr();
   document.getElementById("inputDesc").value = "";
@@ -1315,7 +1345,7 @@ function importData(file) {
         return {
           id: t.id || Date.now()+Math.random(),
           title: t.title,
-          type: t.type || "产品需求",
+          type: t.type || "未分类",
           priority: t.priority || "P2",
           deadline: t.deadline || "",
           status: t.status || "待处理",
@@ -1895,7 +1925,7 @@ function applyCloudSync(snapshot) {
     var normalized = {
       id: t.id || Date.now() + Math.random(),
       title: t.title,
-      type: t.type || "产品需求",
+      type: t.type || "未分类",
       priority: t.priority || "P2",
       deadline: t.deadline || "",
       status: t.status || "待处理",
