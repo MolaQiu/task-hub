@@ -1,0 +1,481 @@
+{
+  "version": 1788514364,
+  "updatedAt": "2026-09-04T17:32:44+08:00",
+  "source": "manual",
+  "tasks": [
+    {
+      "id": 1788603351923,
+      "title": "[试用期绩效后台] 下周待办",
+      "type": "产品需求",
+      "priority": "P1",
+      "deadline": "",
+      "status": "待处理",
+      "desc": "下周试用期绩效管理后台需要处理事项：1、确认钉钉可以用的权限有哪些 2、修改上级提交的oa单内容，是管理后台获取结果需要定义下，根据绩效考核定义 3、转到另外一台电脑进行部署",
+      "createdAt": "2026-09-05T18:15:51+08:00",
+      "completedAt": null,
+      "progressLog": [
+        {
+          "time": "2026-09-05T18:15:51+08:00",
+          "content": "通过对话创建（Gist 云同步）"
+        }
+      ],
+      "pinned": false
+    },
+    {
+      "id": 1788580626830,
+      "title": "[奇想AI] 2.0 fast 价格配置",
+      "type": "产品需求",
+      "priority": "P1",
+      "deadline": "2026-09-08",
+      "status": "待处理",
+      "desc": "9月8日要完成奇想AI工具上2.0 fast的价格配置",
+      "createdAt": "2026-09-05T11:57:06+08:00",
+      "completedAt": null,
+      "progressLog": [
+        {
+          "time": "2026-09-05T11:57:06+08:00",
+          "content": "通过对话创建（Gist 云同步）"
+        }
+      ],
+      "pinned": false
+    },
+    {
+      "id": 1788525633663,
+      "title": "[Gist验证] 对话里加的任务，能到料理台吗？",
+      "type": "测试",
+      "priority": "P1",
+      "deadline": "2026-09-10",
+      "status": "待处理",
+      "desc": "这条任务是小黄花在对话里通过 Gist 通道加的。\n如果你在云端料理台看到这条，说明「对话 → 云端」链路完全打通了 🌼",
+      "createdAt": "2026-09-04T20:40:33+08:00",
+      "completedAt": null,
+      "progressLog": [
+        {
+          "ts": 1788594577777,
+          "content": "通过 GitHub Gist 通道创建"
+        }
+      ]
+    },
+    {
+      "id": 1788511264093,
+      "title": "[猫汤3]软著使用用户手册制作",
+      "type": "产品需求",
+      "priority": "P0",
+      "deadline": "2026-09-09",
+      "status": "待处理",
+      "desc": "软著使用用户手册制作",
+      "createdAt": "2026-09-04",
+      "completedAt": null,
+      "progressLog": []
+    },
+    {
+      "id": 1788264461218,
+      "title": "[聚合API]海外版本接入大知闲sd2.0和2.5通道",
+      "type": "产品需求",
+      "priority": "P0",
+      "deadline": "2026-09-04",
+      "status": "已完成",
+      "desc": "发需求给志鹏，海外接入这2个模型通道，通道设定为c5",
+      "createdAt": "2026-09-01",
+      "completedAt": "2026-09-04",
+      "progressLog": [
+        {
+          "ts": 1788322236987,
+          "content": "需求已提供开发，预计9/3完成开发并测试，9/4更新"
+        },
+        {
+          "ts": 1788438428629,
+          "content": "发布环境测试完成，预计9/4更新"
+        }
+      ]
+    },
+    {
+      "id": 1788244103203,
+      "title": "c1通道报错记录",
+      "type": "产品需求",
+      "priority": "P1",
+      "deadline": "",
+      "status": "待处理",
+      "desc": "Paperingress preprocessing failed. Paperingress Seedance [NetworkError] temporary network failure\n\nPaperlngress preprocessing failed: java.lang.InterruptedException\n\nPaperlngress preprocessing failed: Paperlingress Seedance [NetworkError]: temporary network failure\n\nPaperingress preprocessing failed: Paperingress Seedance InvalidResponsel provider response is missing asset id",
+      "createdAt": "2026-09-01",
+      "completedAt": null,
+      "progressLog": []
+    },
+    {
+      "id": 1788157096833,
+      "title": "[奇想AI]积分调整",
+      "type": "产品需求",
+      "priority": "P0",
+      "deadline": "2026-09-01",
+      "status": "已完成",
+      "desc": "1、直充积分取消赠送，全部改成1元=100积分\n2、月卡修改基础积分和赠送积分比例",
+      "createdAt": "2026-08-31",
+      "completedAt": "2026-09-01",
+      "progressLog": [
+        {
+          "ts": 1788241965113,
+          "content": "积分调整后，上架qwen image3和pro的模型，并设置限时折扣7折"
+        }
+      ]
+    },
+    {
+      "id": 1787710655610,
+      "title": "奇想-1066账号资产管理",
+      "type": "技术对接",
+      "priority": "P1",
+      "deadline": "",
+      "status": "进行中",
+      "desc": "1、定期清理过期的资产素材，根据assetid的最后时间，删除超过60天的assetid\n2、原key已停的项目，对应的资产库删除",
+      "createdAt": "2026-08-26",
+      "completedAt": null,
+      "progressLog": [
+        {
+          "ts": 1788322394813,
+          "content": "1、原key已停项目已进行资产删除\n2、小朱会对默认项目下，4月30日前的素材进行批量操作删除\n3、c3通道的素材，需要斌哥那边增加删除素材功能\n\n目前素材删除整合到了ops后台"
+        }
+      ]
+    },
+    {
+      "id": 1787710560127,
+      "title": "奇想-ops统计后台",
+      "type": "产品需求",
+      "priority": "P1",
+      "deadline": "2026-09-30",
+      "status": "进行中",
+      "desc": "1、接入火山、腾讯、阿里的账单回传\n2、每天定时捞火山的ep请求任务信息\n3、制作一个vip后台，可以展示这些任务的生成记录",
+      "createdAt": "2026-08-26",
+      "completedAt": null,
+      "progressLog": [
+        {
+          "ts": 1787710593618,
+          "content": "1、火山的国内和海外账单回传已接入\n2、火山ep任务已经捞下，并存储"
+        },
+        {
+          "ts": 1788157177922,
+          "content": "2、在099后台增加了mcp调用的数据，根据火山返回的任务数来填充mcp调用数，但面板上的用户ID是默认用户，如果需要展示指定的用户（火山原key的项目名称），则需要斌哥手动修改下展示"
+        }
+      ]
+    },
+    {
+      "id": 1787642489160,
+      "title": "[奇想AI]sd2.5 1080P 72折下架",
+      "type": "产品需求",
+      "priority": "P0",
+      "deadline": "2026-09-17",
+      "status": "待处理",
+      "desc": "去掉72折-9月17日上午10点",
+      "createdAt": "2026-08-25",
+      "completedAt": null,
+      "progressLog": []
+    },
+    {
+      "id": 1787315202113,
+      "title": "[猫汤]9月份开始猫2开发费用",
+      "type": "产品需求",
+      "priority": "P1",
+      "deadline": "2026-08-22",
+      "status": "已完成",
+      "desc": "[猫汤]9月份开始猫2开发费用要加入猫3的费用，先出一版预估，看下超了多少",
+      "createdAt": "2026-08-21",
+      "completedAt": "2026-08-26",
+      "progressLog": [
+        {
+          "ts": 1787710463297,
+          "content": "10月份加入猫3的费用开发"
+        }
+      ]
+    },
+    {
+      "id": 1787312544756,
+      "title": "[奇想AI]内部生成团队项目成本统计",
+      "type": "产品需求",
+      "priority": "P1",
+      "deadline": "",
+      "status": "待处理",
+      "desc": "目前内部生成的项目无法统计实际真实的消耗，需要有方案处理",
+      "createdAt": "2026-08-21",
+      "completedAt": null,
+      "progressLog": []
+    },
+    {
+      "id": 1787302579871,
+      "title": "[奇想AI]UGC内容功能",
+      "type": "产品需求",
+      "priority": "P0",
+      "deadline": "2026-08-21",
+      "status": "已完成",
+      "desc": "测试内容提交流程 - 审核流程 -获得内容等",
+      "createdAt": "2026-08-21",
+      "completedAt": "2026-08-25",
+      "progressLog": []
+    },
+    {
+      "id": 1787302531080,
+      "title": "[奇想AI]通道路由功能测试",
+      "type": "产品需求",
+      "priority": "P0",
+      "deadline": "2026-08-21",
+      "status": "已完成",
+      "desc": "同一个模型可以配置不同的路由策略，测试不同策略的效果，和模型调用是否成功。",
+      "createdAt": "2026-08-21",
+      "completedAt": "2026-08-26",
+      "progressLog": [
+        {
+          "ts": 1787636059672,
+          "content": "通道路由功能已上线，目前使用seedance 2.0来处理路由，c0/c1/c3三个通道路由."
+        }
+      ]
+    },
+    {
+      "id": 1787302441630,
+      "title": "聚合平台通道改造测试",
+      "type": "产品需求",
+      "priority": "P0",
+      "deadline": "2026-08-22",
+      "status": "已完成",
+      "desc": "1、老客户切通道测试\n2、新通道测试，测试没问题后后续新注册用户则使用新通道的接入文档",
+      "createdAt": "2026-08-21",
+      "completedAt": "2026-08-26",
+      "progressLog": [
+        {
+          "ts": 1787302455068,
+          "content": "1、老客户切通道测试已完成。8/21"
+        },
+        {
+          "ts": 1787636013158,
+          "content": "2、统一接口通道已上线，兼容老通道测试已通过。8/25"
+        }
+      ]
+    },
+    {
+      "id": 1787118721790,
+      "title": "[奇想AI]测试MJ模型",
+      "type": "产品需求",
+      "priority": "P0",
+      "deadline": "2026-08-19",
+      "status": "已完成",
+      "desc": "test099环境测试MJ模型调用",
+      "createdAt": "2026-08-19",
+      "completedAt": "2026-08-20",
+      "progressLog": [
+        {
+          "ts": 1787127625341,
+          "content": "test099已测试完成，待8/20更新后配置上线"
+        }
+      ]
+    },
+    {
+      "id": 1786940298967,
+      "title": "[奇想AI]sd2.0 fast 8折下架",
+      "type": "产品需求",
+      "priority": "P0",
+      "deadline": "2026-09-06",
+      "status": "待处理",
+      "desc": "sd2.0 fast 8折要改成超分通道-9月6日上午10点",
+      "createdAt": "2026-08-17",
+      "completedAt": null,
+      "progressLog": []
+    },
+    {
+      "id": 1786936759330,
+      "title": "[始祖鸟]海外通道问题",
+      "type": "产品需求",
+      "priority": "P1",
+      "deadline": "",
+      "status": "待处理",
+      "desc": "海外目前存在2种用户状态和付费策略：\n1、普通用户，通过自助充值获得积分，通道是溢价价格通道\n2、商务建联用户，通过对公打款获得积分，通道可以选择vip通道，vip通道是官方原价+下风控。\n需要制定根据用户群里来配置对应的通道和计费方案",
+      "createdAt": "2026-08-17",
+      "completedAt": null,
+      "progressLog": [
+        {
+          "ts": 1787127704180,
+          "content": "研发建议，下风控+价格走不同标识的模型配置，根据客户来选择单独授权的模型"
+        }
+      ]
+    },
+    {
+      "id": 1786709276311,
+      "title": "quick 国内版续约",
+      "type": "设计跟进",
+      "priority": "P0",
+      "deadline": "2026-08-17",
+      "status": "已完成",
+      "desc": "quick 国内版是否要续约，要审批",
+      "createdAt": "2026-08-14",
+      "completedAt": "2026-08-18",
+      "progressLog": [
+        {
+          "ts": 1786935101263,
+          "content": "协议已发法务，等通过后走oa单"
+        }
+      ]
+    },
+    {
+      "id": 1786519441786,
+      "title": "[始祖鸟]海外支付接入",
+      "type": "技术对接",
+      "priority": "P2",
+      "deadline": "",
+      "status": "进行中",
+      "desc": "申请海外第三方支付接入，目前对方还在审核中，已经进行了3轮的资质提交往返",
+      "createdAt": "2026-08-12",
+      "completedAt": null,
+      "progressLog": [
+        {
+          "ts": 1786935074374,
+          "content": "第三方已审核提供接入文档和demo，开发接入中"
+        },
+        {
+          "ts": 1787053358490,
+          "content": "test099测试一轮，目前退款卡住了"
+        },
+        {
+          "ts": 1787127802192,
+          "content": "test099测试二轮，已通过测试"
+        },
+        {
+          "ts": 1787217881262,
+          "content": "visa和mastcard审核未通过，暂时未发布到外部，周琼在沟通审核问题。"
+        },
+        {
+          "ts": 1787302479933,
+          "content": "提供测试环境和测试号给审核方进行审核。"
+        }
+      ]
+    },
+    {
+      "id": 1786519284205,
+      "title": "[聚合API]SD2.0-c1通道素材请求报错问题",
+      "type": "技术对接",
+      "priority": "P1",
+      "deadline": "",
+      "status": "进行中",
+      "desc": "该通道素材请求有qps限制，运营商在处理，需要跟进进度，解决后，[奇想AI]需要替换原SD2.0通道对外使用",
+      "createdAt": "2026-08-12",
+      "completedAt": null,
+      "progressLog": [
+        {
+          "ts": 1786935247858,
+          "content": "运营商已处理完毕，暂不考虑单独投放到奇想上增加通道；本周奇想会进行2.0通道池权重改造等改造完再投放，该通道可以提供给聚合客户"
+        },
+        {
+          "ts": 1787127769056,
+          "content": "素材库问题已解决，但对方没有通知并发分组要修改，导致报错。--该问题已处理。8/18\n出现异步任务查询失败问题。--该问题已处理。8/19"
+        }
+      ]
+    },
+    {
+      "id": 1786519209439,
+      "title": "[奇想AI]社区UGC方案",
+      "type": "产品需求",
+      "priority": "P0",
+      "deadline": "2026-08-20",
+      "status": "已完成",
+      "desc": "需求：\n1、哪些地方需要增加提交审核\n2、后台审核\n3、前端展示\n4、对应的活动设计",
+      "createdAt": "2026-08-12",
+      "completedAt": "2026-08-26",
+      "progressLog": [
+        {
+          "ts": 1786935179746,
+          "content": "增加投稿的功能和审核，前端展示按照开发提供的方案进行制作，活动设计预计8月20日初"
+        },
+        {
+          "ts": 1787041546431,
+          "content": "第一阶段需求已同步开发，UI示意图也已同步"
+        },
+        {
+          "ts": 1787127655439,
+          "content": "需求和UI已交付项目组，开发中，预计本周六更新"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "上周AIGC工具使用数据复盘",
+      "type": "数据分析",
+      "priority": "P2",
+      "deadline": "2026-09-04",
+      "status": "进行中",
+      "desc": "整理上周图片生成/视频生成/漫剧工作流的使用数据，输出周报。",
+      "createdAt": "2026-09-04",
+      "completedAt": null
+    },
+    {
+      "id": 4,
+      "title": "会员积分体系后端联调 - 新用户引导+奖励机制",
+      "type": "技术对接",
+      "priority": "P2",
+      "deadline": "2026-09-10",
+      "status": "待处理",
+      "desc": "新用户引导流程、奖励机制、充值链路的后端接口联调。",
+      "createdAt": "2026-09-04",
+      "completedAt": null
+    },
+    {
+      "id": 3,
+      "title": "账单/开票系统UI终稿确认",
+      "type": "设计跟进",
+      "priority": "P1",
+      "deadline": "2026-09-08",
+      "status": "待处理",
+      "desc": "确认客户终端+管理后台的UI终稿，同步给开发。",
+      "createdAt": "2026-09-04",
+      "completedAt": null
+    },
+    {
+      "id": 2,
+      "title": "8月运营活动策略落地 - 文案需求推进",
+      "type": "运营活动",
+      "priority": "P0",
+      "deadline": "2026-09-03",
+      "status": "待处理",
+      "desc": "竞品调研已完成(覆盖率54%)，需推进文案需求输出并同步设计。",
+      "createdAt": "2026-09-04",
+      "completedAt": null
+    },
+    {
+      "id": 1,
+      "title": "奇想无限Web端UI设计优化 - 气泡对话框引导交互",
+      "type": "产品需求",
+      "priority": "P1",
+      "deadline": "2026-09-06",
+      "status": "进行中",
+      "desc": "完成气泡对话框式任务引导的交互稿，覆盖新用户首次进入流程。",
+      "createdAt": "2026-09-04",
+      "completedAt": null
+    }
+  ],
+  "notes": [
+    {
+      "id": 1786518898867,
+      "content": "大智闲-C1：seedance-2-0-c1\n并发：200\n素材条数：500w条\n※该通道需配置：模型并发、素材分组数、素材数量限制\n※使用对象：奇想AI、美图、CF哥、武汉世捷通",
+      "color": "green",
+      "createdAt": "2026-08-12",
+      "pinned": true
+    },
+    {
+      "id": 1788749868905,
+      "content": "奇想 阿里云\nwan3.0 6折  并发200\nwan3.0 prime 7折 并发海外20，国内50\nimage3\\image3 pro 7折\n\n天文悦\nwan3.0 6折  额外补12%\nwan3.0 prime  7折  额外补12%\nimage3\\image3 pro 7折  额外补12%",
+      "color": "yellow",
+      "createdAt": "2026-09-07"
+    },
+    {
+      "id": 1788749814835,
+      "content": "===老高\n海外聚合：\nwan3.0   55折  （天文悦 c1）\nwan3.0 prime 65折 （天文悦 c1）\nqwen image3 \\pro  65折\nSeedance 2.0 85折\nseedance 2.5 88折\n国内聚合\nseedance 2.0 8折（杭州友量）\n\n===小方总\n海外聚合\nwan3.0   55折（天文悦 c1）\nwan3.0 prime 65折（天文悦 c1）\nqwen image3 \\pro  65折",
+      "color": "yellow",
+      "createdAt": "2026-09-07"
+    },
+    {
+      "id": 1786703815297,
+      "content": "上海账户mini使用对象：\n秦九、微甜",
+      "color": "pink",
+      "createdAt": "2026-08-14"
+    },
+    {
+      "id": 1786518904490,
+      "content": "泽荣75-C3：seedance-2-0-c3\n并发：100\n素材条数：10000条\n※该通道需配置：模型并发、素材分组数、素材数量限制\n※该通道高峰期生成视频1条需要耗时15分钟\n※使用对象：微甜、秦九、闲闲互娱",
+      "color": "yellow",
+      "createdAt": "2026-08-12"
+    }
+  ]
+}
