@@ -580,6 +580,7 @@ textarea{resize:vertical;min-height:60px}
 <div class="footer">
   <p>数据保存在本地浏览器，刷新关闭不丢失</p>
   <button class="btn btn-secondary btn-sm" id="gistConfigBtn" type="button">云同步设置</button>
+  <button class="btn btn-secondary btn-sm" id="clearTombBtn" type="button">清空已删名单</button>
 </div>
 
 </div><!-- /.container -->
@@ -677,6 +678,29 @@ var CLOUD_DISMISSED_VERSION_KEY = "wb_task_hub_cloud_dismissed_version";
 var GIST_ID_KEY = "wb_task_hub_gist_id";
 var GIST_USER = "MolaQiu";
 var GIST_FILE = "taskhub-data.json";
+// 墓碑名单：记录本地已删除的 id，云端同步时跳过，防止"删了又被同步回来"
+var DELETED_TASK_IDS_KEY = "wb_task_hub_deleted_task_ids";
+var DELETED_NOTE_IDS_KEY = "wb_task_hub_deleted_note_ids";
+function getDeletedIds(k) {
+  try {
+    var raw = storageGet(k);
+    var arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr.map(String) : [];
+  } catch(e) { return []; }
+}
+function addDeletedId(k, id) {
+  try {
+    var arr = getDeletedIds(k);
+    var s = String(id);
+    if(arr.indexOf(s) < 0) arr.push(s);
+    // 只保留最近 500 条，避免无限增长
+    if(arr.length > 500) arr = arr.slice(-500);
+    storageSet(k, JSON.stringify(arr));
+  } catch(e) {}
+}
+function clearDeletedIds() {
+  try { storageSet(DELETED_TASK_IDS_KEY, "[]"); storageSet(DELETED_NOTE_IDS_KEY, "[]"); } catch(e) {}
+}
 function getGistId() { try { return storageGet(GIST_ID_KEY) || ""; } catch(e) { return ""; } }
 function setGistId(id) { try { storageSet(GIST_ID_KEY, id); } catch(e) {} }
 // 云端数据通道（动态生成，按顺序尝试，第一个成功的为准）
@@ -770,6 +794,7 @@ function addNote() {
 }
 function deleteNote(id) {
   notes = notes.filter(function(n){ return n.id !== id; });
+  addDeletedId(DELETED_NOTE_IDS_KEY, id);
   saveNotes();
   renderNotes();
   showToast("便签已删除");
@@ -864,6 +889,7 @@ function updateTask(id,data) {
 }
 function deleteTask(id) {
   tasks = tasks.filter(function(t){return t.id!==id;});
+  addDeletedId(DELETED_TASK_IDS_KEY, id);
   saveTasks();
 }
 function completeTask(id) {
@@ -1304,6 +1330,7 @@ function importData(file) {
 
       if(valid.length===0) { showToast("未找到有效任务数据"); return; }
       tasks = valid;
+      clearDeletedIds();
       saveTasks();
 
       // Import notes if present
@@ -1410,6 +1437,16 @@ function bindEvents() {
     } else {
       showToast("已取消云同步");
     }
+  });
+
+  // 清空已删名单（误删恢复用）
+  document.getElementById("clearTombBtn").addEventListener("click", function(){
+    var dt = getDeletedIds(DELETED_TASK_IDS_KEY);
+    var dn = getDeletedIds(DELETED_NOTE_IDS_KEY);
+    if(dt.length === 0 && dn.length === 0) { showToast("已删名单为空"); return; }
+    if(!confirm("清空已删名单？\n\n当前记录：" + dt.length + " 条任务 / " + dn.length + " 条便签。\n清空后，下次云端同步会把这些条目重新拉回来。")) return;
+    clearDeletedIds();
+    showToast("已清空，下次同步恢复这些条目");
   });
 
   // Form (always visible)
@@ -1851,8 +1888,10 @@ function applyCloudSync(snapshot) {
   tasks.forEach(function(t){ localById[String(t.id)] = t; });
   var merged = [];
   var added = 0, updated = 0;
+  var delTasks = getDeletedIds(DELETED_TASK_IDS_KEY);
   (snapshot.tasks || []).forEach(function(t){
     if(!t || typeof t.title !== "string") return;
+    if(delTasks.indexOf(String(t.id)) >= 0) return;
     var normalized = {
       id: t.id || Date.now() + Math.random(),
       title: t.title,
@@ -1883,8 +1922,10 @@ function applyCloudSync(snapshot) {
   var noteById = {};
   notes.forEach(function(n){ noteById[String(n.id)] = n; });
   var mergedNotes = [];
+  var delNotes = getDeletedIds(DELETED_NOTE_IDS_KEY);
   (snapshot.notes || []).forEach(function(n){
     if(!n || typeof n.content !== "string") return;
+    if(delNotes.indexOf(String(n.id)) >= 0) return;
     var normalized = {
       id: n.id || Date.now() + Math.random(),
       content: n.content,
