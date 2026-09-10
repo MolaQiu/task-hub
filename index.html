@@ -628,6 +628,31 @@ textarea{resize:vertical;min-height:60px}
   </div>
 </div>
 
+<div id="syncSettingModal" class="modal-overlay hidden" data-page-node-id="syncSettingModal">
+  <div class="modal" data-page-node-id="syncSettingModalInner">
+    <div class="modal-title" data-page-node-id="syncSettingTitle">云同步设置</div>
+    <div class="modal-body">
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label">① Gist ID（云端任务数据位置）</label>
+        <input type="text" id="settingGistId" placeholder="留空则取消云同步">
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label">② 同步后端 URL（启用双向实时同步）</label>
+        <input type="text" id="settingWorkerUrl" placeholder="例如 http://localhost:8787 或 Cloudflare Worker 地址">
+        <div style="font-size:12px;color:var(--text-light);margin-top:4px">留空则只使用单向 Gist 同步（不改动的内容不会被回退，但你 chrome 上的修改也不会自动上传）。</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">③ 同步密钥（与后端 SYNC_SECRET 一致，可留空）</label>
+        <input type="text" id="settingSyncSecret" placeholder="无密钥时留空">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="cancelSyncSettingBtn" type="button">取消</button>
+      <button class="btn btn-primary" id="saveSyncSettingBtn" type="button">保存并同步</button>
+    </div>
+  </div>
+</div>
+
 <input type="file" id="importFile" accept=".json" class="hidden" data-page-node-id="3d68c43sGUEaLvFWiDTtx1">
 
 <script>
@@ -717,6 +742,8 @@ var CLOUD_DISMISSED_VERSION_KEY = "wb_task_hub_cloud_dismissed_version";
 var GIST_ID_KEY = "wb_task_hub_gist_id";
 var GIST_USER = "MolaQiu";
 var GIST_FILE = "taskhub-data.json";
+var WORKER_URL_KEY = "wb_task_hub_worker_url";
+var SYNC_SECRET_KEY = "wb_task_hub_sync_secret";
 // 墓碑名单：记录本地已删除的 id，云端同步时跳过，防止"删了又被同步回来"
 var DELETED_TASK_IDS_KEY = "wb_task_hub_deleted_task_ids";
 var DELETED_NOTE_IDS_KEY = "wb_task_hub_deleted_note_ids";
@@ -742,6 +769,10 @@ function clearDeletedIds() {
 }
 function getGistId() { try { return storageGet(GIST_ID_KEY) || ""; } catch(e) { return ""; } }
 function setGistId(id) { try { storageSet(GIST_ID_KEY, id); } catch(e) {} }
+function getWorkerUrl() { try { return storageGet(WORKER_URL_KEY) || ""; } catch(e) { return ""; } }
+function setWorkerUrl(url) { try { storageSet(WORKER_URL_KEY, url); } catch(e) {} }
+function getSyncSecret() { try { return storageGet(SYNC_SECRET_KEY) || ""; } catch(e) { return ""; } }
+function setSyncSecret(secret) { try { storageSet(SYNC_SECRET_KEY, secret); } catch(e) {} }
 // 云端数据通道（动态生成，按顺序尝试，第一个成功的为准）
 //  1) GitHub Gist raw：主通道，CORS 全放行，需先配置 Gist ID
 //  2) CloudStudio 同域 tasks.json：回退通道
@@ -1510,20 +1541,21 @@ function bindEvents() {
   document.getElementById("tabTasksBtn").addEventListener("click", function(){ switchView("tasks"); });
   document.getElementById("tabNotesBtn").addEventListener("click", function(){ switchView("notes"); });
 
-  // Gist ID 配置（不硬编码，用户本地保存）
+  // 云同步设置（Gist ID + 后端 URL + 密钥）
   document.getElementById("gistConfigBtn").addEventListener("click", function(){
-    var curId = getGistId();
-    var id = prompt("① Gist ID（云端任务数据位置，可留空）", curId || "");
-    if(id === null) return;
-    setGistId(id.trim());
-    var curW = getWorkerUrl();
-    var w = prompt("② 同步后端 Worker URL（启用双向实时同步；留空则仅单向 Gist）\n例如 https://taskhub-sync.xxx.workers.dev", curW || "");
-    if(w === null) return;
-    setWorkerUrl(w.trim());
-    var curS = getSyncSecret();
-    var s = prompt("③ 同步密钥（与 Worker 的 SYNC_SECRET 一致，可留空）", curS || "");
-    if(s === null) return;
-    setSyncSecret(s.trim());
+    document.getElementById("settingGistId").value = getGistId();
+    document.getElementById("settingWorkerUrl").value = getWorkerUrl();
+    document.getElementById("settingSyncSecret").value = getSyncSecret();
+    document.getElementById("syncSettingModal").classList.remove("hidden");
+  });
+  document.getElementById("cancelSyncSettingBtn").addEventListener("click", function(){
+    document.getElementById("syncSettingModal").classList.add("hidden");
+  });
+  document.getElementById("saveSyncSettingBtn").addEventListener("click", function(){
+    setGistId(document.getElementById("settingGistId").value.trim());
+    setWorkerUrl(document.getElementById("settingWorkerUrl").value.trim());
+    setSyncSecret(document.getElementById("settingSyncSecret").value.trim());
+    document.getElementById("syncSettingModal").classList.add("hidden");
     storageSet(CLOUD_LAST_SYNC_KEY, "0");
     showToast("已保存同步设置，正在同步");
     checkCloudSync();
