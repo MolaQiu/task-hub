@@ -18,7 +18,7 @@
   --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
   --shadow-lg:0 10px 30px rgba(0,0,0,.08);
   --radius:12px;--radius-sm:8px;
-  --sidebar-w:340px;
+  --sidebar-w:340px;--nav-w:210px;
 }
 /* Dark theme */
 [data-theme="dark"]{
@@ -90,16 +90,18 @@ textarea{resize:vertical;min-height:60px}
 .backup-reminder strong{font-weight:700}
 
 /* ========== Main Layout ========== */
-.main-layout{display:grid;grid-template-columns:var(--sidebar-w) 1fr;gap:16px;align-items:start}
-.layout-left{position:sticky;top:76px}
-.layout-right{display:flex;flex-direction:column;gap:16px;min-width:0}
+.main-layout{display:grid;grid-template-columns:var(--nav-w) 1fr;gap:16px;align-items:start}
+.layout-nav{position:sticky;top:76px}
+.layout-main{display:flex;flex-direction:column;gap:16px;min-width:0}
 
-/* ========== View Tabs ========== */
-.view-tabs{position:sticky;top:76px;z-index:90;display:flex;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:4px}
-.view-tab{flex:1;padding:10px 16px;border:none;background:transparent;border-radius:var(--radius-sm);font-size:14px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
-.view-tab:hover{color:var(--text)}
-.view-tab.active{background:var(--card-bg);color:var(--primary);box-shadow:var(--shadow)}
-.view-tab .count-badge{margin-left:0;font-size:12px;padding:1px 8px}
+/* ========== Left Nav Menu ========== */
+.nav-menu{display:flex;flex-direction:column;gap:4px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:8px;box-shadow:var(--shadow)}
+.nav-item{display:flex;align-items:center;gap:10px;width:100%;padding:11px 12px;border:none;background:transparent;border-radius:var(--radius-sm);font-size:14px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all .15s;text-align:left;min-height:44px;font-family:inherit}
+.nav-item svg{width:18px;height:18px;flex-shrink:0}
+.nav-item:hover{background:var(--bg);color:var(--text)}
+.nav-item.active{background:var(--primary-bg);color:var(--primary)}
+.nav-item .count-badge{margin-left:auto;font-size:12px;padding:1px 8px}
+.nav-hint{margin-top:12px;padding:10px 12px;font-size:12px;line-height:1.6;color:var(--text-light);background:var(--bg);border:1px dashed var(--border);border-radius:var(--radius-sm)}
 .view-panel{display:flex;flex-direction:column;gap:16px}
 .view-panel.hidden{display:none}
 
@@ -141,6 +143,16 @@ textarea{resize:vertical;min-height:60px}
 .task-form{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
 .form-row.full{grid-template-columns:1fr}
+.form-row.three{grid-template-columns:repeat(3,1fr)}
+/* 任务描述框：默认高度约为通用 textarea（60px）的 3 倍 */
+#inputDesc{min-height:180px}
+/* 新增任务：折叠 / 展开开关 */
+.form-collapse-btn{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--text-secondary);background:var(--bg);border:1px solid var(--border-dark);border-radius:12px;padding:3px 10px;transition:all .15s;flex-shrink:0}
+.form-collapse-btn:hover{border-color:var(--primary);color:var(--primary)}
+.form-collapse-btn svg{width:14px;height:14px;transition:transform .2s}
+.form-collapse-btn.open svg{transform:rotate(180deg)}
+#taskFormSection.collapsed .task-form{display:none}
+#taskFormSection.collapsed .section-title{margin-bottom:0}
 .form-group{display:flex;flex-direction:column;gap:4px}
 .form-label{font-size:13px;color:var(--text-secondary);font-weight:500}
 .form-actions{display:flex;gap:8px;justify-content:flex-end}
@@ -183,6 +195,9 @@ textarea{resize:vertical;min-height:60px}
 .task-body{flex:1;min-width:0}
 .task-header{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
 .task-title{font-size:15px;font-weight:600;color:var(--text);word-break:break-word}
+/* 类型前缀：由 type 字段动态生成，只保留文字颜色，不显示底色 */
+.type-prefix{background:none!important;padding:0!important;border-radius:0!important;font-weight:600;margin-right:1px}
+.type-prefix-hint{margin-top:6px;font-size:12px;color:var(--text-secondary);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .task-badges{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .badge{font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
 .task-desc{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
@@ -308,6 +323,76 @@ textarea{resize:vertical;min-height:60px}
 [data-theme="dark"] .note-pin-btn.active{color:#f87171}
 [data-theme="dark"] .note-textarea{background:#0f172a;color:#e2e8f0}
 
+/* ========== Daily Todos (每日待办) ========== */
+.todo-input-wrap{display:flex;flex-direction:column;gap:10px;padding:12px;border:1px dashed var(--border-dark);border-radius:var(--radius-sm);background:var(--bg)}
+.todo-input-date-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.todo-input-label{font-size:13px;font-weight:600;color:var(--text-secondary);flex-shrink:0}
+.todo-date-input{width:168px;flex-shrink:0;padding:8px 10px;font-size:14px;background:var(--card-bg)}
+.todo-quick-dates{display:flex;gap:6px;flex-wrap:wrap}
+.todo-quick-btn{font-size:12px;padding:5px 12px;border:1px solid var(--border-dark);border-radius:20px;background:var(--card-bg);color:var(--text-secondary);transition:all .15s;white-space:nowrap;line-height:1.5}
+.todo-quick-btn:hover{border-color:var(--primary);color:var(--primary)}
+.todo-quick-btn.active{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:600}
+.todo-content-input{width:100%;min-height:78px;max-height:420px;padding:10px 12px;font-size:14px;line-height:1.6;border:1px solid var(--border-dark);border-radius:var(--radius-sm);background:var(--card-bg);color:var(--text);resize:vertical}
+.todo-content-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-light)}
+.todo-input-actions{display:flex;align-items:center;gap:10px}
+.todo-input-hint{font-size:12px;color:var(--text-light);flex:1;min-width:0}
+.todo-input-actions .btn{flex-shrink:0}
+.todo-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 10px;padding-bottom:10px;border-bottom:1px dashed var(--border);font-size:13px;color:var(--text-secondary)}
+.todo-toolbar .todo-stat strong{color:var(--primary);font-weight:700}
+.todo-toolbar .filter-toggle{margin-left:auto}
+.todo-list{display:flex;flex-direction:column;gap:14px}
+.todo-group-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--text-secondary);margin-bottom:8px}
+.todo-group-title.is-today{color:var(--primary)}
+.todo-group-title.is-overdue{color:var(--danger)}
+.todo-group-title .count-badge{margin-left:0;font-size:12px}
+.todo-group-list{display:flex;flex-direction:column;gap:6px}
+.todo-item{padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);transition:all .15s}
+.todo-item:hover{box-shadow:var(--shadow)}
+.todo-item-main{display:flex;align-items:flex-start;gap:10px}
+.todo-item.done{background:var(--bg)}
+.todo-item.done .todo-content{text-decoration:line-through;color:var(--text-light)}
+.todo-check{width:18px;height:18px;margin:3px 0 0;flex-shrink:0;cursor:pointer;accent-color:var(--primary)}
+.todo-content{flex:1;min-width:0;font-size:14px;line-height:1.55;color:var(--text);word-break:break-word;white-space:pre-wrap;cursor:pointer}
+.todo-actions{display:flex;gap:4px;flex-shrink:0;opacity:.45;transition:opacity .15s}
+.todo-item:hover .todo-actions{opacity:1}
+.todo-actions .btn-icon{width:28px;height:28px;min-height:28px;padding:4px}
+.todo-empty{text-align:center;padding:28px 16px;color:var(--text-light);font-size:13px}
+.todo-empty svg{width:44px;height:44px;margin:0 auto 10px;display:block;opacity:.35}
+.todo-item.editing{background:var(--bg)}
+.todo-edit-row{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;width:100%}
+.todo-edit-date{width:168px;flex-shrink:0;padding:8px 10px;font-size:14px}
+.todo-edit-content{flex:1;min-width:200px;min-height:64px;padding:8px 10px;font-size:14px;line-height:1.55;resize:vertical}
+.todo-edit-row .todo-actions{align-self:center}
+/* 待办项内的进度记录（复用任务的进度时间线样式） */
+.todo-progress{margin-top:8px}
+.todo-progress .task-progress-head{margin-bottom:6px}
+.todo-prog-input{width:100%;min-height:54px;padding:8px 10px;font-size:13px;font-family:inherit;border:1px solid var(--border-dark);border-radius:var(--radius-sm);background:var(--card-bg);color:var(--text);resize:vertical;line-height:1.5}
+.todo-prog-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 2px rgba(37,99,235,.12)}
+[data-theme="dark"] .todo-input-wrap{background:rgba(15,23,42,.45)}
+[data-theme="dark"] .todo-item.done{background:rgba(255,255,255,.03)}
+
+/* ========== Pagination (翻页展示) ========== */
+.pager-host{margin-top:0}
+.pager{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;padding-top:12px;border-top:1px dashed var(--border)}
+.pager-info{font-size:13px;color:var(--text-secondary);flex:1 1 auto;min-width:0}
+.pager-info strong{color:var(--primary);font-weight:700}
+.pager-btns{display:flex;align-items:center;gap:4px;flex:0 0 auto}
+.pager-btn{min-width:34px;height:34px;padding:0 10px;border:1px solid var(--border-dark);border-radius:var(--radius-sm);background:var(--card-bg);color:var(--text-secondary);font-size:13px;font-weight:600;font-family:inherit;transition:all .15s;display:inline-flex;align-items:center;justify-content:center}
+.pager-btn:hover:not(:disabled):not(.active){border-color:var(--primary);color:var(--primary)}
+.pager-btn.active{background:var(--primary);border-color:var(--primary);color:#fff;cursor:default}
+.pager-btn:disabled{opacity:.4;cursor:not-allowed}
+.pager-btn svg{width:14px;height:14px}
+.pager-ellipsis{padding:0 2px;color:var(--text-light);font-size:13px;user-select:none}
+.pager-size{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);flex:1 1 auto;justify-content:flex-end;white-space:nowrap}
+.pager-size select{width:auto;min-width:76px;padding:6px 8px;font-size:13px;min-height:34px}
+[data-theme="dark"] .pager-btn.active{color:#fff}
+@media(max-width:768px){
+  .pager{gap:8px}
+  .pager-info{flex:1 1 100%}
+  .pager-size{flex:1 1 100%;justify-content:center}
+  .pager-btns{flex:1 1 100%;justify-content:center;flex-wrap:wrap}
+}
+
 /* ========== Modal ========== */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px}
 .modal{background:var(--card-bg);border-radius:var(--radius);padding:24px;max-width:400px;width:100%;box-shadow:var(--shadow-lg)}
@@ -359,13 +444,27 @@ textarea{resize:vertical;min-height:60px}
   .container{padding:0 12px}
   .section{padding:16px}
   .main-layout{grid-template-columns:1fr;gap:12px}
-  .layout-left{position:static}
-  .layout-right{gap:12px}
+  .layout-nav{position:sticky;top:62px;z-index:88}
+  .nav-menu{flex-direction:row;gap:6px;overflow-x:auto}
+  .nav-item{flex:1;justify-content:center;white-space:nowrap;min-width:0;font-size:13px;padding:10px 8px}
+  .nav-item .count-badge{margin-left:4px}
+  .nav-hint{display:none}
+  .layout-main{gap:12px}
+  .todo-input-date-row{gap:6px}
+  .todo-date-input,.todo-edit-date{width:100%}
+  .todo-quick-dates{width:100%}
+  .todo-quick-btn{flex:1;text-align:center}
+  .todo-input-actions{flex-direction:column;align-items:stretch;gap:8px}
+  .todo-input-hint{text-align:center}
+  .todo-input-actions .btn{width:100%}
+  .todo-actions{opacity:.6}
+  .todo-toolbar .filter-toggle{margin-left:0;width:100%;justify-content:center}
   .today-stats{grid-template-columns:repeat(3,1fr);gap:8px}
   .today-stat{padding:12px 8px}
   .today-stat .stat-num{font-size:22px}
   .today-stat .stat-label{font-size:11px}
   .form-row{grid-template-columns:1fr;gap:8px}
+  .form-row.three{grid-template-columns:1fr}
   .task-card{padding:12px}
   .task-title{font-size:14px}
   .filter-bar{flex-direction:column}
@@ -431,22 +530,51 @@ textarea{resize:vertical;min-height:60px}
 
 <div class="main-layout" data-page-node-id="UwlTFlrSdudOUPVHvnHckA">
 
-  <!-- ========== Left: Task Form (always visible) ========== -->
-  <aside class="layout-left" data-page-node-id="fgMwzctEGwrTIYpkE3uZ0I">
-    <section class="section" data-page-node-id="Cet8ihgEAa62OwTegPnm36">
+  <!-- ========== Left: View Nav ========== -->
+  <aside class="layout-nav" data-page-node-id="fgMwzctEGwrTIYpkE3uZ0I">
+    <nav class="nav-menu" data-page-node-id="1iABOGMXxuPNemFtYBxp3n">
+      <button class="nav-item active" id="tabTodosBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        每日待办
+        <span class="count-badge" id="navTodoCount">0</span>
+      </button>
+      <button class="nav-item" id="tabTasksBtn" type="button" data-page-node-id="HmwZjWsgqz80F2aJUV4uuX">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="2tET50eXAHqupv8TvVl5JL"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        任务列表
+        <span class="count-badge" id="navTaskCount">0</span>
+      </button>
+      <button class="nav-item" id="tabNotesBtn" type="button" data-page-node-id="emJEa8TRVqlDiQBlutc04u">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h12l4 4v12H4z" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 12h8M8 16h5" stroke-linecap="round"/></svg>
+        便签备忘
+        <span class="count-badge" id="navNoteCount">0</span>
+      </button>
+    </nav>
+    <div class="nav-hint">数据在你本机与云端双向同步；切换页签不影响数据。</div>
+  </aside>
+
+  <div class="layout-main" data-page-node-id="1iDMXD93jcSDxkcRkBJg2C">
+
+    <div id="tasksView" class="view-panel hidden" data-page-node-id="YXXA9tzX7GO4FkcTUGEO8e">
+
+    <section class="section collapsed" id="taskFormSection" data-page-node-id="Cet8ihgEAa62OwTegPnm36">
       <h2 class="section-title" data-page-node-id="2HtFckiTD0uSBVPPe1E7dc">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="vSu57cBHw9AKrADFKEIc89"><path d="M12 5v14M5 12h14" stroke-linecap="round" data-page-node-id="VJxmoAAksp7rJaBnJ62e4n"/></svg>
         新增任务
         <span class="form-mode-tag add" id="formModeTag" data-page-node-id="Dk1xZxWtqvphyn9UgZedwL">新增</span>
+        <button class="form-collapse-btn" id="formToggleBtn" type="button" aria-expanded="false" title="展开 / 收起新增任务表单">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="formToggleText">展开</span>
+        </button>
       </h2>
-      <div class="task-form" style="margin-bottom:0" data-page-node-id="pmYoSNY1M2B5fEMIhbmcZT">
+      <div class="task-form" id="taskFormBody" style="margin-bottom:0" data-page-node-id="pmYoSNY1M2B5fEMIhbmcZT">
         <div class="form-row full" data-page-node-id="WZFSqGWugYMCCP2rUgzxBH">
           <div class="form-group" data-page-node-id="umsHBUyARV9Icemr7jNg4S">
             <label class="form-label" data-page-node-id="K9MaFt1RZHC5fEoC6Eq8A6">任务标题 *</label>
             <input type="text" id="inputTitle" placeholder="输入任务标题" maxlength="100" data-page-node-id="0EmK8voHVdIUCL4DsDpFB8">
+            <div class="type-prefix-hint" id="titlePrefixHint"></div>
           </div>
         </div>
-        <div class="form-row" data-page-node-id="0uxEujIS7CD7ikAH43hTxL">
+        <div class="form-row three" data-page-node-id="0uxEujIS7CD7ikAH43hTxL">
           <div class="form-group" data-page-node-id="1JEJCSadK9ep5AYUfRDgTQ">
             <label class="form-label" data-page-node-id="y6Zjz6kf3gfp5GR2rSdGdz">产品类型</label>
             <select id="inputType" data-page-node-id="cJuA6VL5T9B26eHZEhf2Jv">
@@ -470,8 +598,6 @@ textarea{resize:vertical;min-height:60px}
               <option value="P2" data-page-node-id="47KI4QJYmqFjaarmgUBfum">P2 一般</option>
             </select>
           </div>
-        </div>
-        <div class="form-row full" data-page-node-id="97Bw5leIRqKVCqGqIBy67z">
           <div class="form-group" data-page-node-id="RCvHN1fANRGhvqwRoptdVk">
             <label class="form-label" data-page-node-id="Xs3umFFBx5bkgwBEowbTrc">截止日期</label>
             <input type="date" id="inputDeadline" data-page-node-id="ZjSQTvN8NIWYJ6MZGWCpfv">
@@ -491,18 +617,6 @@ textarea{resize:vertical;min-height:60px}
       </div>
     </section>
 
-  </aside>
-
-  <!-- ========== Right: Today + Task List ========== -->
-  <div class="layout-right" data-page-node-id="1iDMXD93jcSDxkcRkBJg2C">
-
-    <div class="view-tabs" data-page-node-id="1iABOGMXxuPNemFtYBxp3n">
-      <button class="view-tab active" id="tabTasksBtn" type="button" data-page-node-id="HmwZjWsgqz80F2aJUV4uuX">任务列表</button>
-      <button class="view-tab" id="tabNotesBtn" type="button" data-page-node-id="emJEa8TRVqlDiQBlutc04u">便签备忘 <span class="count-badge" id="noteCountBadge" data-page-node-id="e9DgjzfqN6vYiCiFK80f6s">0</span></button>
-    </div>
-
-    <div id="tasksView" class="view-panel" data-page-node-id="YXXA9tzX7GO4FkcTUGEO8e">
-
     <section class="section" data-page-node-id="MgiI2jVjIZ1agPq20AX4UM">
       <h2 class="section-title" data-page-node-id="jCfkC8aLERlnVDbP89ndrz">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="SGRXTVkIeXUAB5B2o0QSIY"><circle cx="12" cy="12" r="10" data-page-node-id="IRLRPIDS4ljCYg5CKg1eeu"/><path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="0hPmdtkvNz5dPj469chdAK"/></svg>
@@ -515,7 +629,7 @@ textarea{resize:vertical;min-height:60px}
         </div>
         <div class="today-stat today" data-page-node-id="HDnZNJ6DTFWVLbscLgkjpN">
           <div class="stat-num" id="todayCount" data-page-node-id="8YDaZen5JZ6vfFU0wRdJVM">0</div>
-          <div class="stat-label" data-page-node-id="EU8alUFWB769g1orzLHvv3">今日待办</div>
+          <div class="stat-label" data-page-node-id="EU8alUFWB769g1orzLHvv3">今日到期</div>
         </div>
         <div class="today-stat upcoming" data-page-node-id="wbHJABW95iCrZqEtRP1pji">
           <div class="stat-num" id="upcomingCount" data-page-node-id="XwTx9xRL3jDaxiOJAVvoDy">0</div>
@@ -569,6 +683,7 @@ textarea{resize:vertical;min-height:60px}
       </div>
 
       <div id="taskList" class="task-list" data-page-node-id="6bF7pR1pQUGTFjUg7W7s3d"></div>
+      <div id="taskPager" class="pager-host"></div>
 
       <div id="archiveSection" class="archive-section hidden" data-page-node-id="YpmFEjpMGXexOHw1sDprFf">
         <div class="archive-header" id="archiveHeader" data-page-node-id="0xdAGEl92Zju9oV3x4Ap3N">
@@ -582,11 +697,48 @@ textarea{resize:vertical;min-height:60px}
 
     </div><!-- /#tasksView -->
 
+    <div id="todosView" class="view-panel">
+      <section class="section todos-section">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          每日待办
+          <span class="count-badge" id="todoCountBadge">0</span>
+        </h2>
+        <div class="todo-input-wrap">
+          <div class="todo-input-date-row">
+            <span class="todo-input-label">日期</span>
+            <input type="date" id="todoTimeInput" class="todo-date-input">
+            <div class="todo-quick-dates">
+              <button class="todo-quick-btn js-todo-quick" data-days="0" type="button">今天</button>
+              <button class="todo-quick-btn js-todo-quick" data-days="1" type="button">明天</button>
+              <button class="todo-quick-btn js-todo-quick" data-days="2" type="button">后天</button>
+              <button class="todo-quick-btn js-todo-quick" data-days="" type="button">不指定</button>
+            </div>
+          </div>
+          <textarea id="todoContentInput" class="todo-content-input" rows="3" placeholder="要办的事，可以写多行，例如：把第一批 FAQ 上传到火山知识库，再让小朱和阿栋跑一轮智能体测试" maxlength="1000"></textarea>
+          <div class="todo-input-actions">
+            <span class="todo-input-hint">输入框可拖右下角调整高度 · Ctrl + Enter 快速添加</span>
+            <button class="btn btn-primary" id="addTodoBtn" type="button">添加待办</button>
+          </div>
+        </div>
+        <div class="todo-toolbar">
+          <span class="todo-stat">共 <strong id="todoTotal">0</strong> 条 · 未完成 <strong id="todoPending">0</strong> 条</span>
+          <label class="filter-toggle">
+            <input type="checkbox" id="hideDoneTodoChk">
+            隐藏已完成
+          </label>
+        </div>
+        <div class="todo-list" id="todoList"></div>
+        <div id="todoPager" class="pager-host"></div>
+      </section>
+    </div><!-- /#todosView -->
+
     <div id="notesView" class="view-panel hidden" data-page-node-id="tZ4SmL5Adl19ztj9k2EG5c">
       <section class="section notes-section" data-page-node-id="CwC2EWANeUhVW2UY4VFAaS">
         <h2 class="section-title" data-page-node-id="IWHD3R4tTeqluXFqZgrbqO">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="7KPRoGTZzkre716eO98djS"><path d="M4 4h12l4 4v12a0 0 0 010 0H4a0 0 0 010 0V4zM16 4v4h4" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="g9IIJdfTGGwP00Vu7rq9ys"/><path d="M8 12h8M8 16h5" stroke-linecap="round" data-page-node-id="XXQPsOBxPXtcH9ofH2QOJW"/></svg>
           便签备忘
+          <span class="count-badge" id="noteCountBadge" data-page-node-id="e9DgjzfqN6vYiCiFK80f6s">0</span>
         </h2>
         <div class="note-input-wrap" data-page-node-id="H1bcd2qFSLl8FwXDqOSe67">
           <textarea class="note-textarea" id="noteInput" placeholder="记录需要随时查看的信息，比如：API密钥、常用链接、会议要点..." maxlength="500"></textarea>
@@ -600,10 +752,11 @@ textarea{resize:vertical;min-height:60px}
           </div>
         </div>
         <div class="note-list" id="noteList" data-page-node-id="6lRIwzKTCiJiPMusuiVNej"></div>
+        <div id="notePager" class="pager-host"></div>
       </section>
     </div><!-- /#notesView -->
 
-  </div><!-- /.layout-right -->
+  </div><!-- /.layout-main -->
 </div><!-- /.main-layout -->
 
 <div class="footer" data-page-node-id="xQa5s18JcUG0BEa3psCgkE">
@@ -696,6 +849,7 @@ function storageRemove(key) {
 /* ========== Config ========== */
 var STORAGE_KEY = "wb_task_hub_tasks";
 var NOTES_KEY = "wb_task_hub_notes";
+var TODOS_KEY = "wb_task_hub_todos";
 
 var TYPE_COLORS = {
   "未分类":"#6b7280",
@@ -727,6 +881,21 @@ var STATUS_CLASS = {
   "已完成":"status-done"
 };
 var STATUS_CYCLE = ["待处理","进行中","已完成"];
+/* 产品类型枚举（用于清洗标题里手写的 [类型] 前缀） */
+var TYPE_ENUM = ["奇想AI","始祖鸟","聚合国内","聚合海外","猫汤1","猫汤2","猫汤3","代号RE","代号DK","未分类","猫汤"];
+/* 类型前缀 HTML：只做展示，数据里 title 仍为纯摘要 */
+function typePrefixHtml(task) {
+  var t = (task && task.type) ? task.type : "未分类";
+  var cls = TYPE_CLASS[t] || "type-unknown";
+  return '<span class="badge type-prefix '+cls+'">['+escapeHtml(t)+']</span> ';
+}
+/* 去掉标题里手写的 [产品类型] 前缀，避免与动态前缀重复 */
+function stripTypePrefix(title) {
+  var t = String(title || "").trim();
+  var m = t.match(/^\[([^\]]+)\]\s*/);
+  if (m && TYPE_ENUM.indexOf(m[1]) >= 0) return t.slice(m[0].length).trim();
+  return t;
+}
 
 /* ========== State ========== */
 var tasks = [];
@@ -734,6 +903,12 @@ var editingTaskId = null;
 var filters = {type:"",priority:"",status:"",keyword:"",hideCompleted:false};
 var notes = [];
 var selectedNoteColor = "yellow";
+/* 每日待办 */
+var todos = [];
+var editingTodoId = null;
+var hideDoneTodos = false;
+/* 默认落地页：每日待办（导航第一项） */
+var currentView = "todos";
 var THEME_KEY = "wb_task_hub_theme";
 var CLOUD_LAST_SYNC_KEY = "wb_task_hub_cloud_last_sync_version";
 var CLOUD_DISMISSED_VERSION_KEY = "wb_task_hub_cloud_dismissed_version";
@@ -747,6 +922,7 @@ var SYNC_SECRET_KEY = "wb_task_hub_sync_secret";
 // 墓碑名单：记录本地已删除的 id，云端同步时跳过，防止"删了又被同步回来"
 var DELETED_TASK_IDS_KEY = "wb_task_hub_deleted_task_ids";
 var DELETED_NOTE_IDS_KEY = "wb_task_hub_deleted_note_ids";
+var DELETED_TODO_IDS_KEY = "wb_task_hub_deleted_todo_ids";
 function getDeletedIds(k) {
   try {
     var raw = storageGet(k);
@@ -765,7 +941,7 @@ function addDeletedId(k, id) {
   } catch(e) {}
 }
 function clearDeletedIds() {
-  try { storageSet(DELETED_TASK_IDS_KEY, "[]"); storageSet(DELETED_NOTE_IDS_KEY, "[]"); } catch(e) {}
+  try { storageSet(DELETED_TASK_IDS_KEY, "[]"); storageSet(DELETED_NOTE_IDS_KEY, "[]"); storageSet(DELETED_TODO_IDS_KEY, "[]"); } catch(e) {}
 }
 function getGistId() { try { return storageGet(GIST_ID_KEY) || ""; } catch(e) { return ""; } }
 function setGistId(id) { try { storageSet(GIST_ID_KEY, id); } catch(e) {} }
@@ -778,6 +954,10 @@ function setSyncSecret(secret) { try { storageSet(SYNC_SECRET_KEY, secret); } ca
 //  2) CloudStudio 同域 tasks.json：回退通道
 function cloudSyncUrls() {
   var urls = [];
+  // 0) 本地同步服务（Worker）最优先：数据最新、同源无 CORS。没有它，局域网 IP 打开时
+  //    只会尝试 Gist 和 ./data/tasks.json（本地服务无此路由，404）→ 永远拉不到数据
+  var wBase = getWorkerUrl().replace(/\/$/, "");
+  if(wBase) urls.push(wBase + "/data");
   var gid = getGistId();
   if(gid) {
     urls.push("https://gist.githubusercontent.com/" + GIST_USER + "/" + gid + "/raw/" + GIST_FILE);
@@ -786,6 +966,110 @@ function cloudSyncUrls() {
   return urls;
 }
 var archiveOpen = false;
+
+/* ========== 翻页（分页）通用逻辑 ========== */
+/* 各列表的分页状态：page 当前页（从 1 起）、size 每页条数、sizes 可选条数、key 用于记住选择 */
+var PAGERS = {
+  todos:   { page:1, size:10, sizes:[10,20,50,100], key:"wb_task_hub_page_size_todos",   label:"条待办" },
+  tasks:   { page:1, size:10, sizes:[10,20,50,100], key:"wb_task_hub_page_size_tasks",   label:"个任务" },
+  archive: { page:1, size:10, sizes:[10,20,50,100], key:"wb_task_hub_page_size_archive", label:"个已完成" },
+  notes:   { page:1, size:5,  sizes:[5,10,20,50],   key:"wb_task_hub_page_size_notes",   label:"条便签" }
+};
+var PAGER_HOSTS = { todos:"todoPager", tasks:"taskPager", archive:"archivePager", notes:"notePager" };
+/* 读取上次选择的「每页条数」 */
+function loadPagerSizes() {
+  Object.keys(PAGERS).forEach(function(k){
+    var v = parseInt(storageGet(PAGERS[k].key), 10);
+    if(v > 0 && PAGERS[k].sizes.indexOf(v) >= 0) PAGERS[k].size = v;
+  });
+}
+function pagerTotalPages(name, total) {
+  var p = PAGERS[name];
+  var size = p ? p.size : 10;
+  return Math.max(1, Math.ceil(total / size));
+}
+/* 页码越界时收敛到合法范围（例如删到只剩 1 页），返回合法页码 */
+function pagerClamp(name, total) {
+  var p = PAGERS[name];
+  if(!p) return 1;
+  p.page = Math.min(Math.max(1, p.page||1), pagerTotalPages(name, total));
+  return p.page;
+}
+/* 按当前页码切片 */
+function pagerSlice(name, arr) {
+  var page = pagerClamp(name, arr.length);
+  var size = PAGERS[name].size;
+  var start = (page-1)*size;
+  return { items: arr.slice(start, start+size), page: page, total: arr.length };
+}
+/* 页码按钮序列（超过 7 页时用省略号收拢） */
+function pagerNumberList(cur, totalPages) {
+  var out = [], i;
+  if(totalPages <= 7) { for(i=1;i<=totalPages;i++) out.push(i); return out; }
+  out.push(1);
+  var start = Math.max(2, cur-1), end = Math.min(totalPages-1, cur+1);
+  if(start > 2) out.push("…");
+  for(i=start;i<=end;i++) out.push(i);
+  if(end < totalPages-1) out.push("…");
+  out.push(totalPages);
+  return out;
+}
+/* 生成分页条 HTML（hostEl 可指定渲染目标容器） */
+function pagerHtml(name, hostEl) {
+  var p = PAGERS[name];
+  if(!p) return "";
+  var total = p.total || 0;
+  if(total <= 0) return "";
+  var host = hostEl || document.getElementById(PAGER_HOSTS[name]);
+  if(!host) return "";
+  var pages = pagerTotalPages(name, total);
+  var cur = Math.min(Math.max(1, p.page||1), pages);
+  var size = p.size;
+  var start = (cur-1)*size + 1;
+  var end = Math.min(cur*size, total);
+  var html = '<div class="pager" data-pager="'+name+'">'+
+    '<span class="pager-info">第 <strong>'+cur+'</strong>/<strong>'+pages+'</strong> 页 · 显示第 '+start+'–'+end+' 条，共 <strong>'+total+'</strong> '+(p.label||"条")+'</span>';
+  if(pages > 1) {
+    html += '<div class="pager-btns">'+
+      '<button class="pager-btn" data-pager-jump="'+name+'" data-page="1"'+(cur===1?" disabled":"")+' title="首页">«</button>'+
+      '<button class="pager-btn" data-pager-jump="'+name+'" data-page="'+(cur-1)+'"'+(cur===1?" disabled":"")+' title="上一页">上一页</button>';
+    var nums = pagerNumberList(cur, pages);
+    for(var i=0;i<nums.length;i++) {
+      if(nums[i] === "…") html += '<span class="pager-ellipsis">…</span>';
+      else html += '<button class="pager-btn'+(nums[i]===cur?" active":"")+'" data-pager-jump="'+name+'" data-page="'+nums[i]+'">'+nums[i]+'</button>';
+    }
+    html += '<button class="pager-btn" data-pager-jump="'+name+'" data-page="'+(cur+1)+'"'+(cur===pages?" disabled":"")+' title="下一页">下一页</button>'+
+      '<button class="pager-btn" data-pager-jump="'+name+'" data-page="'+pages+'"'+(cur===pages?" disabled":"")+' title="末页">»</button>'+
+    '</div>';
+  }
+  html += '<span class="pager-size">每页 <select data-pager-size="'+name+'" title="每页显示条数">';
+  for(var s=0;s<p.sizes.length;s++) {
+    html += '<option value="'+p.sizes[s]+'"'+(p.sizes[s]===size?" selected":"")+'>'+p.sizes[s]+'</option>';
+  }
+  html += '</select> '+(p.label||"条")+'</span></div>';
+  return html;
+}
+/* 切页 / 换每页条数后重渲染对应列表 */
+function pagerGo(name, page) {
+  if(!PAGERS[name]) return;
+  PAGERS[name].page = parseInt(page,10) || 1;
+  pagerRender(name);
+}
+function pagerSetSize(name, size) {
+  var p = PAGERS[name];
+  if(!p) return;
+  size = parseInt(size,10);
+  if(p.sizes.indexOf(size) < 0) return;
+  p.size = size;
+  p.page = 1;
+  storageSet(p.key, String(size));
+  pagerRender(name);
+}
+function pagerRender(name) {
+  if(name === "todos") renderTodos();
+  else if(name === "notes") renderNotes();
+  else renderTaskList();
+}
 
 /* ========== Date Utils ========== */
 function pad2(n) { return String(n).padStart(2,"0"); }
@@ -853,6 +1137,32 @@ function saveNotes() {
   } catch(e) {}
   schedulePush();
 }
+/* ========== Storage: 每日待办 ========== */
+function loadTodos() {
+  try {
+    var raw = storageGet(TODOS_KEY);
+    if(raw) todos = JSON.parse(raw);
+  } catch(e) { todos = []; }
+  if(!Array.isArray(todos)) todos = [];
+  /* 兼容旧数据：补齐字段，时间戳统一为数值毫秒（合并比较用） */
+  for(var i=0; i<todos.length; i++) {
+    var t = todos[i];
+    if(!t || typeof t !== "object") { todos.splice(i,1); i--; continue; }
+    if(!t.id) t.id = Date.now() + Math.floor(Math.random()*1000);
+    if(t.time == null) t.time = "";
+    if(t.done == null) t.done = false;
+    if(!t.createdAt) t.createdAt = todayStr();
+    if(!Array.isArray(t.progressLog)) t.progressLog = [];
+    if(!t.updatedAt) t.updatedAt = tsOf(t) || Date.now();
+  }
+}
+function saveTodos() {
+  try {
+    storageSet(TODOS_KEY, JSON.stringify(todos));
+  } catch(e) {}
+  schedulePush();
+}
+function touchTodo(t) { if(t) t.updatedAt = Date.now(); }
 
 /* ========== 云同步写回（轻量后端代理） ========== */
 // 每次本地保存后，把当前数据 POST 到 Worker，由 Worker 与 Gist 做 last-write-wins 合并。
@@ -873,8 +1183,10 @@ function pushToCloud() {
   var payload = {
     tasks: tasks,
     notes: notes,
+    todos: todos,
     deletedTaskIds: getDeletedIds(DELETED_TASK_IDS_KEY),
-    deletedNoteIds: getDeletedIds(DELETED_NOTE_IDS_KEY)
+    deletedNoteIds: getDeletedIds(DELETED_NOTE_IDS_KEY),
+    deletedTodoIds: getDeletedIds(DELETED_TODO_IDS_KEY)
   };
   var headers = { "Content-Type": "application/json" };
   var sec = getSyncSecret();
@@ -886,7 +1198,14 @@ function pushToCloud() {
     cache: "no-store"
   })
   .then(function(r){ return r.json(); })
-  .then(function(data){ if(data && data.version) storageSet(CLOUD_LAST_SYNC_KEY, String(data.version)); })
+  .then(function(data){
+    if(!data || !data.version) return;
+    storageSet(CLOUD_LAST_SYNC_KEY, String(data.version));
+    // 服务端返回的是「合并后」的权威数据 → 静默回灌本地缓存，
+    // 这样同一份数据在 localhost 与局域网 IP 两个 origin 上都会收敛一致。
+    // skipPush=true：回灌后不再触发推送，避免与服务端来回循环
+    if(Array.isArray(data.tasks) && Array.isArray(data.notes)) applyCloudSync(data, true, true);
+  })
   .catch(function(){});   // 静默：下次保存或下次同步会再尝试
 }
 function addNote() {
@@ -897,10 +1216,12 @@ function addNote() {
     id: Date.now(),
     content: content,
     color: selectedNoteColor,
-    createdAt: todayStr()
+    createdAt: todayStr(),
+    updatedAt: Date.now()
   });
   saveNotes();
   input.value = "";
+  PAGERS.notes.page = 1;
   renderNotes();
   showToast("便签已添加");
 }
@@ -941,12 +1262,287 @@ function saveEditNote(id, newContent) {
   saveNotes();
   renderNotes();
 }
+/* ========== 每日待办：工具与渲染 ========== */
+/* 日期输入为 date，值形如 "2026-09-18"；允许留空（未安排日期） */
+function todoDateOf(t) {
+  var v = (t && t.time) ? String(t.time) : "";
+  if(!v) return "";
+  return v.indexOf("T") >= 0 ? v.split("T")[0] : v;
+}
+/* 兼容旧数据：老版本存的是 datetime-local（带时刻），组内排序时仍可用作次序 */
+function todoTimeOf(t) {
+  var v = (t && t.time) ? String(t.time) : "";
+  if(!v || v.indexOf("T") < 0) return "";
+  return v.split("T")[1].slice(0,5);
+}
+function todoDayLabel(dateStr) {
+  if(!dateStr) return "未安排日期";
+  var parts = dateStr.split("-");
+  if(parts.length !== 3) return dateStr;
+  var d = new Date(dateStr + "T00:00:00");
+  var wd = ["周日","周一","周二","周三","周四","周五","周六"][d.getDay()];
+  var md = parseInt(parts[1],10) + "月" + parseInt(parts[2],10) + "日";
+  var diff = daysBetween(dateStr);
+  if(diff === 0) return "今天 · " + md + " " + wd;
+  if(diff === 1) return "明天 · " + md + " " + wd;
+  if(diff === 2) return "后天 · " + md + " " + wd;
+  if(diff === -1) return "昨天 · " + md + " " + wd;
+  if(diff < 0) return md + " " + wd + "（已过期 " + (-diff) + " 天）";
+  return md + " " + wd;
+}
+function todoGroupClass(dateStr) {
+  if(!dateStr) return "";
+  var diff = daysBetween(dateStr);
+  if(diff === 0) return " is-today";
+  if(diff < 0) return " is-overdue";
+  return "";
+}
+/* 默认日期：今天 */
+function defaultTodoDate() { return todayStr(); }
+/* 待办排序规则：按选择的时间（日期）升序，未安排日期排最后；同日内未完成在前、已完成在后 */
+function todoSortFn(a, b) {
+  var da = todoDateOf(a), db = todoDateOf(b);
+  if(da !== db) {
+    if(!da) return 1;
+    if(!db) return -1;
+    return da < db ? -1 : 1;
+  }
+  var dna = a.done ? 1 : 0, dnb = b.done ? 1 : 0;
+  if(dna !== dnb) return dna - dnb;
+  var ta = todoTimeOf(a), tb = todoTimeOf(b);
+  if(ta !== tb) return ta < tb ? -1 : 1;
+  return (a.id||0) - (b.id||0);
+}
+/* 当前可见（受「隐藏已完成」影响）且已排序的待办列表 */
+function todoVisibleList() {
+  var visible = hideDoneTodos ? todos.filter(function(t){ return !t.done; }) : todos.slice();
+  visible.sort(todoSortFn);
+  return visible;
+}
+/* 待办项内的进度记录（时间线 + 内联输入） */
+function todoProgressHtml(t) {
+  var progress = t.progressLog || [];
+  var items = "";
+  for(var pi=progress.length-1; pi>=0; pi--) {
+    items += '<div class="task-progress-item">'+
+      '<span class="task-progress-time">'+formatDateTime(progress[pi].ts)+'</span>'+
+      '<span class="task-progress-content">'+escapeHtml(progress[pi].content)+'</span>'+
+      '<button class="task-progress-del js-todo-progress-del" data-id="'+t.id+'" data-idx="'+pi+'" title="删除该条进度" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>'+
+    '</div>';
+  }
+  var head = '<div class="task-progress-head">'+
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+    '进度记录'+(progress.length ? '<span class="task-progress-count">'+progress.length+'</span>' : '')+
+    '<button class="task-progress-add js-todo-add-progress" data-id="'+t.id+'" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>'+(progress.length ? '添加' : '添加进度')+'</button>'+
+  '</div>';
+  var list = progress.length ? '<div class="task-progress-list">'+items+'</div>' : '';
+  var inputWrap = '<div class="task-progress-input-wrap todo-prog-wrap" data-id="'+t.id+'">'+
+    '<textarea class="todo-prog-input js-todo-progress-input" data-id="'+t.id+'" placeholder="记录进展，如：已联系小朱，等回复…（Ctrl+Enter 保存）"></textarea>'+
+    '<div class="task-progress-input-actions">'+
+      '<button class="btn js-todo-progress-cancel" data-id="'+t.id+'" type="button">取消</button>'+
+      '<button class="btn btn-primary js-todo-progress-save" data-id="'+t.id+'" type="button">保存进度</button>'+
+    '</div>'+
+  '</div>';
+  return '<div class="task-progress todo-progress">'+head+list+inputWrap+'</div>';
+}
+function todoItemHtml(t) {
+  return '<div class="todo-item'+(t.done?" done":"")+'" data-id="'+t.id+'">'+
+    '<div class="todo-item-main">'+
+      '<input type="checkbox" class="todo-check js-todo-toggle" data-id="'+t.id+'"'+(t.done?" checked":"")+' title="标记完成/未完成">'+
+      '<div class="todo-content js-todo-toggle" data-id="'+t.id+'" title="点击切换完成状态">'+escapeHtml(t.content)+'</div>'+
+      '<div class="todo-actions">'+
+        '<button class="btn btn-icon js-todo-edit" data-id="'+t.id+'" title="编辑" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
+        '<button class="btn btn-icon delete js-todo-delete" data-id="'+t.id+'" title="删除" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
+      '</div>'+
+    '</div>'+
+    todoProgressHtml(t)+
+  '</div>';
+}
+function todoEditRowHtml(t) {
+  return '<div class="todo-item editing" data-id="'+t.id+'">'+
+    '<div class="todo-edit-row">'+
+      '<input type="date" class="todo-edit-date" id="todoEditTime" value="'+escapeHtml(todoDateOf(t))+'" title="日期（可留空）">'+
+      '<textarea class="todo-edit-content" id="todoEditContent" maxlength="1000">'+escapeHtml(t.content)+'</textarea>'+
+      '<div class="todo-actions">'+
+        '<button class="btn btn-primary btn-sm js-todo-save" data-id="'+t.id+'" type="button">保存</button>'+
+        '<button class="btn btn-secondary btn-sm js-todo-cancel" type="button">取消</button>'+
+      '</div>'+
+    '</div>'+
+  '</div>';
+}
+function renderTodos() {
+  var list = document.getElementById("todoList");
+  if(!list) return;
+  var pending = 0;
+  for(var i=0;i<todos.length;i++) { if(!todos[i].done) pending++; }
+  var badge = document.getElementById("todoCountBadge");
+  if(badge) badge.textContent = pending;
+  var totalEl = document.getElementById("todoTotal");
+  if(totalEl) totalEl.textContent = todos.length;
+  var pendEl = document.getElementById("todoPending");
+  if(pendEl) pendEl.textContent = pending;
+
+  var visible = todoVisibleList();
+  var pagerEl = document.getElementById("todoPager");
+  if(visible.length === 0) {
+    list.innerHTML = '<div class="todo-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+      (todos.length === 0 ? "还没有待办，在上面添加一条吧" : "没有未完成的待办，干得漂亮")+'</div>';
+    PAGERS.todos.total = 0;
+    if(pagerEl) pagerEl.innerHTML = "";
+    return;
+  }
+  /* 排序：先按选择的时间（日期）升序，未安排日期的排最后；
+     同一日期内未完成在前、已完成在后，再按创建先后（id 升序） */
+  PAGERS.todos.total = visible.length;
+  /* 分页：每页默认 10 条，条数可选 */
+  var pageData = pagerSlice("todos", visible);
+  var pageItems = pageData.items;
+
+  /* 当前页内按日期分组展示；组头条数按整个可见集合统计 */
+  var groups = {}, keys = [];
+  for(var j=0;j<pageItems.length;j++) {
+    var d = todoDateOf(pageItems[j]);
+    var k = d || "\uffff";
+    if(!groups[k]) { groups[k] = []; keys.push(k); }
+    groups[k].push(pageItems[j]);
+  }
+  keys.sort();
+  var html = "";
+  for(var g=0;g<keys.length;g++) {
+    var k2 = keys[g];
+    var dateKey = (k2 === "\uffff") ? "" : k2;
+    var arr = groups[k2];
+    var groupTotal = 0;
+    for(var vi=0;vi<visible.length;vi++) { if((todoDateOf(visible[vi]) || "\uffff") === k2) groupTotal++; }
+    html += '<div class="todo-group">'+
+      '<div class="todo-group-title'+todoGroupClass(dateKey)+'">'+escapeHtml(todoDayLabel(dateKey))+
+        '<span class="count-badge">'+groupTotal+'</span></div>'+
+      '<div class="todo-group-list">';
+    for(var m=0;m<arr.length;m++) {
+      html += (arr[m].id === editingTodoId) ? todoEditRowHtml(arr[m]) : todoItemHtml(arr[m]);
+    }
+    html += '</div></div>';
+  }
+  list.innerHTML = html;
+  if(pagerEl) pagerEl.innerHTML = pagerHtml("todos");
+}
+function addTodo() {
+  var ti = document.getElementById("todoTimeInput");
+  var ci = document.getElementById("todoContentInput");
+  if(!ci) return;
+  var content = (ci.value||"").trim();
+  if(!content) { showToast("请输入待办内容"); ci.focus(); return; }
+  var newTodo = {
+    id: Date.now(),
+    time: (ti && ti.value ? ti.value : "").trim(),
+    content: content,
+    done: false,
+    createdAt: todayStr(),
+    updatedAt: Date.now(),
+    progressLog: []
+  };
+  todos.unshift(newTodo);
+  saveTodos();
+  /* 自动翻到新待办所在的那一页，避免「加了却看不到」 */
+  try {
+    var ordered = todoVisibleList();
+    for(var oi=0; oi<ordered.length; oi++) {
+      if(ordered[oi].id === newTodo.id) {
+        PAGERS.todos.page = Math.floor(oi / PAGERS.todos.size) + 1;
+        break;
+      }
+    }
+  } catch(e) {}
+  renderTodos();
+  ci.value = "";
+  syncTodoQuickBtns();
+  ci.focus();
+  showToast("已添加待办");
+}
+/* 设置输入区的日期（快捷按钮：今天/明天/后天/不指定） */
+function setTodoDate(v) {
+  var ti = document.getElementById("todoTimeInput");
+  if(ti) ti.value = v || "";
+  syncTodoQuickBtns();
+}
+function syncTodoQuickBtns() {
+  var ti = document.getElementById("todoTimeInput");
+  var v = ti ? ti.value : "";
+  var btns = document.querySelectorAll(".js-todo-quick");
+  for(var i=0;i<btns.length;i++) {
+    var days = btns[i].getAttribute("data-days");
+    var target = (days === "" || days == null) ? "" : dateOffset(parseInt(days,10));
+    btns[i].classList.toggle("active", v !== "" && v === target);
+  }
+}
+function deleteTodo(id) {
+  todos = todos.filter(function(t){ return t.id !== id; });
+  addDeletedId(DELETED_TODO_IDS_KEY, id);
+  if(editingTodoId === id) editingTodoId = null;
+  saveTodos();
+  renderTodos();
+  showToast("待办已删除");
+}
+function toggleTodoDone(id) {
+  for(var i=0;i<todos.length;i++) {
+    if(todos[i].id === id) { todos[i].done = !todos[i].done; touchTodo(todos[i]); break; }
+  }
+  saveTodos();
+  renderTodos();
+}
+function saveTodoEdit(id) {
+  var timeEl = document.getElementById("todoEditTime");
+  var contentEl = document.getElementById("todoEditContent");
+  var content = contentEl ? (contentEl.value||"").trim() : "";
+  if(!content) { showToast("内容不能为空"); if(contentEl) contentEl.focus(); return; }
+  for(var i=0;i<todos.length;i++) {
+    if(todos[i].id === id) {
+      todos[i].content = content;
+      todos[i].time = timeEl ? (timeEl.value||"").trim() : todos[i].time;
+      if(!Array.isArray(todos[i].progressLog)) todos[i].progressLog = [];
+      touchTodo(todos[i]);
+      break;
+    }
+  }
+  editingTodoId = null;
+  saveTodos();
+  renderTodos();
+  showToast("已保存");
+}
+/* 待办进度：追加 / 删除（与任务的进度记录同构，随待办一起同步） */
+function addTodoProgress(id, content) {
+  for(var i=0;i<todos.length;i++) {
+    if(todos[i].id === id) {
+      if(!Array.isArray(todos[i].progressLog)) todos[i].progressLog = [];
+      todos[i].progressLog.push({ ts: Date.now(), content: content });
+      touchTodo(todos[i]);
+      break;
+    }
+  }
+  saveTodos();
+  renderTodos();
+}
+function deleteTodoProgress(id, idx) {
+  for(var i=0;i<todos.length;i++) {
+    if(todos[i].id === id) {
+      if(todos[i].progressLog && todos[i].progressLog[idx]) todos[i].progressLog.splice(idx, 1);
+      touchTodo(todos[i]);
+      break;
+    }
+  }
+  saveTodos();
+  renderTodos();
+}
+
 function renderNotes() {
   var list = document.getElementById("noteList");
   var badge = document.getElementById("noteCountBadge");
   if(badge) badge.textContent = notes.length;
+  var notePagerEl = document.getElementById("notePager");
   if(notes.length === 0) {
     list.innerHTML = '<div class="note-empty">暂无便签，记录一些常用信息吧</div>';
+    PAGERS.notes.total = 0;
+    if(notePagerEl) notePagerEl.innerHTML = "";
     return;
   }
   var sorted = notes.slice().sort(function(a,b){
@@ -955,9 +1551,12 @@ function renderNotes() {
     if(ap !== bp) return bp - ap;
     return b.id - a.id;
   });
+  /* 翻页展示：便签默认每页 5 条 */
+  PAGERS.notes.total = sorted.length;
+  var nPage = pagerSlice("notes", sorted);
   var html = "";
-  for(var i=0;i<sorted.length;i++) {
-    var n = sorted[i];
+  for(var i=0;i<nPage.items.length;i++) {
+    var n = nPage.items[i];
     var pinCls = n.pinned ? " pinned" : "";
     var pinBtnCls = n.pinned ? " active" : "";
     var pinTitle = n.pinned ? "取消置顶" : "置顶";
@@ -975,6 +1574,7 @@ function renderNotes() {
     '</div>';
   }
   list.innerHTML = html;
+  if(notePagerEl) notePagerEl.innerHTML = pagerHtml("notes");
 }
 /* ========== CRUD ========== */
 function addTask(data) {
@@ -988,6 +1588,7 @@ function addTask(data) {
     desc:data.desc||"",
     createdAt:todayStr(),
     completedAt:null,
+    updatedAt:Date.now(),
     progressLog:[]
   });
   saveTasks();
@@ -1000,6 +1601,7 @@ function updateTask(id,data) {
       tasks[i].priority=data.priority;
       tasks[i].deadline=data.deadline;
       tasks[i].desc=data.desc||"";
+      touchTask(tasks[i]);
       break;
     }
   }
@@ -1015,6 +1617,7 @@ function completeTask(id) {
     if(tasks[i].id===id) {
       tasks[i].status="已完成";
       tasks[i].completedAt=todayStr();
+      touchTask(tasks[i]);
       break;
     }
   }
@@ -1025,6 +1628,7 @@ function setStatus(id, newStatus) {
     if(tasks[i].id===id) {
       tasks[i].status = newStatus;
       tasks[i].completedAt = newStatus==="已完成" ? todayStr() : null;
+      touchTask(tasks[i]);
       break;
     }
   }
@@ -1073,6 +1677,7 @@ function uncompleteTask(id) {
     if(tasks[i].id===id) {
       tasks[i].status="进行中";
       tasks[i].completedAt=null;
+      touchTask(tasks[i]);
       break;
     }
   }
@@ -1084,6 +1689,7 @@ function addProgressLog(id, content) {
     if(tasks[i].id===id) {
       if(!tasks[i].progressLog) tasks[i].progressLog = [];
       tasks[i].progressLog.push({ ts: Date.now(), content: content });
+      touchTask(tasks[i]);
       break;
     }
   }
@@ -1096,6 +1702,7 @@ function deleteProgressLog(id, idx) {
       if(tasks[i].progressLog && tasks[i].progressLog[idx]) {
         tasks[i].progressLog.splice(idx, 1);
       }
+      touchTask(tasks[i]);
       break;
     }
   }
@@ -1170,10 +1777,9 @@ function renderToday() {
 function todayItemHtml(task,isOverdue) {
   return '<div class="today-item'+(isOverdue?" overdue":"")+'">'+
     '<div class="today-item-body">'+
-      '<div class="today-item-title">'+escapeHtml(task.title)+'</div>'+
+      '<div class="today-item-title">'+typePrefixHtml(task)+escapeHtml(task.title)+'</div>'+
       '<div class="today-item-meta">'+
         '<span class="badge prio-'+task.priority+'">'+task.priority+'</span>'+
-        '<span class="badge '+(TYPE_CLASS[task.type]||"")+'">'+task.type+'</span>'+
         '<span class="today-item-deadline '+(isOverdue?"overdue-text":"")+'">'+formatDeadline(task.deadline)+'</span>'+
       '</div>'+
     '</div>'+
@@ -1193,7 +1799,8 @@ function renderTaskList() {
     if(kw) {
       var inTitle = t.title.toLowerCase().indexOf(kw)>=0;
       var inDesc = t.desc && t.desc.toLowerCase().indexOf(kw)>=0;
-      if(!inTitle && !inDesc) return false;
+      var inType = (t.type||"").toLowerCase().indexOf(kw)>=0;
+      if(!inTitle && !inDesc && !inType) return false;
     }
     return true;
   });
@@ -1226,20 +1833,26 @@ function renderTaskList() {
     }
   }
 
-  /* Render active list */
+  /* Render active list（翻页展示：每页默认 10 条，条数可选） */
+  var taskPagerEl = document.getElementById("taskPager");
+  PAGERS.tasks.total = active.length;
   if(active.length===0 && completed.length===0) {
     document.getElementById("taskList").innerHTML =
       '<div class="task-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6M9 16h6M14 2H5a2 2 0 00-2 2v16a2 2 0 002 2h14a2 2 0 002-2V7l-5-5zM14 2v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg><p>暂无任务</p><p style="font-size:12px">在左侧面板输入任务标题开始记录</p></div>';
+    if(taskPagerEl) taskPagerEl.innerHTML = "";
   } else if(active.length===0 && completed.length>0) {
     document.getElementById("taskList").innerHTML =
       '<div class="task-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6M9 16h6M14 2H5a2 2 0 00-2 2v16a2 2 0 002 2h14a2 2 0 002-2V7l-5-5zM14 2v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg><p>当前筛选下无活跃任务</p><p style="font-size:12px">'+completed.length+'条已完成任务在下方归档区</p></div>';
+    if(taskPagerEl) taskPagerEl.innerHTML = "";
   } else {
+    var tPage = pagerSlice("tasks", active);
     var html = "";
-    for(var i=0;i<active.length;i++) html += taskCardHtml(active[i]);
+    for(var i=0;i<tPage.items.length;i++) html += taskCardHtml(tPage.items[i]);
     document.getElementById("taskList").innerHTML = html;
+    if(taskPagerEl) taskPagerEl.innerHTML = pagerHtml("tasks");
   }
 
-  /* Render archive section */
+  /* Render archive section（归档区同样翻页） */
   var archiveSec = document.getElementById("archiveSection");
   var archiveBody = document.getElementById("archiveBody");
   var archiveHeader = document.getElementById("archiveHeader");
@@ -1247,8 +1860,11 @@ function renderTaskList() {
   if(completed.length>0 && filters.hideCompleted) {
     archiveSec.classList.remove("hidden");
     archiveCount.textContent = completed.length;
+    PAGERS.archive.total = completed.length;
+    var aPage = pagerSlice("archive", completed);
     var aHtml = "";
-    for(var i=0;i<completed.length;i++) aHtml += taskCardHtml(completed[i]);
+    for(var i=0;i<aPage.items.length;i++) aHtml += taskCardHtml(aPage.items[i]);
+    aHtml += pagerHtml("archive", archiveBody);
     archiveBody.innerHTML = aHtml;
     if(archiveOpen) {
       archiveBody.classList.add("open");
@@ -1259,6 +1875,7 @@ function renderTaskList() {
     }
   } else {
     archiveSec.classList.add("hidden");
+    PAGERS.archive.total = 0;
   }
 }
 
@@ -1314,10 +1931,9 @@ function taskCardHtml(task) {
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
     '</div>'+
     '<div class="task-body">'+
-      '<div class="task-header"><span class="task-title">'+escapeHtml(task.title)+'</span></div>'+
+      '<div class="task-header"><span class="task-title">'+typePrefixHtml(task)+escapeHtml(task.title)+'</span></div>'+
       '<div class="task-badges">'+
         '<span class="badge prio-'+task.priority+'">'+task.priority+'</span>'+
-        '<span class="badge '+typeCls+'">'+task.type+'</span>'+
         '<span class="badge '+statusCls+' js-toggle-status" data-id="'+task.id+'" style="cursor:pointer">'+task.status+'</span>'+
       '</div>'+
       descHtml+
@@ -1335,7 +1951,31 @@ function taskCardHtml(task) {
   '</div>';
 }
 
-/* ========== Form (always visible) ========== */
+/* ========== Form (新增任务：可折叠) ========== */
+var FORM_OPEN_KEY = "wb_task_hub_form_open";
+/* 折叠 / 展开「新增任务」表单（默认折叠，避免占用屏幕空间挤压任务列表） */
+function setFormCollapsed(collapsed) {
+  var sec = document.getElementById("taskFormSection");
+  if(!sec) return;
+  collapsed = !!collapsed;
+  sec.classList.toggle("collapsed", collapsed);
+  var btn = document.getElementById("formToggleBtn");
+  var txt = document.getElementById("formToggleText");
+  if(btn) {
+    btn.classList.toggle("open", !collapsed);
+    btn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+  }
+  if(txt) txt.textContent = collapsed ? "展开" : "收起";
+  storageSet(FORM_OPEN_KEY, collapsed ? "0" : "1");
+}
+function toggleFormCollapsed() {
+  var sec = document.getElementById("taskFormSection");
+  if(!sec) return;
+  setFormCollapsed(!sec.classList.contains("collapsed"));
+}
+function initFormCollapse() {
+  setFormCollapsed(storageGet(FORM_OPEN_KEY) !== "1");
+}
 function resetForm() {
   editingTaskId = null;
   document.getElementById("inputTitle").value = "";
@@ -1348,6 +1988,7 @@ function resetForm() {
   var tag = document.getElementById("formModeTag");
   tag.textContent = "新增";
   tag.className = "form-mode-tag add";
+  updateTitlePrefixHint();
 }
 
 function fillFormForEdit(id) {
@@ -1357,6 +1998,9 @@ function fillFormForEdit(id) {
   }
   if(!task) return;
   editingTaskId = id;
+  /* 编辑任务时自动展开表单，并滚动到表单位置 */
+  setFormCollapsed(false);
+  try { document.getElementById("taskFormSection").scrollIntoView({behavior:"smooth", block:"start"}); } catch(e) {}
   document.getElementById("inputTitle").value = task.title;
   document.getElementById("inputType").value = task.type;
   document.getElementById("inputPriority").value = task.priority;
@@ -1367,11 +2011,22 @@ function fillFormForEdit(id) {
   var tag = document.getElementById("formModeTag");
   tag.textContent = "编辑中";
   tag.className = "form-mode-tag edit";
+  updateTitlePrefixHint();
   try { document.getElementById("inputTitle").focus(); } catch(e) {}
 }
 
+/* 更新编辑弹窗里的类型前缀提示（前缀由产品类型自动生成，不需要手写） */
+function updateTitlePrefixHint() {
+  var el = document.getElementById("titlePrefixHint");
+  if(!el) return;
+  var t = document.getElementById("inputType").value || "未分类";
+  var cls = TYPE_CLASS[t] || "type-unknown";
+  el.innerHTML = '<span>标题显示为：</span><span class="badge type-prefix '+cls+'">['+escapeHtml(t)+']</span>'+
+    '<span>摘要 —— 前缀由「产品类型」自动生成，标题里不用手写</span>';
+}
+
 function saveForm() {
-  var title = document.getElementById("inputTitle").value.trim();
+  var title = stripTypePrefix(document.getElementById("inputTitle").value);
   if(!title) {
     var errEl = document.getElementById("formError");
     errEl.textContent = "请输入任务标题";
@@ -1402,8 +2057,10 @@ function exportData() {
     exportDate: new Date().toISOString(),
     taskCount: tasks.length,
     noteCount: notes.length,
+    todoCount: todos.length,
     tasks: tasks,
-    notes: notes
+    notes: notes,
+    todos: todos
   };
   var blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
   var url = URL.createObjectURL(blob);
@@ -1440,6 +2097,7 @@ function importData(file) {
           desc: t.desc || "",
           createdAt: t.createdAt || todayStr(),
           completedAt: t.completedAt || null,
+          updatedAt: Date.now(),
           progressLog: Array.isArray(t.progressLog) ? t.progressLog.map(function(g){
             return { ts: g.ts || Date.now(), content: String(g.content || "") };
           }) : []
@@ -1469,9 +2127,32 @@ function importData(file) {
         saveNotes();
       }
 
+      var importedTodos = 0;
+      // 导入每日待办（旧备份文件没有该字段则跳过，不动现有数据）
+      if(data.todos && Array.isArray(data.todos)) {
+        todos = data.todos.filter(function(t){
+          return t && typeof t.content === "string";
+        }).map(function(t){
+          return {
+            id: t.id || Date.now()+Math.random(),
+            time: t.time || "",
+            content: t.content,
+            done: !!t.done,
+            createdAt: t.createdAt || todayStr(),
+            updatedAt: Date.now(),
+            progressLog: Array.isArray(t.progressLog) ? t.progressLog.map(function(g){
+              return { ts: g.ts || Date.now(), content: String(g.content || "") };
+            }) : []
+          };
+        });
+        importedTodos = todos.length;
+        saveTodos();
+      }
+
       renderAll();
       var msg = "已导入 "+valid.length+" 条任务";
       if(importedNotes.length > 0) msg += "，"+importedNotes.length+" 条便签";
+      if(importedTodos > 0) msg += "，"+importedTodos+" 条待办";
       showToast(msg);
     } catch(err) {
       showToast("导入失败：文件格式错误");
@@ -1490,8 +2171,10 @@ function hideClearModal() {
 function clearAllData() {
   tasks = [];
   notes = [];
+  todos = [];
   saveTasks();
   saveNotes();
+  saveTodos();
   hideClearModal();
   resetForm();
   renderAll();
@@ -1512,34 +2195,74 @@ function updateBackupReminder() {
 function renderAll() {
   try { renderToday(); } catch(e) {}
   try { renderTaskList(); } catch(e) {}
+  try { renderTodos(); } catch(e) {}
   try { renderNotes(); } catch(e) {}
+  try { updateNavBadges(); } catch(e) {}
   try { updateBackupReminder(); } catch(e) {}
+}
+/* 左侧导航上的计数徽标：任务/待办显示未完成数，便签显示总数 */
+function updateNavBadges() {
+  var a = document.getElementById("navTaskCount");
+  if(a) a.textContent = tasks.filter(function(t){ return t.status !== "已完成"; }).length;
+  var b = document.getElementById("navTodoCount");
+  if(b) b.textContent = todos.filter(function(t){ return !t.done; }).length;
+  var c = document.getElementById("navNoteCount");
+  if(c) c.textContent = notes.length;
 }
 
 /* ========== View Switching ========== */
 function switchView(view) {
-  var tasksView = document.getElementById("tasksView");
-  var notesView = document.getElementById("notesView");
-  var tabTasks = document.getElementById("tabTasksBtn");
-  var tabNotes = document.getElementById("tabNotesBtn");
-  if(view === "notes") {
-    tasksView.classList.add("hidden");
-    notesView.classList.remove("hidden");
-    tabTasks.classList.remove("active");
-    tabNotes.classList.add("active");
-  } else {
-    tasksView.classList.remove("hidden");
-    notesView.classList.add("hidden");
-    tabTasks.classList.add("active");
-    tabNotes.classList.remove("active");
-  }
+  currentView = (view === "notes" || view === "todos") ? view : "tasks";
+  var map = {
+    tasks: {panel:"tasksView", tab:"tabTasksBtn"},
+    todos: {panel:"todosView", tab:"tabTodosBtn"},
+    notes: {panel:"notesView", tab:"tabNotesBtn"}
+  };
+  Object.keys(map).forEach(function(k){
+    var panel = document.getElementById(map[k].panel);
+    var tab = document.getElementById(map[k].tab);
+    if(panel) panel.classList.toggle("hidden", k !== currentView);
+    if(tab) tab.classList.toggle("active", k === currentView);
+  });
 }
 
 /* ========== Event Binding ========== */
 function bindEvents() {
-  // View tabs
+  // 左侧导航页签
   document.getElementById("tabTasksBtn").addEventListener("click", function(){ switchView("tasks"); });
+  document.getElementById("tabTodosBtn").addEventListener("click", function(){ switchView("todos"); });
   document.getElementById("tabNotesBtn").addEventListener("click", function(){ switchView("notes"); });
+
+  // 每日待办：输入模块
+  var addTodoBtn = document.getElementById("addTodoBtn");
+  if(addTodoBtn) addTodoBtn.addEventListener("click", addTodo);
+  var todoContentInput = document.getElementById("todoContentInput");
+  if(todoContentInput) {
+    // 大输入框：Enter 换行，Ctrl/⌘ + Enter 快速添加
+    todoContentInput.addEventListener("keydown", function(e){
+      if(e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); addTodo(); }
+    });
+  }
+  var todoTimeInput = document.getElementById("todoTimeInput");
+  if(todoTimeInput) {
+    todoTimeInput.value = defaultTodoDate();
+    todoTimeInput.addEventListener("change", syncTodoQuickBtns);
+  }
+  var quickBtns = document.querySelectorAll(".js-todo-quick");
+  for(var qi=0; qi<quickBtns.length; qi++) {
+    quickBtns[qi].addEventListener("click", function(){
+      var days = this.getAttribute("data-days");
+      setTodoDate((days === "" || days == null) ? "" : dateOffset(parseInt(days,10)));
+    });
+  }
+  syncTodoQuickBtns();
+  var hideDoneChk = document.getElementById("hideDoneTodoChk");
+  if(hideDoneChk) {
+    hideDoneChk.addEventListener("change", function(e){
+      hideDoneTodos = !!e.target.checked;
+      renderTodos();
+    });
+  }
 
   // 云同步设置（Gist ID + 后端 URL + 密钥）
   document.getElementById("gistConfigBtn").addEventListener("click", function(){
@@ -1565,13 +2288,16 @@ function bindEvents() {
   document.getElementById("clearTombBtn").addEventListener("click", function(){
     var dt = getDeletedIds(DELETED_TASK_IDS_KEY);
     var dn = getDeletedIds(DELETED_NOTE_IDS_KEY);
-    if(dt.length === 0 && dn.length === 0) { showToast("已删名单为空"); return; }
-    if(!confirm("清空已删名单？\n\n当前记录：" + dt.length + " 条任务 / " + dn.length + " 条便签。\n清空后，下次云端同步会把这些条目重新拉回来。")) return;
+    var dd = getDeletedIds(DELETED_TODO_IDS_KEY);
+    if(dt.length === 0 && dn.length === 0 && dd.length === 0) { showToast("已删名单为空"); return; }
+    if(!confirm("清空已删名单？\n\n当前记录：" + dt.length + " 条任务 / " + dn.length + " 条便签 / " + dd.length + " 条待办。\n清空后，下次云端同步会把这些条目重新拉回来。")) return;
     clearDeletedIds();
     showToast("已清空，下次同步恢复这些条目");
   });
 
-  // Form (always visible)
+  // Form：新增任务的折叠 / 展开开关
+  var formToggleBtn = document.getElementById("formToggleBtn");
+  if(formToggleBtn) formToggleBtn.addEventListener("click", toggleFormCollapsed);
   document.getElementById("cancelFormBtn").addEventListener("click", function(){
     resetForm();
   });
@@ -1612,14 +2338,17 @@ function bindEvents() {
   // Filters
   document.getElementById("filterType").addEventListener("change", function(e){
     filters.type = e.target.value;
+    PAGERS.tasks.page = 1;
     renderTaskList();
   });
   document.getElementById("filterPriority").addEventListener("change", function(e){
     filters.priority = e.target.value;
+    PAGERS.tasks.page = 1;
     renderTaskList();
   });
   document.getElementById("filterStatus").addEventListener("change", function(e){
     filters.status = e.target.value;
+    PAGERS.tasks.page = 1;
     renderTaskList();
   });
 
@@ -1630,6 +2359,7 @@ function bindEvents() {
     var val = e.target.value;
     searchTimer = setTimeout(function(){
       filters.keyword = val;
+      PAGERS.tasks.page = 1;
       renderTaskList();
     }, 200);
   });
@@ -1637,6 +2367,8 @@ function bindEvents() {
   // Hide completed toggle
   document.getElementById("hideCompletedChk").addEventListener("change", function(e){
     filters.hideCompleted = e.target.checked;
+    PAGERS.tasks.page = 1;
+    PAGERS.archive.page = 1;
     renderTaskList();
   });
 
@@ -1669,6 +2401,9 @@ function bindEvents() {
       saveForm();
     }
   });
+
+  // 产品类型变化 → 实时刷新标题前缀提示
+  document.getElementById("inputType").addEventListener("change", updateTitlePrefixHint);
 
   // Event delegation for dynamically generated elements
   document.addEventListener("click", function(e) {
@@ -1719,11 +2454,11 @@ function bindEvents() {
     var editBtn = e.target.closest(".js-edit-task");
     if(editBtn) {
       var id = parseInt(editBtn.getAttribute("data-id"));
+      if(currentView !== "tasks") switchView("tasks");
       fillFormForEdit(id);
-      // Scroll to form on mobile
-      if(window.innerWidth <= 768) {
-        document.querySelector(".layout-left").scrollIntoView({behavior:"smooth",block:"start"});
-      }
+      // 表单现在在任务页顶部，编辑时滚到顶部
+      var formSec = document.getElementById("taskFormSection");
+      if(formSec) formSec.scrollIntoView({behavior:"smooth",block:"start"});
       return;
     }
 
@@ -1845,6 +2580,120 @@ function bindEvents() {
       editArea.setSelectionRange(editArea.value.length, editArea.value.length);
       return;
     }
+
+    // 每日待办：勾选完成（复选框或点击内容）
+    var todoToggle = e.target.closest(".js-todo-toggle");
+    if(todoToggle) {
+      toggleTodoDone(parseInt(todoToggle.getAttribute("data-id")));
+      return;
+    }
+
+    // 每日待办：进入编辑
+    var todoEditBtn = e.target.closest(".js-todo-edit");
+    if(todoEditBtn) {
+      editingTodoId = parseInt(todoEditBtn.getAttribute("data-id"));
+      renderTodos();
+      var tc = document.getElementById("todoEditContent");
+      if(tc) { tc.focus(); tc.setSelectionRange(tc.value.length, tc.value.length); }
+      return;
+    }
+
+    // 每日待办：保存编辑
+    var todoSaveBtn = e.target.closest(".js-todo-save");
+    if(todoSaveBtn) {
+      saveTodoEdit(parseInt(todoSaveBtn.getAttribute("data-id")));
+      return;
+    }
+
+    // 每日待办：取消编辑
+    var todoCancelBtn = e.target.closest(".js-todo-cancel");
+    if(todoCancelBtn) {
+      editingTodoId = null;
+      renderTodos();
+      return;
+    }
+
+    // 每日待办：删除
+    var todoDelBtn = e.target.closest(".js-todo-delete");
+    if(todoDelBtn) {
+      deleteTodo(parseInt(todoDelBtn.getAttribute("data-id")));
+      return;
+    }
+
+    // 每日待办：展开进度输入
+    var todoAddProg = e.target.closest(".js-todo-add-progress");
+    if(todoAddProg) {
+      var tpid = todoAddProg.getAttribute("data-id");
+      var tWraps = document.querySelectorAll(".task-progress-input-wrap.active");
+      for(var twi=0; twi<tWraps.length; twi++) {
+        if(tWraps[twi].getAttribute("data-id") !== tpid) tWraps[twi].classList.remove("active");
+      }
+      var twrap = document.querySelector('.todo-prog-wrap[data-id="'+tpid+'"]');
+      if(twrap) {
+        twrap.classList.toggle("active");
+        if(twrap.classList.contains("active")) {
+          var tta = twrap.querySelector("textarea");
+          if(tta) tta.focus();
+        }
+      }
+      return;
+    }
+
+    // 每日待办：保存进度
+    var todoSaveProg = e.target.closest(".js-todo-progress-save");
+    if(todoSaveProg) {
+      var tspid = todoSaveProg.getAttribute("data-id");
+      var tswrap = document.querySelector('.todo-prog-wrap[data-id="'+tspid+'"]');
+      if(tswrap) {
+        var tsta = tswrap.querySelector("textarea");
+        var tscontent = tsta ? tsta.value.trim() : "";
+        if(!tscontent) { showToast("请输入进度内容"); if(tsta) tsta.focus(); return; }
+        if(tsta) tsta.value = "";
+        tswrap.classList.remove("active");
+        addTodoProgress(parseInt(tspid), tscontent);
+        showToast("进度已记录");
+      }
+      return;
+    }
+
+    // 每日待办：取消进度输入
+    var todoCancelProg = e.target.closest(".js-todo-progress-cancel");
+    if(todoCancelProg) {
+      var tcwrap = document.querySelector('.todo-prog-wrap[data-id="'+todoCancelProg.getAttribute("data-id")+'"]');
+      if(tcwrap) {
+        var tcta = tcwrap.querySelector("textarea");
+        if(tcta) tcta.value = "";
+        tcwrap.classList.remove("active");
+      }
+      return;
+    }
+
+    // 每日待办：删除进度条目
+    var todoDelProg = e.target.closest(".js-todo-progress-del");
+    if(todoDelProg) {
+      deleteTodoProgress(parseInt(todoDelProg.getAttribute("data-id")), parseInt(todoDelProg.getAttribute("data-idx")));
+      showToast("进度已删除");
+      return;
+    }
+
+    // 分页：页码 / 上一页 / 下一页（待办、任务、归档、便签通用）
+    var pagerBtn = e.target.closest("[data-pager-jump]");
+    if(pagerBtn) {
+      if(pagerBtn.disabled) return;
+      pagerGo(pagerBtn.getAttribute("data-pager-jump"), pagerBtn.getAttribute("data-page"));
+      try {
+        var host = pagerBtn.closest(".section") || pagerBtn.closest(".archive-body");
+        if(host) host.scrollIntoView({behavior:"smooth", block:"start"});
+      } catch(err) {}
+      return;
+    }
+  });
+
+  // 分页：切换「每页显示条数」
+  document.addEventListener("change", function(e) {
+    if(!e.target || !e.target.closest) return;
+    var sel = e.target.closest("[data-pager-size]");
+    if(sel) pagerSetSize(sel.getAttribute("data-pager-size"), sel.value);
   });
 
   // Auto-resize note edit area while typing
@@ -1871,6 +2720,35 @@ function bindEvents() {
         if(pwrap) pwrap.classList.remove("active");
       } else {
         showToast("请输入进度内容");
+      }
+    }
+  });
+  // 每日待办：进度输入 Ctrl+Enter 保存
+  document.addEventListener("keydown", function(e) {
+    if(!e.target || !e.target.classList) return;
+    if(e.key === "Enter" && (e.ctrlKey||e.metaKey) && e.target.classList.contains("js-todo-progress-input")) {
+      e.preventDefault();
+      var tpid = parseInt(e.target.getAttribute("data-id"));
+      var tcontent = e.target.value.trim();
+      if(!tcontent) { showToast("请输入进度内容"); return; }
+      e.target.value = "";
+      var tw = document.querySelector('.todo-prog-wrap[data-id="'+tpid+'"]');
+      if(tw) tw.classList.remove("active");
+      addTodoProgress(tpid, tcontent);
+      showToast("进度已记录");
+    }
+  });
+  // 每日待办：编辑态快捷键（Ctrl+Enter 保存 / Esc 取消；Enter 在内容框里换行）
+  document.addEventListener("keydown", function(e) {
+    if(!e.target || !e.target.classList) return;
+    if(e.target.classList.contains("todo-edit-content") || e.target.classList.contains("todo-edit-date")) {
+      if(e.key === "Enter" && (e.ctrlKey||e.metaKey)) {
+        e.preventDefault();
+        if(editingTodoId !== null) saveTodoEdit(editingTodoId);
+      } else if(e.key === "Escape") {
+        e.preventDefault();
+        editingTodoId = null;
+        renderTodos();
       }
     }
   });
@@ -1943,9 +2821,15 @@ function init() {
   try {
     loadTasks();
     loadNotes();
+    loadTodos();
   } catch(e) {
     showJSError("数据加载失败: " + e.message);
   }
+
+  // 分页：恢复上次选择的「每页条数」
+  try { loadPagerSizes(); } catch(e) {}
+  // 新增任务表单：默认折叠（上次的展开/收起状态会被记住）
+  try { initFormCollapse(); } catch(e) {}
 
   // Initialize form with default values
   resetForm();
@@ -1953,8 +2837,31 @@ function init() {
   // Render
   renderAll();
 
-  // Cloud sync (only on HTTPS deployed version, fire-and-forget)
-  setTimeout(checkCloudSync, 300);
+  // 本地部署零配置：通过 localhost / 局域网 IP 的 http 打开且未设置后端 URL 时，默认指向同源本地服务
+  try {
+    if (!getWorkerUrl() && isLanOrLocal()) {
+      setWorkerUrl(location.origin);
+    }
+  } catch (e) {}
+
+  // 启动时自动同步：file:// 跳过；localhost/127.0.0.1 的 http 或任意 https 都尝试
+  setTimeout(function(){
+    checkCloudSync(true);
+  }, 300);
+
+  // 窗口重新可见/获得焦点时做一次静默合并：多标签、多地址（localhost 与局域网 IP）访问时保持数据一致
+  try {
+    var refocusSync = function() {
+      if(document.visibilityState && document.visibilityState !== "visible") return;
+      // 正在输入（尤其是卡片里的进度输入框）时不打断，避免重渲染丢输入
+      var ae = document.activeElement;
+      if(ae && (ae.tagName === "TEXTAREA" || ae.tagName === "INPUT")) return;
+      if(document.querySelector(".task-progress-input-wrap.active")) return;
+      checkCloudSync(true);
+    };
+    document.addEventListener("visibilitychange", refocusSync);
+    window.addEventListener("focus", refocusSync);
+  } catch(e) {}
 }
 
 function showJSError(msg) {
@@ -1965,7 +2872,16 @@ function showJSError(msg) {
   }
 }
 
-/* ========== Cloud Sync (HTTPS-only) ========== */
+/* ========== Cloud Sync（HTTPS 部署版 / 局域网 http 本机服务 均支持） ========== */
+// 判断当前访问是否来自本机回环或局域网（http 协议下允许直连同源服务并同步）
+function isLanOrLocal() {
+  if(location.protocol !== "http:") return false;
+  var h = location.hostname;
+  if(h === "localhost" || h === "127.0.0.1") return true;
+  return /^10(\.\d{1,3}){3}$/.test(h)
+      || /^192\.168(\.\d{1,3}){2}$/.test(h)
+      || /^172\.(1[6-9]|2\d|3[01])(\.\d{1,3}){2}$/.test(h);
+}
 // 依次尝试各个云端通道，返回第一个成功拿到的快照
 function fetchCloudSnapshot(urlIndex, urls) {
   var idx = urlIndex || 0;
@@ -1995,13 +2911,21 @@ function fetchCloudSnapshot(urlIndex, urls) {
     .catch(function(){ return fetchCloudSnapshot(idx + 1, list); });
 }
 
-function checkCloudSync() {
-  // 本地 file:// 协议下 fetch 会被 CORS 拦截，仅 HTTPS 部署版尝试同步
-  if(location.protocol !== "https:") return;
+function checkCloudSync(autoApply) {
+  // file:// 协议下 fetch 会被 CORS 拦截，跳过
+  if(location.protocol === "file:") return;
+  // 仅允许：localhost/局域网私有网段的 http，或任意 https；防止公网 http 源乱请求
+  if(location.protocol === "http:" && !isLanOrLocal()) return;
   fetchCloudSnapshot(0, cloudSyncUrls())
     .then(function(snapshot){
       if(!snapshot || !snapshot.version) return;
       var lastVersion = parseInt(storageGet(CLOUD_LAST_SYNC_KEY) || "0", 10);
+      // 启动/聚焦时：始终以服务端为准做一次 last-write-wins 合并，
+      // 避免不同 origin（localhost 与局域网 IP）各自 localStorage 造成长期不一致
+      if(autoApply) {
+        applyCloudSync(snapshot, true);
+        return;
+      }
       if(snapshot.version <= lastVersion) return;
       // 检查本会话是否已主动忽略过这个版本
       var dismissed = parseInt(storageGet(CLOUD_DISMISSED_VERSION_KEY) || "0", 10);
@@ -2045,68 +2969,137 @@ function dismissCloudSync(version) {
   storageSet(CLOUD_LAST_SYNC_KEY, String(version));
 }
 
-function applyCloudSync(snapshot) {
-  // 按 id 合并任务：云端覆盖本地（云端是源），本地独有保留
-  var localById = {};
-  tasks.forEach(function(t){ localById[String(t.id)] = t; });
-  var merged = [];
-  var added = 0, updated = 0;
-  var delTasks = getDeletedIds(DELETED_TASK_IDS_KEY);
-  (snapshot.tasks || []).forEach(function(t){
-    if(!t || typeof t.title !== "string") return;
-    if(delTasks.indexOf(String(t.id)) >= 0) return;
-    var normalized = {
-      id: t.id || Date.now() + Math.random(),
-      title: t.title,
-      type: t.type || "未分类",
-      priority: t.priority || "P2",
-      deadline: t.deadline || "",
-      status: t.status || "待处理",
-      desc: t.desc || "",
-      createdAt: t.createdAt || todayStr(),
-      completedAt: t.completedAt || null,
-      progressLog: Array.isArray(t.progressLog) ? t.progressLog.map(function(g){
-          return { ts: g.ts || Date.now(), content: String(g.content || "") };
-        }) : []
-    };
-    if(localById[String(normalized.id)]) updated++;
-    else added++;
-    merged.push(normalized);
-    delete localById[String(normalized.id)];
+/* 取条目的合并时间戳：兼容数字毫秒、ISO 字符串、日期字符串（如 "2026-09-10"） */
+function tsOf(x) {
+  if(!x) return 0;
+  var v = x.updatedAt;
+  if(typeof v === "number" && v > 0) return v;
+  if(typeof v === "string" && v) {
+    var n = parseInt(v, 10);
+    if(/^\d+$/.test(v.trim()) && n > 0) return n;
+    var p = Date.parse(v.indexOf("T") >= 0 ? v : v + "T00:00:00");
+    if(!isNaN(p)) return p;
+  }
+  var fb = x.completedAt || x.createdAt;
+  if(typeof fb === "number" && fb > 0) return fb;
+  if(typeof fb === "string" && fb) {
+    var n2 = parseInt(fb, 10);
+    if(/^\d+$/.test(fb.trim()) && n2 > 0) return n2;
+    var p2 = Date.parse(fb.indexOf("T") >= 0 ? fb : fb + "T00:00:00");
+    if(!isNaN(p2)) return p2;
+  }
+  return 0;
+}
+function normalizeTask(t) {
+  return {
+    id: t.id || Date.now() + Math.random(),
+    title: t.title,
+    type: t.type || "未分类",
+    priority: t.priority || "P2",
+    deadline: t.deadline || "",
+    status: t.status || "待处理",
+    desc: t.desc || "",
+    createdAt: t.createdAt || todayStr(),
+    completedAt: t.completedAt || null,
+    updatedAt: tsOf(t),
+    pinned: !!t.pinned,
+    progressLog: Array.isArray(t.progressLog) ? t.progressLog.map(function(g){
+      return { ts: g.ts || Date.now(), content: String(g.content || "") };
+    }) : []
+  };
+}
+function normalizeTodo(t) {
+  return {
+    id: t.id || Date.now() + Math.random(),
+    time: t.time || "",
+    content: t.content,
+    done: !!t.done,
+    createdAt: t.createdAt || todayStr(),
+    updatedAt: tsOf(t),
+    progressLog: Array.isArray(t.progressLog) ? t.progressLog.map(function(g){
+      return { ts: g.ts || Date.now(), content: String(g.content || "") };
+    }) : []
+  };
+}
+function normalizeNote(n) {
+  return {
+    id: n.id || Date.now() + Math.random(),
+    content: n.content,
+    color: n.color || "yellow",
+    createdAt: n.createdAt || todayStr(),
+    updatedAt: tsOf(n),
+    pinned: !!n.pinned
+  };
+}
+/* 按 id 做 last-write-wins 合并：谁的时间戳新谁胜；本地独有的保留 */
+function mergeById(cloudList, localList, deletedIds, normalize, validFn) {
+  var cloudById = {}, localById = {}, out = [], stats = {added:0, updated:0, localOnly:0, removed:0};
+  (cloudList || []).forEach(function(x){ if(x && x.id != null) cloudById[String(x.id)] = x; });
+  (localList || []).forEach(function(x){ if(x && x.id != null) localById[String(x.id)] = x; });
+  Object.keys(cloudById).forEach(function(k){
+    if(deletedIds.indexOf(k) >= 0) { stats.removed++; delete cloudById[k]; }
   });
-  // 本地独有的追加到末尾
-  var localOnly = Object.keys(localById).map(function(k){ return localById[k]; });
-
-  tasks = merged.concat(localOnly);
-  saveTasks();
-  storageSet(CLOUD_LAST_SYNC_KEY, String(snapshot.version));
-
-  // 便签同样合并
-  var noteById = {};
-  notes.forEach(function(n){ noteById[String(n.id)] = n; });
-  var mergedNotes = [];
-  // 全局墓碑（含云端删除名单）
-  var localDelN = getDeletedIds(DELETED_NOTE_IDS_KEY);
-  var cloudDelN = (snapshot.deletedNoteIds || []).map(String);
-  var delNotes = localDelN.concat(cloudDelN.filter(function(x){ return localDelN.indexOf(x) < 0; }));
-  (snapshot.notes || []).forEach(function(n){
-    if(!n || typeof n.content !== "string") return;
-    if(delNotes.indexOf(String(n.id)) >= 0) return;
-    var normalized = {
-      id: n.id || Date.now() + Math.random(),
-      content: n.content,
-      color: n.color || "yellow",
-      createdAt: n.createdAt || todayStr(),
-      pinned: !!n.pinned
-    };
-    mergedNotes.push(normalized);
-    delete noteById[String(normalized.id)];
+  Object.keys(localById).forEach(function(k){
+    var c = cloudById[k], l = localById[k];
+    if(!c) {
+      if(deletedIds.indexOf(k) >= 0) { delete localById[k]; return; }  // 尊重删除（防复活）
+      stats.localOnly++; out.push(normalize(l)); return;
+    }
+    if(tsOf(l) > tsOf(c)) { stats.localOnly++; out.push(normalize(l)); }
+    else { if(tsOf(l) > 0) stats.updated++; else stats.updated++; out.push(normalize(c)); }
+    delete localById[k]; delete cloudById[k];
   });
-  notes = mergedNotes.concat(Object.keys(noteById).map(function(k){ return noteById[k]; }));
-  saveNotes();
+  Object.keys(cloudById).forEach(function(k){
+    var c = cloudById[k];
+    if(!c || (validFn && !validFn(c))) return;
+    stats.added++; out.push(normalize(c));
+  });
+  return {items: out, stats: stats};
+}
 
+function applyCloudSync(snapshot, silent, skipPush) {
+  if(!snapshot) return;
+  var total = {added:0, updated:0, localOnly:0, removed:0};
+  suppressCloudPush = true;
+  try {
+    // 墓碑 = 本地 + 云端 并集（防已删条目复活）
+    var localDelT = getDeletedIds(DELETED_TASK_IDS_KEY);
+    var cloudDelT = (snapshot.deletedTaskIds || []).map(String);
+    var delTasks = localDelT.concat(cloudDelT.filter(function(x){ return localDelT.indexOf(x) < 0; }));
+
+    var r1 = mergeById(snapshot.tasks, tasks, delTasks, normalizeTask, function(t){ return typeof t.title === "string"; });
+    tasks = r1.items;
+
+    var localDelN = getDeletedIds(DELETED_NOTE_IDS_KEY);
+    var cloudDelN = (snapshot.deletedNoteIds || []).map(String);
+    var delNotes = localDelN.concat(cloudDelN.filter(function(x){ return localDelN.indexOf(x) < 0; }));
+    var r2 = mergeById(snapshot.notes, notes, delNotes, normalizeNote, function(n){ return typeof n.content === "string"; });
+    notes = r2.items;
+
+    // 每日待办：旧版服务/旧快照没有 todos 字段时，视为「本地独有」保留，绝不误删
+    var localDelD = getDeletedIds(DELETED_TODO_IDS_KEY);
+    var cloudDelD = (snapshot.deletedTodoIds || []).map(String);
+    var delTodos = localDelD.concat(cloudDelD.filter(function(x){ return localDelD.indexOf(x) < 0; }));
+    var r3 = mergeById(snapshot.todos, todos, delTodos, normalizeTodo, function(x){ return typeof x.content === "string"; });
+    todos = r3.items;
+
+    var rs = [r1.stats, r2.stats, r3.stats];
+    for(var si=0; si<rs.length; si++) {
+      total.added += rs[si].added; total.updated += rs[si].updated;
+      total.localOnly += rs[si].localOnly; total.removed += rs[si].removed;
+    }
+
+    saveTasks();
+    saveNotes();
+    saveTodos();
+    storageSet(CLOUD_LAST_SYNC_KEY, String(snapshot.version || Date.now()));
+  } finally {
+    suppressCloudPush = false;
+  }
   renderAll();
-  showToast("已合并云端更新：新增 " + added + "，更新 " + updated + "，本地保留 " + localOnly.length);
+  // 本地有云端不知道的数据 → 推回服务端，让两端收敛（skipPush 用于防止来回循环）
+  if(!skipPush && (total.localOnly > 0 || total.removed > 0)) schedulePush();
+  if(!silent) showToast("已与服务端合并：新增 " + total.added + "，本地更新 " + total.localOnly + "，删除 " + total.removed);
 }
 
 // Global error handler
