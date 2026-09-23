@@ -393,6 +393,88 @@ textarea{resize:vertical;min-height:60px}
   .pager-btns{flex:1 1 100%;justify-content:center;flex-wrap:wrap}
 }
 
+/* ========== JSON Tool (工具箱) ========== */
+.btn-xs{padding:5px 10px;font-size:12px;min-height:30px;border-radius:6px;display:inline-flex;align-items:center;gap:4px;font-weight:600;line-height:1.2}
+.json-privacy-badge{font-size:11px;font-weight:600;color:var(--success);background:var(--success-bg);border:1px solid var(--success-border);padding:2px 8px;border-radius:10px;margin-left:auto;white-space:nowrap}
+.json-modes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;padding:4px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.json-mode{border:1px solid transparent;background:transparent;color:var(--text-secondary);font-size:13px;font-weight:600;font-family:inherit;padding:7px 14px;border-radius:6px;transition:all .15s;min-height:36px}
+.json-mode:hover{color:var(--text);background:var(--card-bg)}
+.json-mode.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.json-options{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.json-check{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);cursor:pointer;user-select:none;white-space:nowrap}
+.json-check input[type="checkbox"]{width:auto;flex:0 0 auto;min-width:0;margin:0;padding:0;accent-color:var(--primary);cursor:pointer}
+.json-indent-wrap{display:inline-flex;align-items:center;gap:6px;margin-left:auto}
+.json-opt-label{font-size:13px;color:var(--text-secondary);white-space:nowrap}
+.json-indent-wrap select{width:auto;min-width:96px;padding:6px 8px;font-size:13px;min-height:34px}
+.json-io{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.json-col{display:flex;flex-direction:column;min-width:0}
+.json-col-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;min-height:32px}
+.json-col-title{font-size:13px;font-weight:700;color:var(--text-secondary)}
+.json-col-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.json-textarea{min-height:340px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13px;line-height:1.55;resize:vertical;white-space:pre;overflow:auto;tab-size:2}
+#jsonOutput{background:var(--bg);color:var(--text)}
+.json-file-row{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap}
+.json-file-label{cursor:pointer;margin:0}
+.json-file-name{font-size:12px;color:var(--text-light);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.json-status{margin-top:12px;font-size:13px;line-height:1.6;border-radius:var(--radius-sm);padding:0;color:var(--text-secondary)}
+.json-status.has{display:block;padding:10px 12px}
+.json-status.ok{background:var(--success-bg);border:1px solid var(--success-border);color:#047857}
+.json-status.err{background:var(--danger-bg);border:1px solid var(--danger-border);color:var(--danger)}
+.json-status.info{background:var(--primary-bg);border:1px solid var(--primary-light);color:var(--text-secondary)}
+.json-status strong{font-weight:700}
+.json-status code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:rgba(0,0,0,.06);padding:1px 4px;border-radius:4px}
+.json-err-loc{display:inline-block;font-weight:700;margin-right:6px}
+.json-err-snippet{margin-top:6px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:6px;padding:8px 10px;overflow-x:auto;white-space:pre;color:var(--text-secondary)}
+.json-err-snippet .hit{color:var(--danger);font-weight:700;text-decoration:underline}
+.json-run-row{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+.json-run-hint{font-size:12px;color:var(--text-light)}
+[data-theme="dark"] .json-status.ok{color:#6ee7b7}
+[data-theme="dark"] .json-status code{background:rgba(255,255,255,.08)}
+@media(max-width:900px){
+  .json-io{grid-template-columns:1fr}
+  .json-textarea{min-height:220px}
+  .json-indent-wrap{margin-left:0}
+}
+
+/* ========== Toolbox (子页签) ========== */
+.tool-subnav{display:flex;gap:6px;margin-bottom:14px;padding:4px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.tool-sub-btn{flex:1;display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;background:transparent;color:var(--text-secondary);font-size:13px;font-weight:700;font-family:inherit;padding:8px 14px;border-radius:6px;transition:all .15s;min-height:38px;cursor:pointer;white-space:nowrap}
+.tool-sub-btn:hover{color:var(--text);background:var(--card-bg)}
+.tool-sub-btn.active{background:var(--card-bg);color:var(--primary);border-color:var(--border-dark)}
+
+/* ========== Timestamp Tool ========== */
+.ts-now-card{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:16px;background:var(--primary-bg);border:1px solid var(--primary-light);border-radius:var(--radius-sm);margin-bottom:12px}
+.ts-now-main{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.ts-now-label{font-size:12px;font-weight:700;color:var(--text-light);letter-spacing:.05em}
+.ts-now-value{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:30px;font-weight:700;color:var(--primary);line-height:1.15;word-break:break-all}
+.ts-now-sub{font-size:13px;color:var(--text-secondary);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;word-break:break-all}
+.ts-now-actions{display:flex;gap:6px;flex-wrap:wrap}
+.ts-opts{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.ts-opt-wrap{display:inline-flex;align-items:center;gap:6px}
+.ts-opt-wrap select{width:auto;min-width:130px;padding:6px 8px;font-size:13px;min-height:34px}
+.ts-picker{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:12px}
+.ts-picker .form-group{margin:0;flex:0 1 250px;min-width:200px}
+.ts-picker-quick{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding-bottom:2px}
+.ts-picker-out{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-left:auto}
+.ts-picker-val{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:14px;font-weight:700;color:var(--text);background:var(--card-bg);border:1px solid var(--border);border-radius:6px;padding:7px 10px;min-width:180px;min-height:34px;display:inline-flex;align-items:center;word-break:break-all}
+.ts-io{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ts-textarea{min-height:250px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13px;line-height:1.6;resize:vertical;white-space:pre;overflow:auto}
+#tsOutput{background:var(--bg);color:var(--text)}
+.ts-hint{font-size:12px;color:var(--text-light);line-height:1.6;margin-top:6px}
+.ts-status{margin-top:12px;font-size:13px;line-height:1.6;border-radius:var(--radius-sm);padding:0;color:var(--text-secondary)}
+.ts-status.has{display:block;padding:10px 12px}
+.ts-status.ok{background:var(--success-bg);border:1px solid var(--success-border);color:#047857}
+.ts-status.err{background:var(--danger-bg);border:1px solid var(--danger-border);color:var(--danger)}
+.ts-status strong{font-weight:700}
+[data-theme="dark"] .ts-status.ok{color:#6ee7b7}
+@media(max-width:900px){
+  .ts-io{grid-template-columns:1fr}
+  .ts-textarea{min-height:200px}
+  .ts-now-value{font-size:22px}
+  .ts-picker-out{margin-left:0}
+  .ts-picker .form-group{flex:1 1 100%}
+}
+
 /* ========== Modal ========== */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px}
 .modal{background:var(--card-bg);border-radius:var(--radius);padding:24px;max-width:400px;width:100%;box-shadow:var(--shadow-lg)}
@@ -547,6 +629,10 @@ textarea{resize:vertical;min-height:60px}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h12l4 4v12H4z" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 12h8M8 16h5" stroke-linecap="round"/></svg>
         便签备忘
         <span class="count-badge" id="navNoteCount">0</span>
+      </button>
+      <button class="nav-item" id="tabToolboxBtn" type="button" title="JSON 与时间戳转换（本地处理，不上传）">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        工具箱
       </button>
     </nav>
     <div class="nav-hint">数据在你本机与云端双向同步；切换页签不影响数据。</div>
@@ -755,6 +841,179 @@ textarea{resize:vertical;min-height:60px}
         <div id="notePager" class="pager-host"></div>
       </section>
     </div><!-- /#notesView -->
+
+    <div id="toolboxView" class="view-panel hidden">
+      <section class="section">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          工具箱
+          <span class="json-privacy-badge">本地处理 · 不上传 · 不保存</span>
+        </h2>
+
+        <div class="tool-subnav" id="toolSubnav">
+          <button class="tool-sub-btn active" type="button" id="toolBtnJson" data-tool="json">JSON 转换</button>
+          <button class="tool-sub-btn" type="button" id="toolBtnTs" data-tool="timestamp">时间戳转换</button>
+        </div>
+
+        <div class="tool-panel" id="toolPanelJson">
+        <div class="json-modes" id="jsonModes">
+          <button class="json-mode active" type="button" data-mode="pretty">美化</button>
+          <button class="json-mode" type="button" data-mode="minify">压缩</button>
+          <button class="json-mode" type="button" data-mode="validate">校验</button>
+          <button class="json-mode" type="button" data-mode="json2csv">JSON → CSV</button>
+          <button class="json-mode" type="button" data-mode="csv2json">CSV → JSON</button>
+        </div>
+
+        <div class="json-options">
+          <label class="json-check"><input type="checkbox" id="jsonSortKeys"> 键名排序</label>
+          <label class="json-check" title="适合处理从代码/日志里拷出来的转义字符串"><input type="checkbox" id="jsonUnescape"> 还原转义符</label>
+          <label class="json-check"><input type="checkbox" id="jsonCsvHeader" checked> CSV 首行为表头</label>
+          <label class="json-check" title="CSV→JSON 时，把 123 / true / null 自动转成对应类型"><input type="checkbox" id="jsonTypeInfer" checked> 类型推断</label>
+          <div class="json-indent-wrap">
+            <span class="json-opt-label">缩进</span>
+            <select id="jsonIndent">
+              <option value="2" selected>2 空格</option>
+              <option value="4">4 空格</option>
+              <option value="tab">Tab</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="json-io">
+          <div class="json-col">
+            <div class="json-col-head">
+              <span class="json-col-title">输入</span>
+              <div class="json-col-actions">
+                <button class="btn btn-secondary btn-xs" id="jsonPasteBtn" type="button">粘贴</button>
+                <button class="btn btn-secondary btn-xs" id="jsonSampleBtn" type="button">示例</button>
+                <button class="btn btn-secondary btn-xs" id="jsonClearBtn" type="button">清空</button>
+              </div>
+            </div>
+            <textarea id="jsonInput" class="json-textarea" spellcheck="false" placeholder="在此粘贴 JSON 或 CSV 文本……"></textarea>
+            <div class="json-file-row">
+              <label class="btn btn-secondary btn-xs json-file-label">
+                选择文件
+                <input type="file" id="jsonFileInput" accept=".json,.csv,.txt,text/plain,application/json" hidden>
+              </label>
+              <span class="json-file-name" id="jsonFileName"></span>
+            </div>
+          </div>
+
+          <div class="json-col">
+            <div class="json-col-head">
+              <span class="json-col-title">结果</span>
+              <div class="json-col-actions">
+                <button class="btn btn-secondary btn-xs" id="jsonCopyBtn" type="button">复制</button>
+                <button class="btn btn-secondary btn-xs" id="jsonDownloadBtn" type="button">下载</button>
+              </div>
+            </div>
+            <textarea id="jsonOutput" class="json-textarea" spellcheck="false" readonly placeholder="处理结果会显示在这里……"></textarea>
+          </div>
+        </div>
+
+        <div class="json-status" id="jsonStatus"></div>
+
+        <div class="json-run-row">
+          <button class="btn btn-primary" id="jsonRunBtn" type="button">执行转换</button>
+          <span class="json-run-hint">输入时自动转换，也可手动执行一次</span>
+        </div>
+        </div><!-- /#toolPanelJson -->
+
+        <div class="tool-panel hidden" id="toolPanelTs">
+          <div class="ts-now-card">
+            <div class="ts-now-main">
+              <span class="ts-now-label">当前时间戳</span>
+              <span class="ts-now-value" id="tsNowValue">—</span>
+              <span class="ts-now-sub" id="tsNowSub">—</span>
+            </div>
+            <div class="ts-now-actions">
+              <button class="btn btn-secondary btn-xs" id="tsNowCopyBtn" type="button">复制</button>
+              <button class="btn btn-secondary btn-xs" id="tsNowToggleBtn" type="button">暂停</button>
+            </div>
+          </div>
+
+          <div class="ts-opts">
+            <div class="ts-opt-wrap">
+              <span class="json-opt-label">时间戳单位</span>
+              <select id="tsUnit" title="决定时间戳按秒还是毫秒读写">
+                <option value="ms" selected>毫秒（13 位）</option>
+                <option value="s">秒（10 位）</option>
+              </select>
+            </div>
+            <div class="ts-opt-wrap">
+              <span class="json-opt-label">时区</span>
+              <select id="tsTz" title="日期时间按哪个时区解读与展示">
+                <option value="local" selected>本地时间</option>
+                <option value="utc">UTC（世界时）</option>
+              </select>
+            </div>
+            <div class="ts-opt-wrap">
+              <span class="json-opt-label">日期格式</span>
+              <select id="tsFormat">
+                <option value="std" selected>2026-09-23 16:14:01</option>
+                <option value="cn">2026年9月23日 周三 16:14:01</option>
+                <option value="iso">ISO（带时区偏移）</option>
+                <option value="date">仅日期 2026-09-23</option>
+                <option value="time">仅时间 16:14:01</option>
+                <option value="rel">相对时间（3 分钟前）</option>
+              </select>
+            </div>
+            <label class="json-check" title="纯数字输入时按位数判断：10 位当秒、13 位当毫秒、16 位当微秒"><input type="checkbox" id="tsAutoUnit" checked> 自动识别输入位数</label>
+            <label class="json-check" title="批量结果每行带上原值，便于核对"><input type="checkbox" id="tsKeepRaw"> 结果附带原值</label>
+          </div>
+
+          <div class="ts-picker">
+            <div class="form-group">
+              <label class="form-label" for="tsPickerInput">选个日期时间，换算出时间戳</label>
+              <input type="datetime-local" id="tsPickerInput" step="1">
+            </div>
+            <div class="ts-picker-quick">
+              <button class="btn btn-secondary btn-xs" type="button" data-ts-quick="now">现在</button>
+              <button class="btn btn-secondary btn-xs" type="button" data-ts-quick="today0">今天 0 点</button>
+              <button class="btn btn-secondary btn-xs" type="button" data-ts-quick="tomorrow0">明天 0 点</button>
+              <button class="btn btn-secondary btn-xs" type="button" data-ts-quick="month1">本月 1 日</button>
+            </div>
+            <div class="ts-picker-out">
+              <span class="ts-picker-val" id="tsPickerOut">—</span>
+              <button class="btn btn-secondary btn-xs" id="tsPickerCopyBtn" type="button">复制</button>
+            </div>
+          </div>
+
+          <div class="ts-io">
+            <div class="json-col">
+              <div class="json-col-head">
+                <span class="json-col-title">输入（每行一个）</span>
+                <div class="json-col-actions">
+                  <button class="btn btn-secondary btn-xs" id="tsPasteBtn" type="button">粘贴</button>
+                  <button class="btn btn-secondary btn-xs" id="tsSampleBtn" type="button">示例</button>
+                  <button class="btn btn-secondary btn-xs" id="tsClearBtn" type="button">清空</button>
+                </div>
+              </div>
+              <textarea id="tsInput" class="ts-textarea" spellcheck="false" placeholder="时间戳或日期时间，一行一个&#10;1758614041&#10;2026-09-23 16:14:01&#10;2026-09-23T16:14:01+08:00"></textarea>
+              <div class="ts-hint">纯数字 → 换成日期时间；日期时间文本 → 换成时间戳。方向自动判断，混合粘贴也能逐行处理。</div>
+            </div>
+            <div class="json-col">
+              <div class="json-col-head">
+                <span class="json-col-title">结果</span>
+                <div class="json-col-actions">
+                  <button class="btn btn-secondary btn-xs" id="tsCopyBtn" type="button">复制</button>
+                  <button class="btn btn-secondary btn-xs" id="tsDownloadBtn" type="button">下载</button>
+                </div>
+              </div>
+              <textarea id="tsOutput" class="ts-textarea" spellcheck="false" readonly placeholder="转换结果会显示在这里……"></textarea>
+              <div class="ts-hint" id="tsOutputHint">共 0 行</div>
+            </div>
+          </div>
+
+          <div class="ts-status" id="tsStatus"></div>
+
+          <div class="json-run-row">
+            <button class="btn btn-primary" id="tsRunBtn" type="button">执行转换</button>
+            <span class="json-run-hint">输入时自动转换，也可手动执行一次</span>
+          </div>
+        </div><!-- /#toolPanelTs -->
+      </section>
+    </div><!-- /#toolboxView -->
 
   </div><!-- /.layout-main -->
 </div><!-- /.main-layout -->
@@ -2210,13 +2469,997 @@ function updateNavBadges() {
   if(c) c.textContent = notes.length;
 }
 
+/* ========== JSON Tool（本地处理，不写入任何数据、不进同步） ========== */
+var jsonMode = "pretty";
+var jsonAutoTimer = null;
+
+function jsonModeLabel(mode) {
+  return { pretty:"美化", minify:"压缩", validate:"校验", json2csv:"JSON → CSV", csv2json:"CSV → JSON" }[mode] || "处理";
+}
+
+/* 读取界面选项 */
+function jsonToolOpts() {
+  var ind = document.getElementById("jsonIndent");
+  var iv = ind ? ind.value : "2";
+  return {
+    indent: iv === "tab" ? "\t" : (iv === "4" ? "    " : "  "),
+    sortKeys: jsonCheckbox("jsonSortKeys"),
+    unescape: jsonCheckbox("jsonUnescape"),
+    header: jsonCheckbox("jsonCsvHeader"),
+    infer: jsonCheckbox("jsonTypeInfer")
+  };
+}
+function jsonCheckbox(id) {
+  var el = document.getElementById(id);
+  return !!(el && el.checked);
+}
+
+/* 递归键名排序（数组保持原序） */
+function sortKeysDeep(value) {
+  if (Array.isArray(value)) return value.map(sortKeysDeep);
+  if (value && typeof value === "object") {
+    var out = {};
+    Object.keys(value).sort().forEach(function(k){ out[k] = sortKeysDeep(value[k]); });
+    return out;
+  }
+  return value;
+}
+
+/* 轻量 JSON 扫描器：逐字符走到第一个语法错误点，返回精确位置（比依赖 V8 报错消息更可靠，
+   因为 Node 20+/Chrome 新版已不再在错误消息里给 position） */
+function scanJsonError(text) {
+  var s = String(text), n = s.length, i = 0;
+  var WS = /[\s\uFEFF\u00A0]/, DIGIT = /[0-9]/;
+  function ws() { while (i < n && WS.test(s.charAt(i))) i++; }
+  function fail(msg) { throw { pos: i, msg: msg }; }
+  function parseString() {
+    i++;
+    while (i < n) {
+      var c = s.charAt(i);
+      if (c === "\\") { i += 2; continue; }
+      if (c === '"') { i++; return; }
+      if (c < " ") fail("字符串里出现未转义的控制字符（换行/制表符需要写成 \\n、\\t）");
+      i++;
+    }
+    fail("字符串缺少收尾的双引号");
+  }
+  function parseNumber() {
+    if (s.charAt(i) === "-") i++;
+    if (s.charAt(i) === "0") i++;
+    else if (DIGIT.test(s.charAt(i))) { while (i < n && DIGIT.test(s.charAt(i))) i++; }
+    else fail("数字格式不正确");
+    if (s.charAt(i) === ".") {
+      i++;
+      if (!DIGIT.test(s.charAt(i))) fail("小数点后缺少数字");
+      while (i < n && DIGIT.test(s.charAt(i))) i++;
+    }
+    if (s.charAt(i) === "e" || s.charAt(i) === "E") {
+      i++;
+      if (s.charAt(i) === "+" || s.charAt(i) === "-") i++;
+      if (!DIGIT.test(s.charAt(i))) fail("指数部分缺少数字");
+      while (i < n && DIGIT.test(s.charAt(i))) i++;
+    }
+  }
+  function parseValue() {
+    ws();
+    if (i >= n) fail("内容意外结束，缺少值");
+    var ch = s.charAt(i);
+    if (ch === "\u007B") {
+      i++; ws();
+      if (s.charAt(i) === "\u007D") { i++; return; }
+      while (true) {
+        ws();
+        if (s.charAt(i) !== '"') fail("对象的键必须是双引号包裹的字符串");
+        parseString();
+        ws();
+        if (s.charAt(i) !== ":") fail("键名后面缺少冒号 :");
+        i++;
+        parseValue();
+        ws();
+        var c = s.charAt(i);
+        if (c === ",") { i++; continue; }
+        if (c === "\u007D") { i++; return; }
+        if (i >= n) fail("对象没有收尾的右花括号");
+        fail("对象里缺少逗号 , 或右花括号");
+      }
+    }
+    if (ch === "[") {
+      i++; ws();
+      if (s.charAt(i) === "]") { i++; return; }
+      while (true) {
+        parseValue();
+        ws();
+        var c2 = s.charAt(i);
+        if (c2 === ",") { i++; continue; }
+        if (c2 === "]") { i++; return; }
+        if (i >= n) fail("数组没有收尾的右方括号 ]");
+        fail("数组里缺少逗号 , 或右方括号 ]");
+      }
+    }
+    if (ch === '"') { parseString(); return; }
+    if (ch === "t") { if (s.substr(i, 4) !== "true") fail("无效的取值（应该是 true）"); i += 4; return; }
+    if (ch === "f") { if (s.substr(i, 5) !== "false") fail("无效的取值（应该是 false）"); i += 5; return; }
+    if (ch === "n") { if (s.substr(i, 4) !== "null") fail("无效的取值（应该是 null）"); i += 4; return; }
+    if (ch === "-" || DIGIT.test(ch)) { parseNumber(); return; }
+    fail("出现意外字符 " + JSON.stringify(ch) + "（值的位置不能是它）");
+  }
+  try {
+    parseValue();
+    ws();
+    if (i < n) return { position: i, message: "JSON 已经结束，但后面还有多余内容" };
+    return null;
+  } catch (e) {
+    if (e && typeof e.pos === "number") return { position: e.pos, message: e.msg };
+    return null;
+  }
+}
+
+/* 从 JSON.parse 的报错里解析出位置，并换算行列 + 截取上下文片段 */
+function jsonErrorInfo(err, text) {
+  var msg = (err && err.message) ? String(err.message) : "解析失败";
+  var pos = null, friendly = "";
+  var scanned = scanJsonError(text);
+  if (scanned) { pos = scanned.position; friendly = scanned.message; }
+  if (pos === null || pos === undefined) {
+    var m = msg.match(/position\s+(\d+)/i);
+    if (m) pos = parseInt(m[1], 10);
+    if (pos === null || isNaN(pos)) {
+      var m2 = msg.match(/line\s+(\d+)\s+column\s+(\d+)/i);
+      if (m2) {
+        var ln = parseInt(m2[1], 10), cl = parseInt(m2[2], 10);
+        var lines = text.split("\n");
+        var p = 0;
+        for (var i = 0; i < ln - 1 && i < lines.length; i++) p += lines[i].length + 1;
+        pos = p + (cl - 1);
+      }
+    }
+  }
+  var line = 1, col = 1;
+  if (pos !== null && pos !== undefined && !isNaN(pos)) {
+    pos = Math.max(0, Math.min(pos, text.length));
+    for (var j = 0; j < pos; j++) {
+      if (text.charAt(j) === "\n") { line++; col = 1; } else { col++; }
+    }
+  } else {
+    pos = null;
+  }
+  var snippet = "";
+  if (pos !== null) {
+    var start = Math.max(0, pos - 40);
+    var end = Math.min(text.length, pos + 40);
+    snippet = (start > 0 ? "…" : "") + text.slice(start, pos) + "\u0001" +
+      (text.charAt(pos) || "") + "\u0002" + text.slice(pos + 1, end) + (end < text.length ? "…" : "");
+  }
+  return { message: friendly || msg, position: pos, line: line, column: col, snippet: snippet };
+}
+/* 去掉报错里冗余的 position 尾巴，避免与行列信息重复 */
+function cleanJsonErrMsg(msg) {
+  return String(msg || "解析失败")
+    .replace(/\s+in JSON at position\s+\d+.*$/i, "")
+    .replace(/\s+at position\s+\d+.*$/i, "")
+    .replace(/\s*\(line\s+\d+\s+column\s+\d+\)\s*$/i, "")
+    .trim();
+}
+
+/* 转义还原：仅当「原文不是合法 JSON、但解码后是合法 JSON」时才采用（安全兜底） */
+function maybeUnescapeText(text) {
+  try { JSON.parse(text); return { text: text, used: false }; } catch (e) { /* 继续尝试解码 */ }
+  try {
+    var decoded = JSON.parse('"' + String(text).replace(/\r\n/g, "\\n").replace(/\n/g, "\\n").replace(/\r/g, "\\n") + '"');
+    JSON.parse(decoded);
+    return { text: decoded, used: true };
+  } catch (e2) {
+    return { text: text, used: false };
+  }
+}
+
+/* 统计信息 */
+function jsonStats(value) {
+  var type, sizeLabel = "";
+  if (Array.isArray(value)) { type = "数组"; sizeLabel = value.length + " 个元素"; }
+  else if (value === null) { type = "null"; }
+  else if (typeof value === "object") { type = "对象"; sizeLabel = Object.keys(value).length + " 个键"; }
+  else if (typeof value === "string") { type = "字符串"; sizeLabel = value.length + " 字符"; }
+  else { type = typeof value; }
+  return { type: type, sizeLabel: sizeLabel };
+}
+
+/* CSV 单元格转义（RFC 4180） */
+function csvEscapeCell(v) {
+  if (v === null || v === undefined) return "";
+  var s = (typeof v === "object") ? JSON.stringify(v) : String(v);
+  if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
+
+/* JSON → CSV */
+function jsonToCsvText(value, opts) {
+  var header = !opts || opts.header !== false;
+  var rows = [];
+  if (Array.isArray(value)) {
+    if (value.length === 0) return { ok: false, error: { message: "数组为空，没有可转换的行" } };
+    var allObj = value.every(function(x){ return x && typeof x === "object" && !Array.isArray(x); });
+    var allArr = value.every(function(x){ return Array.isArray(x); });
+    if (allObj) {
+      var cols = [];
+      value.forEach(function(o){
+        Object.keys(o).forEach(function(k){ if (cols.indexOf(k) < 0) cols.push(k); });
+      });
+      if (header) rows.push(cols.map(csvEscapeCell));
+      value.forEach(function(o){
+        rows.push(cols.map(function(c){ return csvEscapeCell(o[c]); }));
+      });
+    } else if (allArr) {
+      var maxCols = 0;
+      value.forEach(function(r){ if (r.length > maxCols) maxCols = r.length; });
+      if (header) {
+        var h = [];
+        for (var i = 0; i < maxCols; i++) h.push("col" + (i + 1));
+        rows.push(h);
+      }
+      value.forEach(function(r){
+        var line = [];
+        for (var j = 0; j < maxCols; j++) line.push(csvEscapeCell(r[j]));
+        rows.push(line);
+      });
+    } else {
+      if (header) rows.push(["value"]);
+      value.forEach(function(v){ rows.push([csvEscapeCell(v)]); });
+    }
+  } else if (value && typeof value === "object") {
+    if (header) rows.push(["key", "value"]);
+    Object.keys(value).forEach(function(k){ rows.push([csvEscapeCell(k), csvEscapeCell(value[k])]); });
+  } else {
+    return { ok: false, error: { message: "顶层需要是数组或对象才能转成表格（当前是" + (value === null ? "null" : typeof value) + "）" } };
+  }
+  return { ok: true, output: rows.map(function(r){ return r.join(","); }).join("\n") };
+}
+
+/* CSV 解析（支持引号包裹、双引号转义、字段内换行、CRLF） */
+function parseCsvText(text) {
+  var s = String(text).replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  var rows = [], row = [], cell = "", inQ = false, i = 0;
+  while (i < s.length) {
+    var ch = s.charAt(i);
+    if (inQ) {
+      if (ch === '"') {
+        if (s.charAt(i + 1) === '"') { cell += '"'; i += 2; continue; }
+        inQ = false; i++; continue;
+      }
+      cell += ch; i++; continue;
+    }
+    if (ch === '"' && cell === "") { inQ = true; i++; continue; }
+    if (ch === ",") { row.push(cell); cell = ""; i++; continue; }
+    if (ch === "\n") { row.push(cell); rows.push(row); row = []; cell = ""; i++; continue; }
+    cell += ch; i++;
+  }
+  if (cell !== "" || row.length > 0) { row.push(cell); rows.push(row); }
+  while (rows.length > 0 && rows[rows.length - 1].length === 1 && rows[rows.length - 1][0] === "") rows.pop();
+  return rows;
+}
+
+/* CSV 单元格 → 值（可选类型推断） */
+function csvCellValue(raw, infer) {
+  var v = (raw === undefined || raw === null) ? "" : String(raw);
+  if (!infer) return v;
+  var t = v.trim();
+  if (t === "") return "";
+  if (t === "true") return true;
+  if (t === "false") return false;
+  if (t === "null") return null;
+  if (/^-?\d+(\.\d+)?([eE][+-]?\d+)?$/.test(t) && t.replace(/[^0-9]/g, "").length < 16) return Number(t);
+  return v;
+}
+
+/* CSV → JSON */
+function csvToJsonText(text, opts) {
+  var rows = parseCsvText(text);
+  if (rows.length === 0) return { ok: false, error: { message: "没有解析到任何 CSV 内容" } };
+  var useHeader = !opts || opts.header !== false;
+  var infer = !opts || opts.infer !== false;
+  var indent = (opts && opts.indent) ? opts.indent : "  ";
+  var header = useHeader ? rows[0] : null;
+  var dataRows = useHeader ? rows.slice(1) : rows;
+  if (useHeader && dataRows.length === 0) return { ok: false, error: { message: "只有表头，没有数据行" } };
+  var out = dataRows.map(function(r){
+    if (header) {
+      var o = {};
+      header.forEach(function(h, idx){
+        var key = (h === undefined || h === null || String(h) === "") ? ("col" + (idx + 1)) : String(h);
+        o[key] = csvCellValue(r[idx], infer);
+      });
+      return o;
+    }
+    return r.map(function(c){ return csvCellValue(c, infer); });
+  });
+  return { ok: true, output: JSON.stringify(out, null, indent), note: infer ? "已推断数字/布尔/null 类型" : "全部按字符串处理" };
+}
+
+/* 统一入口：纯函数，mode 见 jsonModeLabel */
+function processJsonTool(mode, text, opts) {
+  opts = opts || {};
+  var note = "";
+  var src = text;
+  if (opts.unescape) {
+    var u = maybeUnescapeText(text);
+    if (u.used) { src = u.text; note = "已还原转义符"; }
+  }
+  var parsed;
+  try {
+    parsed = JSON.parse(src);
+  } catch (e) {
+    return { ok: false, mode: mode, error: jsonErrorInfo(e, src), output: "", note: note };
+  }
+  var value = opts.sortKeys ? sortKeysDeep(parsed) : parsed;
+  var indent = opts.indent || "  ";
+
+  if (mode === "json2csv") {
+    var csv = jsonToCsvText(value, opts);
+    if (!csv.ok) return { ok: false, mode: mode, error: csv.error, output: "", note: note };
+    return { ok: true, mode: mode, output: csv.output, stats: jsonStats(value), note: note };
+  }
+
+  var out = (mode === "minify") ? JSON.stringify(value) : JSON.stringify(value, null, indent);
+  return { ok: true, mode: mode, output: out, stats: jsonStats(value), note: note };
+}
+
+/* CSV → JSON 入口（不先 parse JSON） */
+function processCsvTool(text, opts) {
+  opts = opts || {};
+  var r = csvToJsonText(text, opts);
+  if (!r.ok) return { ok: false, mode: "csv2json", error: r.error, output: "", note: "" };
+  var parsed;
+  try { parsed = JSON.parse(r.output); } catch (e) { parsed = null; }
+  return { ok: true, mode: "csv2json", output: r.output, stats: parsed ? jsonStats(parsed) : null, note: r.note || "" };
+}
+
+/* 执行并渲染 */
+function runJsonTool() {
+  var input = document.getElementById("jsonInput");
+  var out = document.getElementById("jsonOutput");
+  var st = document.getElementById("jsonStatus");
+  if (!input || !out || !st) return null;
+  var text = input.value;
+  if (!text.trim()) {
+    out.value = "";
+    st.className = "json-status";
+    st.innerHTML = "";
+    return null;
+  }
+  var opts = jsonToolOpts();
+  var res = (jsonMode === "csv2json") ? processCsvTool(text, opts) : processJsonTool(jsonMode, text, opts);
+  if (!res.ok) {
+    out.value = "";
+    var e = res.error || {};
+    var loc = (e.line && e.line > 0) ? ("第 " + e.line + " 行，第 " + e.column + " 列") : "";
+    var snip = e.snippet
+      ? '<div class="json-err-snippet">' + escapeHtml(e.snippet).split("\u0001").join('<span class="hit">').split("\u0002").join("</span>") + '</div>'
+      : "";
+    st.className = "json-status has err";
+    st.innerHTML = (loc ? '<span class="json-err-loc">✗ ' + escapeHtml(loc) + '</span>' : '<span class="json-err-loc">✗ 无法处理</span>') +
+      escapeHtml(cleanJsonErrMsg(e.message)) + snip;
+    return res;
+  }
+  out.value = res.output;
+  var info = [];
+  if (res.stats) { info.push(res.stats.type); if (res.stats.sizeLabel) info.push(res.stats.sizeLabel); }
+  info.push(res.output.length + " 字符");
+  if (res.note) info.push(res.note);
+  st.className = "json-status has ok";
+  st.innerHTML = "✓ " + escapeHtml(jsonModeLabel(res.mode)) + "完成 · " + escapeHtml(info.join(" · "));
+  return res;
+}
+
+/* 复制 / 下载 / 文件读取 */
+function jsonCopyOutput() {
+  var out = document.getElementById("jsonOutput");
+  if (!out || !out.value) { showToast("没有可复制的内容"); return; }
+  var done = function(){ showToast("已复制到剪贴板"); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(out.value).then(done, function(){ jsonFallbackCopy(out, done); });
+  } else {
+    jsonFallbackCopy(out, done);
+  }
+}
+function jsonFallbackCopy(area, done) {
+  try {
+    area.removeAttribute("readonly");
+    area.select();
+    document.execCommand("copy");
+    area.setAttribute("readonly", "readonly");
+    done();
+  } catch (e) { showToast("复制失败，请手动选中复制"); }
+}
+function jsonDownloadOutput() {
+  var out = document.getElementById("jsonOutput");
+  if (!out || !out.value) { showToast("没有可下载的内容"); return; }
+  var isCsv = jsonMode === "json2csv";
+  var blob = new Blob([out.value], { type: isCsv ? "text/csv;charset=utf-8" : "application/json;charset=utf-8" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = (isCsv ? "data" : "result") + "_" + todayStr() + (isCsv ? ".csv" : ".json");
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+}
+function jsonReadFile(file) {
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function() {
+    var input = document.getElementById("jsonInput");
+    if (input) input.value = String(reader.result || "");
+    var nameEl = document.getElementById("jsonFileName");
+    if (nameEl) nameEl.textContent = file.name + "（" + Math.max(1, Math.round(file.size / 1024)) + " KB）";
+    runJsonTool();
+  };
+  reader.onerror = function(){ showToast("文件读取失败"); };
+  reader.readAsText(file, "utf-8");
+}
+function jsonSampleText() {
+  if (jsonMode === "csv2json") {
+    return 'name,age,active\n张三,28,true\n李四,35,false\n王五,42,true';
+  }
+  return '{"order":"A-1001","items":[{"name":"wan3.0","qty":2,"price":55},{"name":"image3","qty":1,"price":65}],"paid":true,"remark":"优先处理\\n勿漏水"}';
+}
+function jsonResetTool() {
+  var input = document.getElementById("jsonInput");
+  var out = document.getElementById("jsonOutput");
+  var st = document.getElementById("jsonStatus");
+  var nameEl = document.getElementById("jsonFileName");
+  if (input) input.value = "";
+  if (out) out.value = "";
+  if (st) { st.className = "json-status"; st.innerHTML = ""; }
+  if (nameEl) nameEl.textContent = "";
+}
+
+function bindJsonToolEvents() {
+  var modes = document.getElementById("jsonModes");
+  if (modes) {
+    modes.addEventListener("click", function(e){
+      var btn = e.target.closest ? e.target.closest(".json-mode") : null;
+      if (!btn) return;
+      jsonMode = btn.getAttribute("data-mode") || "pretty";
+      var all = modes.querySelectorAll(".json-mode");
+      for (var i = 0; i < all.length; i++) all[i].classList.toggle("active", all[i] === btn);
+      runJsonTool();
+    });
+  }
+  var runBtn = document.getElementById("jsonRunBtn");
+  if (runBtn) runBtn.addEventListener("click", function(){ runJsonTool(); });
+  var input = document.getElementById("jsonInput");
+  if (input) {
+    input.addEventListener("input", function(){
+      clearTimeout(jsonAutoTimer);
+      jsonAutoTimer = setTimeout(runJsonTool, 300);
+    });
+    input.addEventListener("keydown", function(e){
+      if (e.key === "Tab") {
+        e.preventDefault();
+        var s = input.selectionStart, t = input.selectionEnd;
+        input.value = input.value.slice(0, s) + "  " + input.value.slice(t);
+        input.selectionStart = input.selectionEnd = s + 2;
+        return;
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); runJsonTool(); }
+    });
+  }
+  ["jsonSortKeys", "jsonCsvHeader", "jsonTypeInfer", "jsonUnescape"].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.addEventListener("change", function(){ runJsonTool(); });
+  });
+  var indent = document.getElementById("jsonIndent");
+  if (indent) indent.addEventListener("change", function(){ runJsonTool(); });
+  var pasteBtn = document.getElementById("jsonPasteBtn");
+  if (pasteBtn) pasteBtn.addEventListener("click", function(){
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      navigator.clipboard.readText().then(function(t){
+        var el = document.getElementById("jsonInput");
+        if (el) { el.value = t; runJsonTool(); showToast("已粘贴"); }
+      }, function(){ showToast("浏览器未授权读取剪贴板，请手动粘贴"); });
+    } else {
+      showToast("当前浏览器不支持一键粘贴，请手动粘贴");
+    }
+  });
+  var sampleBtn = document.getElementById("jsonSampleBtn");
+  if (sampleBtn) sampleBtn.addEventListener("click", function(){
+    var el = document.getElementById("jsonInput");
+    if (el) { el.value = jsonSampleText(); runJsonTool(); }
+  });
+  var clearBtn = document.getElementById("jsonClearBtn");
+  if (clearBtn) clearBtn.addEventListener("click", jsonResetTool);
+  var copyBtn = document.getElementById("jsonCopyBtn");
+  if (copyBtn) copyBtn.addEventListener("click", jsonCopyOutput);
+  var dlBtn = document.getElementById("jsonDownloadBtn");
+  if (dlBtn) dlBtn.addEventListener("click", jsonDownloadOutput);
+  var fileInput = document.getElementById("jsonFileInput");
+  if (fileInput) fileInput.addEventListener("change", function(e){
+    var f = e.target.files && e.target.files[0];
+    jsonReadFile(f);
+    fileInput.value = "";
+  });
+}
+
+/* ========== Timestamp Tool (工具箱) ========== */
+
+/* ---- 纯函数区（被 tests/test-timestamp-tool.js 抽取测试） ---- */
+
+/* 补零到 3 位（毫秒） */
+function pad3(n) {
+  var s = String(Math.abs(Math.round(n)));
+  while (s.length < 3) s = "0" + s;
+  return s;
+}
+
+/* 取某毫秒时刻在指定时区下的字段。tz 为 utc 时用世界时，否则用本机时区 */
+function tzParts(ms, tz) {
+  var d = new Date(ms);
+  if (!d || isNaN(d.getTime())) return null;
+  if (tz === "utc") {
+    return { y: d.getUTCFullYear(), mo: d.getUTCMonth() + 1, d: d.getUTCDate(),
+      h: d.getUTCHours(), mi: d.getUTCMinutes(), s: d.getUTCSeconds(),
+      ms: d.getUTCMilliseconds(), wd: d.getUTCDay() };
+  }
+  return { y: d.getFullYear(), mo: d.getMonth() + 1, d: d.getDate(),
+    h: d.getHours(), mi: d.getMinutes(), s: d.getSeconds(),
+    ms: d.getMilliseconds(), wd: d.getDay() };
+}
+
+/* 相对时间文案：3 分钟前 / 2 天后 */
+function relTimeText(ms, nowMs) {
+  var now = (typeof nowMs === "number") ? nowMs : Date.now();
+  var diff = ms - now;
+  var abs = Math.abs(diff);
+  var fut = diff > 0;
+  if (abs < 1000) return fut ? "马上" : "刚刚";
+  var n, unit;
+  if (abs < 60000) { n = Math.floor(abs / 1000); unit = "秒"; }
+  else if (abs < 3600000) { n = Math.floor(abs / 60000); unit = "分钟"; }
+  else if (abs < 86400000) { n = Math.floor(abs / 3600000); unit = "小时"; }
+  else if (abs < 2592000000) { n = Math.floor(abs / 86400000); unit = "天"; }
+  else if (abs < 31536000000) { n = Math.floor(abs / 2592000000); unit = "个月"; }
+  else { n = Math.floor(abs / 31536000000); unit = "年"; }
+  return n + " " + unit + (fut ? "后" : "前");
+}
+
+/* 毫秒 → 时间戳文本（unit 为 s 输出秒，否则输出毫秒） */
+function tsTextOf(ms, unit) {
+  if (unit === "s") return String(Math.floor(ms / 1000));
+  return String(Math.round(ms));
+}
+
+/* 数字文本 → 毫秒。autoUnit 为真时按位数推断单位：
+   10 位以内当秒，11~13 位当毫秒，14~16 位当微秒，17~19 位当纳秒 */
+function tsNumberToMs(raw, unit, autoUnit) {
+  var t = String(raw).trim();
+  if (!/^[+-]?\d+(\.\d+)?$/.test(t)) return null;
+  var num = parseFloat(t);
+  if (!isFinite(num)) return null;
+  var ms;
+  if (autoUnit) {
+    var digits = t.replace(/[^0-9]/g, "").replace(/^0+/, "").length;
+    if (digits === 0) ms = num;
+    else if (digits <= 10) ms = num * 1000;
+    else if (digits <= 13) ms = num;
+    else if (digits <= 16) ms = num / 1000;
+    else if (digits <= 19) ms = num / 1e6;
+    else return null;
+  } else {
+    ms = (unit === "s") ? num * 1000 : num;
+  }
+  if (!isFinite(ms) || Math.abs(ms) > 8.64e15) return null;
+  return Math.round(ms);
+}
+
+/* 年月日时分秒 → 毫秒。带合法性校验，避免 2 月 30 日被自动进位 */
+function datePartsToMs(y, mo, d, h, mi, s, ms, tz) {
+  if (mo < 1 || mo > 12 || d < 1 || d > 31) return null;
+  if (h < 0 || h > 23 || mi < 0 || mi > 59 || s < 0 || s > 59) return null;
+  if (tz === "utc") {
+    var u = new Date(Date.UTC(y, mo - 1, d, h, mi, s, ms));
+    if (u.getUTCFullYear() !== y || u.getUTCMonth() !== mo - 1 || u.getUTCDate() !== d) return null;
+    return u.getTime();
+  }
+  var dt = new Date(y, mo - 1, d, h, mi, s, ms);
+  if (dt.getFullYear() !== y || dt.getMonth() !== mo - 1 || dt.getDate() !== d) return null;
+  return dt.getTime();
+}
+
+/* 紧凑写法：20260923（8 位）或 20260923161401（14 位） */
+function parseCompactDate(t, tz) {
+  var s = String(t).trim();
+  if (!/^\d{8}$/.test(s) && !/^\d{14}$/.test(s)) return null;
+  var y = parseInt(s.slice(0, 4), 10);
+  var mo = parseInt(s.slice(4, 6), 10);
+  var d = parseInt(s.slice(6, 8), 10);
+  var h = 0, mi = 0, sec = 0;
+  if (s.length === 14) {
+    h = parseInt(s.slice(8, 10), 10);
+    mi = parseInt(s.slice(10, 12), 10);
+    sec = parseInt(s.slice(12, 14), 10);
+  }
+  return datePartsToMs(y, mo, d, h, mi, sec, 0, tz);
+}
+
+/* 日期时间文本 → 毫秒。支持 2026-09-23 16:14:01 / 2026/9/23 /
+   2026年9月23日 16:14 / 2026.09.23 / 2026-09-23T16:14:01Z / 2026-09-23T16:14:01+08:00 */
+function parseDateTimeText(text, tz) {
+  var s = String(text).trim();
+  if (!s) return null;
+  var compact = parseCompactDate(s, tz);
+  if (compact !== null) return compact;
+  if (/^\d{4}-\d{1,2}-\d{1,2}[T ]\d{1,2}:\d{1,2}(:\d{1,2})?(\.\d{1,3})?(Z|[+-]\d{2}:?\d{2})$/i.test(s)) {
+    var iso = Date.parse(s.replace(" ", "T"));
+    return isNaN(iso) ? null : iso;
+  }
+  var t = s.replace(/年|月/g, "-").replace(/日/g, " ")
+    .replace(/\//g, "-").replace(/：/g, ":")
+    .replace(/\s+/g, " ").trim();
+  t = t.replace(/^(\d{4})\.(\d{1,2})\.(\d{1,2})/, "$1-$2-$3");
+  var m = t.match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T](\d{1,2}):(\d{1,2})(?::(\d{1,2})(?:\.(\d{1,3}))?)?)?$/);
+  if (!m) return null;
+  var frac = m[7] ? parseInt((m[7] + "00").slice(0, 3), 10) : 0;
+  return datePartsToMs(parseInt(m[1], 10), parseInt(m[2], 10), parseInt(m[3], 10),
+    m[4] ? parseInt(m[4], 10) : 0, m[5] ? parseInt(m[5], 10) : 0, m[6] ? parseInt(m[6], 10) : 0,
+    frac, tz);
+}
+
+/* 毫秒 → 可读文本。fmt 取值见 tsFormatLabel */
+function formatTsText(ms, fmt, tz) {
+  var p = tzParts(ms, tz);
+  if (!p) return "";
+  var WD = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  var base = p.y + "-" + pad2(p.mo) + "-" + pad2(p.d);
+  var clock = pad2(p.h) + ":" + pad2(p.mi) + ":" + pad2(p.s);
+  if (fmt === "rel") return relTimeText(ms, Date.now());
+  if (fmt === "cn") return p.y + "年" + p.mo + "月" + p.d + "日 " + WD[p.wd] + " " + clock;
+  if (fmt === "iso") {
+    if (tz === "utc") return new Date(ms).toISOString();
+    var off = -new Date(ms).getTimezoneOffset();
+    var a = Math.abs(off);
+    var sign = off >= 0 ? "+" : "-";
+    return base + "T" + clock + "." + pad3(p.ms) + sign + pad2(Math.floor(a / 60)) + ":" + pad2(a % 60);
+  }
+  if (fmt === "date") return base;
+  if (fmt === "time") return clock;
+  if (tz === "utc") return base + " " + clock + " UTC";
+  return base + " " + clock;
+}
+
+function tsFormatLabel(fmt) {
+  if (fmt === "cn") return "中文日期";
+  if (fmt === "iso") return "ISO 格式";
+  if (fmt === "date") return "仅日期";
+  if (fmt === "time") return "仅时间";
+  if (fmt === "rel") return "相对时间";
+  return "标准格式";
+}
+
+/* 单行转换：纯数字当时间戳（转成日期时间），日期时间文本当日期（转成时间戳） */
+function convertTsLine(raw, opts) {
+  var t = String(raw).trim();
+  if (!t) return { ok: true, kind: "blank", text: "" };
+  var compact = parseCompactDate(t, opts.tz);
+  if (compact !== null) return { ok: true, kind: "datetime", text: tsTextOf(compact, opts.unit) };
+  if (/^[+-]?\d+(\.\d+)?$/.test(t)) {
+    var nms = tsNumberToMs(t, opts.unit, opts.autoUnit !== false);
+    if (nms === null) return { ok: false, kind: "ts", error: "这个数字超出可表示的时间范围" };
+    return { ok: true, kind: "ts", text: formatTsText(nms, opts.format, opts.tz) };
+  }
+  var dms = parseDateTimeText(t, opts.tz);
+  if (dms === null) return { ok: false, kind: "unknown", error: "无法识别，既不是时间戳也不是日期时间" };
+  return { ok: true, kind: "datetime", text: tsTextOf(dms, opts.unit) };
+}
+
+/* 批量转换：一行一个，结果逐行对应 */
+function convertTsBatch(text, opts) {
+  var lines = String(text).replace(/\r\n?/g, "\n").split("\n");
+  var rows = [], okCount = 0, errCount = 0;
+  for (var i = 0; i < lines.length; i++) {
+    var r = convertTsLine(lines[i], opts);
+    if (r.kind === "blank") { rows.push({ raw: lines[i], ok: null, text: "", kind: "blank" }); continue; }
+    if (r.ok) { okCount++; rows.push({ raw: lines[i], ok: true, text: r.text, kind: r.kind }); }
+    else { errCount++; rows.push({ raw: lines[i], ok: false, text: "", kind: r.kind, error: r.error }); }
+  }
+  var out = [];
+  for (var j = 0; j < rows.length; j++) {
+    var row = rows[j];
+    var body = (row.ok === false) ? ("⚠ " + row.error) : row.text;
+    if (opts.keepRaw && row.ok !== null) out.push(String(row.raw).trim() + " → " + body);
+    else out.push(body);
+  }
+  while (out.length > 0 && out[out.length - 1] === "") { out.pop(); rows.pop(); }
+  return { ok: errCount === 0, output: out.join("\n"), rows: rows, okCount: okCount, errCount: errCount };
+}
+
+/* ---- 界面区 ---- */
+var tsNowTimer = null;
+var tsNowMs = Date.now();
+var tsNowPaused = false;
+var tsAutoTimer = null;
+
+function tsToolOpts() {
+  var unit = document.getElementById("tsUnit");
+  var tz = document.getElementById("tsTz");
+  var fmt = document.getElementById("tsFormat");
+  var auto = document.getElementById("tsAutoUnit");
+  var keep = document.getElementById("tsKeepRaw");
+  return {
+    unit: unit ? unit.value : "ms",
+    tz: tz ? tz.value : "local",
+    format: fmt ? fmt.value : "std",
+    autoUnit: auto ? !!auto.checked : true,
+    keepRaw: keep ? !!keep.checked : false
+  };
+}
+
+/* 把「本地时间」选项文案补上实际偏移，例如 本地时间（UTC+8） */
+function tsTzLabelInit() {
+  var tz = document.getElementById("tsTz");
+  if (!tz) return;
+  var off = -new Date().getTimezoneOffset();
+  var a = Math.abs(off);
+  var name = "UTC" + (off >= 0 ? "+" : "-") + Math.floor(a / 60) + (a % 60 ? ":" + pad2(a % 60) : "");
+  for (var i = 0; i < tz.options.length; i++) {
+    if (tz.options[i].value === "local") tz.options[i].textContent = "本地时间（" + name + "）";
+  }
+}
+
+function tsNowRender() {
+  var el = document.getElementById("tsNowValue");
+  if (!el) return;
+  var opts = tsToolOpts();
+  el.textContent = tsTextOf(tsNowMs, opts.unit);
+  var sub = document.getElementById("tsNowSub");
+  if (sub) {
+    var txt = formatTsText(tsNowMs, opts.format === "rel" ? "std" : opts.format, opts.tz);
+    sub.textContent = txt + (opts.tz === "utc" ? "（UTC）" : "") + (tsNowPaused ? " · 已暂停" : "");
+  }
+}
+
+function tsNowTick() {
+  if (tsNowPaused) return;
+  tsNowMs = Date.now();
+  tsNowRender();
+}
+
+/* 只在工具箱的时间戳子页可见时跑定时器，不在后台空转 */
+function tsNowVisible() {
+  var v = document.getElementById("toolboxView");
+  var p = document.getElementById("toolPanelTs");
+  if (!v || !p) return false;
+  return !v.classList.contains("hidden") && !p.classList.contains("hidden");
+}
+
+function tsNowSyncTimer() {
+  if (tsNowVisible()) {
+    tsNowTick();
+    if (!tsNowTimer) tsNowTimer = setInterval(tsNowTick, 200);
+  } else if (tsNowTimer) {
+    clearInterval(tsNowTimer);
+    tsNowTimer = null;
+  }
+}
+
+function tsNowToggle() {
+  tsNowPaused = !tsNowPaused;
+  var b = document.getElementById("tsNowToggleBtn");
+  if (b) b.textContent = tsNowPaused ? "继续" : "暂停";
+  if (!tsNowPaused) tsNowMs = Date.now();
+  tsNowRender();
+}
+
+function tsLocalInputValue(ms) {
+  var p = tzParts(ms, "local");
+  return p.y + "-" + pad2(p.mo) + "-" + pad2(p.d) + "T" + pad2(p.h) + ":" + pad2(p.mi) + ":" + pad2(p.s);
+}
+
+function tsPickerRender() {
+  var inp = document.getElementById("tsPickerInput");
+  var out = document.getElementById("tsPickerOut");
+  if (!inp || !out) return;
+  if (!inp.value) { out.textContent = "—"; return; }
+  var opts = tsToolOpts();
+  var ms = parseDateTimeText(inp.value, opts.tz);
+  if (ms === null) { out.textContent = "无法识别"; return; }
+  out.textContent = tsTextOf(ms, opts.unit);
+}
+
+function tsQuickSet(kind) {
+  var inp = document.getElementById("tsPickerInput");
+  if (!inp) return;
+  var d = new Date();
+  var y = d.getFullYear(), mo = d.getMonth() + 1, dd = d.getDate();
+  var h = 0, mi = 0, s = 0;
+  if (kind === "now") { h = d.getHours(); mi = d.getMinutes(); s = d.getSeconds(); }
+  else if (kind === "tomorrow0") {
+    var t = new Date(d.getTime() + 86400000);
+    y = t.getFullYear(); mo = t.getMonth() + 1; dd = t.getDate();
+  } else if (kind === "month1") { dd = 1; }
+  inp.value = y + "-" + pad2(mo) + "-" + pad2(dd) + "T" + pad2(h) + ":" + pad2(mi) + ":" + pad2(s);
+  tsPickerRender();
+}
+
+function runTsTool() {
+  var input = document.getElementById("tsInput");
+  var out = document.getElementById("tsOutput");
+  var st = document.getElementById("tsStatus");
+  var hint = document.getElementById("tsOutputHint");
+  if (!input || !out || !st) return null;
+  var text = input.value;
+  if (!text.trim()) {
+    out.value = "";
+    st.className = "ts-status";
+    st.innerHTML = "";
+    if (hint) hint.textContent = "共 0 行";
+    return null;
+  }
+  var opts = tsToolOpts();
+  var res = convertTsBatch(text, opts);
+  out.value = res.output;
+  if (hint) hint.textContent = "输出 " + res.rows.length + " 行 · 成功 " + res.okCount + " 行";
+  var parts = "按 " + (opts.unit === "s" ? "秒" : "毫秒") + "读取 · " + tsFormatLabel(opts.format) + " · " +
+    (opts.tz === "utc" ? "UTC" : "本地时区");
+  if (res.errCount === 0) {
+    st.className = "ts-status has ok";
+    st.innerHTML = "✓ 转换完成 · 成功 " + res.okCount + " 行 · " + escapeHtml(parts);
+  } else {
+    st.className = "ts-status has err";
+    st.innerHTML = "⚠ 有 " + res.errCount + " 行无法识别（已用 <strong>⚠</strong> 标注）· 成功 " +
+      res.okCount + " 行 · " + escapeHtml(parts);
+  }
+  return res;
+}
+
+function tsFallbackCopy(text, done) {
+  try {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "readonly");
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    done();
+  } catch (e) { showToast("复制失败，请手动选中复制"); }
+}
+
+function tsCopyText(text, emptyMsg) {
+  if (!text) { showToast(emptyMsg || "没有可复制的内容"); return; }
+  var done = function(){ showToast("已复制到剪贴板"); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, function(){ tsFallbackCopy(text, done); });
+  } else {
+    tsFallbackCopy(text, done);
+  }
+}
+
+function tsDownloadOutput() {
+  var out = document.getElementById("tsOutput");
+  if (!out || !out.value) { showToast("没有可下载的内容"); return; }
+  var blob = new Blob([out.value], { type: "text/plain;charset=utf-8" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "timestamp_" + todayStr() + ".txt";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+}
+
+function tsSampleText() {
+  return ["1758614041", "1758614041000", "2026-09-23 16:14:01",
+    "2026-09-23T16:14:01+08:00", "2026年9月23日 16:14", "20260923"].join("\n");
+}
+
+function tsResetTool() {
+  var input = document.getElementById("tsInput");
+  var out = document.getElementById("tsOutput");
+  var st = document.getElementById("tsStatus");
+  var hint = document.getElementById("tsOutputHint");
+  if (input) input.value = "";
+  if (out) out.value = "";
+  if (st) { st.className = "ts-status"; st.innerHTML = ""; }
+  if (hint) hint.textContent = "共 0 行";
+}
+
+function bindTsToolEvents() {
+  var subnav = document.getElementById("toolSubnav");
+  if (subnav) {
+    subnav.addEventListener("click", function(e){
+      var btn = e.target.closest ? e.target.closest(".tool-sub-btn") : null;
+      if (!btn) return;
+      switchTool(btn.getAttribute("data-tool"));
+    });
+  }
+  tsTzLabelInit();
+
+  var nowCopy = document.getElementById("tsNowCopyBtn");
+  if (nowCopy) nowCopy.addEventListener("click", function(){
+    tsCopyText(tsTextOf(tsNowMs, tsToolOpts().unit));
+  });
+  var nowToggle = document.getElementById("tsNowToggleBtn");
+  if (nowToggle) nowToggle.addEventListener("click", tsNowToggle);
+
+  ["tsUnit", "tsTz", "tsFormat"].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.addEventListener("change", function(){ tsNowRender(); tsPickerRender(); runTsTool(); });
+  });
+  ["tsAutoUnit", "tsKeepRaw"].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.addEventListener("change", function(){ tsNowRender(); runTsTool(); });
+  });
+
+  var picker = document.getElementById("tsPickerInput");
+  if (picker) {
+    picker.value = tsLocalInputValue(Date.now());
+    picker.addEventListener("input", tsPickerRender);
+    picker.addEventListener("change", tsPickerRender);
+  }
+  var quick = document.querySelectorAll("[data-ts-quick]");
+  for (var i = 0; i < quick.length; i++) {
+    quick[i].addEventListener("click", function(){ tsQuickSet(this.getAttribute("data-ts-quick")); });
+  }
+  var pickerCopy = document.getElementById("tsPickerCopyBtn");
+  if (pickerCopy) pickerCopy.addEventListener("click", function(){
+    var v = document.getElementById("tsPickerOut");
+    tsCopyText(v && v.textContent !== "—" ? v.textContent : "", "请先选一个日期时间");
+  });
+
+  var runBtn = document.getElementById("tsRunBtn");
+  if (runBtn) runBtn.addEventListener("click", function(){ runTsTool(); });
+  var input = document.getElementById("tsInput");
+  if (input) {
+    input.addEventListener("input", function(){
+      clearTimeout(tsAutoTimer);
+      tsAutoTimer = setTimeout(runTsTool, 300);
+    });
+    input.addEventListener("keydown", function(e){
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); runTsTool(); }
+    });
+  }
+  var pasteBtn = document.getElementById("tsPasteBtn");
+  if (pasteBtn) pasteBtn.addEventListener("click", function(){
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      navigator.clipboard.readText().then(function(t){
+        var el = document.getElementById("tsInput");
+        if (el) { el.value = t; runTsTool(); showToast("已粘贴"); }
+      }, function(){ showToast("浏览器未授权读取剪贴板，请手动粘贴"); });
+    } else {
+      showToast("当前浏览器不支持一键粘贴，请手动粘贴");
+    }
+  });
+  var sampleBtn = document.getElementById("tsSampleBtn");
+  if (sampleBtn) sampleBtn.addEventListener("click", function(){
+    var el = document.getElementById("tsInput");
+    if (el) { el.value = tsSampleText(); runTsTool(); }
+  });
+  var clearBtn = document.getElementById("tsClearBtn");
+  if (clearBtn) clearBtn.addEventListener("click", tsResetTool);
+  var copyBtn = document.getElementById("tsCopyBtn");
+  if (copyBtn) copyBtn.addEventListener("click", function(){
+    var el = document.getElementById("tsOutput");
+    tsCopyText(el ? el.value : "", "没有可复制的内容");
+  });
+  var dlBtn = document.getElementById("tsDownloadBtn");
+  if (dlBtn) dlBtn.addEventListener("click", tsDownloadOutput);
+
+  tsNowRender();
+  tsPickerRender();
+}
+
 /* ========== View Switching ========== */
 function switchView(view) {
-  currentView = (view === "notes" || view === "todos") ? view : "tasks";
+  currentView = (view === "notes" || view === "todos" || view === "toolbox") ? view : "tasks";
   var map = {
     tasks: {panel:"tasksView", tab:"tabTasksBtn"},
     todos: {panel:"todosView", tab:"tabTodosBtn"},
-    notes: {panel:"notesView", tab:"tabNotesBtn"}
+    notes: {panel:"notesView", tab:"tabNotesBtn"},
+    toolbox: {panel:"toolboxView", tab:"tabToolboxBtn"}
   };
   Object.keys(map).forEach(function(k){
     var panel = document.getElementById(map[k].panel);
@@ -2224,6 +3467,24 @@ function switchView(view) {
     if(panel) panel.classList.toggle("hidden", k !== currentView);
     if(tab) tab.classList.toggle("active", k === currentView);
   });
+  if (typeof tsNowSyncTimer === "function") tsNowSyncTimer();
+}
+
+/* 工具箱内部子页签切换：json / timestamp */
+function switchTool(tool) {
+  var t = (tool === "timestamp") ? "timestamp" : "json";
+  var map = {
+    json: {panel:"toolPanelJson", btn:"toolBtnJson"},
+    timestamp: {panel:"toolPanelTs", btn:"toolBtnTs"}
+  };
+  Object.keys(map).forEach(function(k){
+    var panel = document.getElementById(map[k].panel);
+    var btn = document.getElementById(map[k].btn);
+    if(panel) panel.classList.toggle("hidden", k !== t);
+    if(btn) btn.classList.toggle("active", k === t);
+  });
+  if (typeof tsNowSyncTimer === "function") tsNowSyncTimer();
+  if (t === "timestamp" && typeof tsPickerRender === "function") tsPickerRender();
 }
 
 /* ========== Event Binding ========== */
@@ -2232,6 +3493,10 @@ function bindEvents() {
   document.getElementById("tabTasksBtn").addEventListener("click", function(){ switchView("tasks"); });
   document.getElementById("tabTodosBtn").addEventListener("click", function(){ switchView("todos"); });
   document.getElementById("tabNotesBtn").addEventListener("click", function(){ switchView("notes"); });
+  var tabToolboxBtn = document.getElementById("tabToolboxBtn");
+  if(tabToolboxBtn) tabToolboxBtn.addEventListener("click", function(){ switchView("toolbox"); });
+  bindJsonToolEvents();
+  bindTsToolEvents();
 
   // 每日待办：输入模块
   var addTodoBtn = document.getElementById("addTodoBtn");
