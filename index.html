@@ -1558,13 +1558,13 @@ function todoGroupClass(dateStr) {
 }
 /* 默认日期：今天 */
 function defaultTodoDate() { return todayStr(); }
-/* 待办排序规则：按选择的时间（日期）升序，未安排日期排最后；同日内未完成在前、已完成在后 */
+/* 待办排序规则：按选择的时间（日期）降序（最新日期在最上），未安排日期排最后；同日内未完成在前、已完成在后 */
 function todoSortFn(a, b) {
   var da = todoDateOf(a), db = todoDateOf(b);
   if(da !== db) {
     if(!da) return 1;
     if(!db) return -1;
-    return da < db ? -1 : 1;
+    return da < db ? 1 : -1;
   }
   var dna = a.done ? 1 : 0, dnb = b.done ? 1 : 0;
   if(dna !== dnb) return dna - dnb;
@@ -1650,7 +1650,7 @@ function renderTodos() {
     if(pagerEl) pagerEl.innerHTML = "";
     return;
   }
-  /* 排序：先按选择的时间（日期）升序，未安排日期的排最后；
+  /* 排序：先按选择的时间（日期）降序（最新日期在最上），未安排日期的排最后；
      同一日期内未完成在前、已完成在后，再按创建先后（id 升序） */
   PAGERS.todos.total = visible.length;
   /* 分页：每页默认 10 条，条数可选 */
@@ -1665,7 +1665,12 @@ function renderTodos() {
     if(!groups[k]) { groups[k] = []; keys.push(k); }
     groups[k].push(pageItems[j]);
   }
-  keys.sort();
+  /* 分组顺序与排序规则一致：日期降序（最新在最上），未安排日期沉底 */
+  keys.sort(function(a, b){
+    if(a === "\uffff") return 1;
+    if(b === "\uffff") return -1;
+    return a < b ? 1 : -1;
+  });
   var html = "";
   for(var g=0;g<keys.length;g++) {
     var k2 = keys[g];
